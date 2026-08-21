@@ -258,7 +258,30 @@ nav a[aria-current="page"]:hover { background: transparent; color: var(--accent)
    items of that SAME grid and can be placed independently by column
    and order: the heading and the About card stay a full-width intro
    above the grid, the post cards fill the left column, and any widget
-   card after the About one lands in the right column instead. */
+   card after the About one lands in the right column instead.
+
+   Two things this file tried and dropped, worth knowing before
+   touching this again: giving each widget its own explicit grid-row
+   far past any post row (so it could never land in a shared one)
+   sounds right but isn't -- a "far" row number is a real position on
+   the SAME grid, physically below however many rows the posts already
+   used, so the widget ends up pushed to the bottom of the whole page
+   instead of near the top beside them. Making aside itself the one
+   grid item (not display: contents) and stacking the About card and
+   the widgets inside it with flex solves the row-sharing problem
+   perfectly, but confines the About card to the sidebar's own width
+   -- it can no longer span the page, since that requires being a grid
+   item of .layout directly, one level up from where flex can reach.
+
+   What's here instead keeps dense packing (About card back-filling row
+   2 despite aside coming after main in the document -- see the
+   .card:first-child rule) and fixes the actual row-stretch bug at its
+   source: aside > .card:not(:first-child) below is capped to the same
+   240px as a post card. A widget sharing a row with a post can then
+   never need more height than the post already provides, so the row
+   never has to grow past 240px regardless of which one dense packing
+   puts there -- no page-wide row-height mismatch is possible even if a
+   widget and a post do end up on the same row. */
 .layout { grid-template-columns: minmax(0, 1fr); }
 aside { display: none; }
 
@@ -303,10 +326,14 @@ aside { display: none; }
 
 /* Any card after it (the RSS widget, or a future one) moves into the
    right column, top-aligned with the first row of post cards instead
-   of stacking under the About text. */
+   of stacking under the About text. Capped to a post card's own
+   height (see the long comment above) so dense packing landing it on
+   the same row as a post can never stretch that row past 240px. */
 .layout:has(.listing-heading--home) aside > .card:not(:first-child) {
   grid-column: 2;
   align-self: start;
+  max-height: 240px;
+  overflow: hidden;
 }
 
 /* aside.html.erb checks the widgets in a fixed code order (toots,
@@ -596,16 +623,79 @@ footer .chrome-text { font-size: 0.875rem; }
 /* ---------- archos: compact homepage cards ---------- */
 main .post-list-item {
   padding: 0.85rem 1.1rem;
+  /* Fixed instead of the min-height the base rule and the has(figure)
+     variant used below: with content of uneven length, min-height still
+     let every card grow to fit its own excerpt, so the row never lined
+     up. A hard height plus the base rule's overflow: hidden (see "list
+     cards" above) clips whatever doesn't fit instead of growing the
+     card for it -- matching the fixed-height listing cards on the Hugo
+     site this skin is styled after. */
+  height: 240px;
 }
 .post-list-item h2 { font-size: 1.1rem; }
 main .post-list-item:has(.content.excerpt > figure:first-of-type) {
   padding-left: calc(26% + 1.5rem);
-  min-height: 130px;
 }
 main .post-list-item .content.excerpt > figure:first-of-type {
   width: 26%;
 }
-.content.excerpt { max-height: 140px; }
+/* A pixel max-height clipped mid-line -- a paragraph cut off partway up
+   its own letters, which read as unfinished rather than trimmed. Only
+   the excerpt's first paragraph is shown now (later paragraphs, lists,
+   headings etc. are what "Číst dál" is for) and line-clamped to 2 full
+   lines instead, so the cut always lands on a line boundary.
+
+   p:first-of-type/figure:first-of-type, not :first-child: a lead image
+   (see the has(figure) rule above) can be the excerpt's first child
+   with the opening paragraph right after it, and both need to survive
+   this -- only the figure that's ALREADY absolutely positioned onto the
+   card's left edge, so it stays put instead of flowing above the text.
+   A post whose excerpt opens with something else entirely (a photo
+   grid, not a lone figure -- see the multi-photo comment above) has no
+   .content.excerpt > figure to match here either, same as it always
+   didn't, and simply falls back to its first paragraph.
+
+   Desktop only: the mobile card is height: auto (see the 700px query
+   below) and its own max-height: 420px rule above already gives it
+   room for the fuller excerpt -- clamping it to 2 lines there would
+   throw that room away for nothing. */
+@media (min-width: 701px) {
+  .content.excerpt > :not(p:first-of-type):not(figure:first-of-type) {
+    display: none;
+  }
+
+  .content.excerpt > p:first-of-type {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  /* Belt-and-suspenders on top of the display: none above: anything
+     that hiding rule missed or a future post structure slips past it
+     (a second figure, a bare img, the multi-photo grid) still can't
+     inflate the card past 240px on its own. figure:first-of-type and
+     its img are excluded throughout -- that's the lead thumbnail,
+     already full height via position: absolute two rules up, and
+     capping it here too would squash it back down to 100px. */
+  .post-list-item .content.excerpt figure:not(:first-of-type),
+  .post-list-item .content.excerpt .photo-grid,
+  .post-list-item .content.excerpt img:not(figure:first-of-type img) {
+    max-height: 100px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+}
+
+/* The mobile layout (below) stacks the image above the text instead of
+   filling the card's left edge, so a height tuned for the side-by-side
+   desktop card would slice into that image instead of just the text.
+   Left to grow with its content there, same as before this change. */
+@media (max-width: 700px) {
+  main .post-list-item { height: auto; }
+}
 
 /* ---------- archos: flatten --card-bg into --bg ---------- */
 
