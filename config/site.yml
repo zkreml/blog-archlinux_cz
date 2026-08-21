@@ -9,7 +9,7 @@ site:
   author: "Arch Linux CZ"
   lang: "cs"
   locale: "cs_CZ"
-  page_size: 4
+  page_size: 5
   timezone: "Europe/Prague"
   base_url: "https://arch-linux.cz"
   extra_css:
@@ -113,7 +113,7 @@ widgets:
   rss:
     heading: "Z Fediverse"
     feed_url: "https://gts.arch-linux.cz/@arch/feed.rss"
-    limit: 3
+    limit: 5
   commits:
     heading: "Poslední commity"
     username: "zkreml"

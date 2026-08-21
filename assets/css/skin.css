@@ -616,3 +616,98 @@ main .post-list-item .content.excerpt > figure:first-of-type {
    up automatically, so the whole page -- edges and middle column alike
    -- stays a single flat colour regardless of which palette is active. */
 :root { --card-bg: var(--bg); }
+
+/* ---------- uniform list cards ---------- */
+
+/* One height for every card in the listing, so a post with a tall
+   image row does not tower over its neighbours. Scoped to
+   main .post-list-item and NEVER to bare .card -- .card also dresses
+   the sidebar widget boxes, and a fixed height there cuts them off.
+   The excerpt loses its own cap (the card's overflow:hidden does the
+   cutting), a fade softens the cut, and the read-more link anchors to
+   the bottom above the fade. align-self keeps the homepage grid from
+   stretching a card to its row's tallest neighbour. Offsets follow
+   the compact-card metrics above (26% thumbnail, 1.1rem padding). */
+@media (min-width: 701px) {
+  main .post-list-item {
+    height: 340px;
+    align-self: start;
+  }
+
+  main .post-list-item .content.excerpt { max-height: none; }
+
+  main .post-list-item::after {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 0;
+    height: 2.4rem;
+    background: linear-gradient(transparent, var(--bg));
+    pointer-events: none;
+  }
+
+  main .post-list-item:has(.content.excerpt > figure:first-of-type)::after {
+    left: calc(26% + 1.5rem);
+  }
+
+  main .post-list-item .read-more {
+    position: absolute;
+    z-index: 1;                /* above the fade -- ::after paints later */
+    left: 1.1rem;
+    bottom: 0.8rem;
+    margin: 0;
+  }
+
+  main .post-list-item:has(.content.excerpt > figure:first-of-type) .read-more {
+    left: calc(26% + 1.5rem);
+  }
+}
+
+/* ---------- listing refinements (review 21. 8.) ---------- */
+
+/* The widget column takes a quarter of the layout, no more. */
+.layout:has(.listing-heading--home) {
+  grid-template-columns: minmax(0, 1fr) 25%;
+}
+
+/* A widget card used to sit in ONE auto row and inflate it -- the card
+   beside it held its height (align-self: start), but the next card
+   started only after the row ended, so the gap between the first two
+   cards didn't match the rest. Spanning several rows lets the widget's
+   height spread instead of forcing one row tall. */
+.layout:has(.listing-heading--home) aside > .card:not(:first-child) {
+  grid-row: span 3;
+}
+
+/* Continuations keep the widget column; only the intro text is a
+   first-page thing. Re-opened via display:contents (same specificity
+   as the display:none above, later wins), then the About card -- the
+   aside's first card whenever an about text is configured -- goes
+   alone. */
+body.page-cont .layout:has(.listing-heading--home) aside { display: contents; }
+body.page-cont .layout:has(.listing-heading--home) aside > .card:first-child { display: none; }
+
+/* The thumbnail earns half the card. */
+main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+  padding-left: calc(50% + 1.5rem);
+}
+
+main .post-list-item .content.excerpt > figure:first-of-type {
+  width: 50%;
+}
+
+@media (min-width: 701px) {
+  /* The fade starts higher and is fully opaque well above the card's
+     edge, so the anchored read-more always sits on solid ground
+     instead of over half-faded text. */
+  main .post-list-item::after {
+    height: 4.4rem;
+    background: linear-gradient(transparent, var(--bg) 62%);
+  }
+
+  main .post-list-item:has(.content.excerpt > figure:first-of-type)::after,
+  main .post-list-item:has(.content.excerpt > figure:first-of-type) .read-more {
+    left: calc(50% + 1.5rem);
+  }
+}
