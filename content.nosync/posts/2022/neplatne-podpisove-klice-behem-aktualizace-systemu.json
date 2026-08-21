@@ -1,0 +1,34 @@
+{
+  "slug": "neplatne-podpisove-klice-behem-aktualizace-systemu",
+  "title": "Neplatné podpisové klíče během aktualizace systému",
+  "date": "2022-05-06T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "update",
+    "Naše komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V současné době existují některé podpisové klíče pro balíčky Arch, které jsou při aktualizaci detekovány jako neplatné (vypršela platnost, byly staženy atd.). To způsobí, že aktualizace systému pomocí Pacmana selže."
+    },
+    {
+      "type": "code",
+      "text": "error: \n: signature from \"Someone \" is marginal trust\n:: File /var/cache/pacman/pkg/_x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (PGP signature)).\nDo you want to delete it? [Y/n]"
+    },
+    {
+      "type": "text",
+      "text": "Je třeba nejprve aktualizovat podpisové klíče a potom systém."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Sy archlinux-keys\nsudo pacman -Syu"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/neplatne-podpisove-klice-behem-aktualizace-systemu.md"
+  }
+}

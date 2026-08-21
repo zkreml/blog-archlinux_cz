@@ -1,0 +1,1402 @@
+{
+  "slug": "arch-linux-pruvodce-instalaci-zakladniho-sifrovani-celeho-disku",
+  "title": "Arch Linux průvodce instalací základního šifrování celého disku",
+  "date": "2022-12-06T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "instalace",
+    "btrfs",
+    "luks",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Tato příručka obsahuje pokyny pro instalaci Arch Linuxu se šifrováním celého disku pomocí BTRFS na LUKS a šifrovaným spouštěcím oddílem (GRUB) pro systémy UEFI."
+    },
+    {
+      "type": "text",
+      "text": "Po hlavní instalaci následují další pokyny, jak se bránit útokům Evil Maid prostřednictvím vlastní registrace klíče UEFI Secure Boot, jádra a bootloaderu s vlastním podpisem."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Předmluva"
+    },
+    {
+      "type": "text",
+      "text": "Většinu těchto informací najdete na Arch Wiki a dalších zdrojů na ně odkazovaných v dolní části článku.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#Encrypted_boot_partition_(GRUB)",
+          "start": 36,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Poznámka:  Návod popisuje instalaci na moderní NVMe SSD disk. Pokud používáte jiný typ disků, proveďte všude v návodu substituci /dev/nvme0nX na /dev/sdX, popř. jiný typ zařízení podle potřeby. Video návod používá  /dev/sdX, který je standardním nastavením ve Virtualboxu.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "code",
+          "start": 129,
+          "end": 141
+        },
+        {
+          "type": "code",
+          "start": 145,
+          "end": 153
+        },
+        {
+          "type": "code",
+          "start": 215,
+          "end": 223
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Připojení k internetu"
+    },
+    {
+      "type": "text",
+      "text": "Zapojte ethernet a pokračujte dál, nebo pro bezdrátové připojení se podívejte na vševědoucí  Arch Wiki.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 81,
+          "end": 91
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/installation_guide#Connect_to_the_internet",
+          "start": 93,
+          "end": 102
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavení Wifi"
+    },
+    {
+      "type": "code",
+      "text": "iwctl\n[iwd]# device list -> note your device\n[iwd]# station  get-networks\n[iwd]# station  connect \n\n# second variant\niwctl --passphrase  station  connect \n\n# test connection\nping archlinux.org"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Aktualizujte systémové hodiny"
+    },
+    {
+      "type": "code",
+      "text": "timedatectl set-ntp true"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "(Volitelně) Aktualizujte mirrorlist"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Syy\npacman -S reflector\ncp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak\n\nreflector --country 'Czechia' --age 24 --verbose --sort rate --save /etc/pacman.d/mirrorlist\n# OR\nreflector -c \"CZ\" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavení rozlišení Virtualbox tty"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S fbset terminus-font\nfbset -g 2048 1080 2048 1080 32\nsetfont ter-132n"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava disku"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Aktualizujte btrfs-progs"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Syy btrfs-progs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zobrazení disků a oddílů"
+    },
+    {
+      "type": "code",
+      "text": "lsblk"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte oddíly EFI System a Linux LUKS"
+    },
+    {
+      "type": "text",
+      "text": "Number*Start (sectorEnd (sector)*Size*Code*Name**120481130495256.0 MiBEF00EFI System21130496976773134465.2 GiB8309Linux LUKS",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 6
+        },
+        {
+          "type": "italic",
+          "start": 6,
+          "end": 20
+        },
+        {
+          "type": "italic",
+          "start": 20,
+          "end": 32
+        },
+        {
+          "type": "bold",
+          "start": 20,
+          "end": 32
+        },
+        {
+          "type": "italic",
+          "start": 37,
+          "end": 42
+        },
+        {
+          "type": "bold",
+          "start": 37,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "gdisk /dev/nvme0n1\n\n# alternative apps\ncfdisk\nfdisk"
+    },
+    {
+      "type": "code",
+      "text": "o\nn\n[Enter]\n0\n+256M\nef00\nn\n[Enter]\n[Enter]\n[Enter]\n8309\nw"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte šifrovaný kontejner LUKS1 na oddílu Linux LUKS (GRUB nepodporuje LUKS2 od května 2019)"
+    },
+    {
+      "type": "code",
+      "text": "cryptsetup luksFormat --type luks1 --use-random -S 1 -s 512 -h sha512 -i 1000 /dev/nvme0n1p2"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Otevřete kontejner (dešifrujte jej a zpřístupněte na /dev/mapper/cryptbtrfs)"
+    },
+    {
+      "type": "code",
+      "text": "cryptsetup open /dev/nvme0n1p2 cryptbtrfs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava svazku/podsvazků BTRFS"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Formátování btrfs, nyní již dešifrovaného disku"
+    },
+    {
+      "type": "code",
+      "text": "mkfs.btrfs -L \"Arch Linux\" /dev/mapper/cryptbtrfs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Připojit souborový systém (zatím bezparametrické)"
+    },
+    {
+      "type": "code",
+      "text": "mount /dev/mapper/cryptbtrfs /mnt"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvoření podsvazků (subvolumes)"
+    },
+    {
+      "type": "text",
+      "text": "Toto schéma lze upravit podle vašich potřeb, navrhoval bych alespoň jeden podsvazek pro root (@) a jeden pro snímky (.@snapshots). varlog a tmp jsou vytvořeny pro snadné zakázání kopírování při zápisu na /var/log a /tmp. pkg subvolume naopak pomáhá v organizaci pacman balíčků s možností jejich zálohy a vrácení se k předchozím verzím. docker subvolume umožňuje efektivní práci s dockrem, který má implementovanou efektivní spolupráci s btrfs souborovým systémem."
+    },
+    {
+      "type": "code",
+      "text": "btrfs sub cr /mnt/@\nbtrfs sub cr /mnt/@home\nbtrfs sub cr /mnt/@tmp\nbtrfs sub cr /mnt/@log\nbtrfs sub cr /mnt/@pkg\nbtrfs sub cr /mnt/@docker\nbtrfs sub cr /mnt/.@snapshots"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zakázat kopírování při zápisu do /var/log a /tmp"
+    },
+    {
+      "type": "code",
+      "text": "chattr +C /mnt/@log\nchattr +C /mnt/@tmp  \numount /mnt"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Připojení subolumes BTRFS, nyní již s kompletní parametrizací pro stálé používání"
+    },
+    {
+      "type": "code",
+      "text": "mount -o defaults,noatime,discard,ssd,subvol=@ /dev/mapper/cryptbtrfs /mnt  \nmkdir -p /mnt/{home,var/log,var/cache/pacman/pkg,var/lib/docker,tmp,.snapshots}\n\n# Discard and ssd options and are for ssd disks only\nmount -o defaults,noatime,discard,ssd,subvol=@home /dev/mapper/cryptbtrfs /mnt/home\nmount -o defaults,noatime,discard,ssd,subvol=@tmp /dev/mapper/cryptbtrfs /mnt/tmp\nmount -o defaults,noatime,discard,ssd,subvol=@log /dev/mapper/cryptbtrfs /mnt/var/log\nmount -o defaults,noatime,discard,ssd,subvol=@pkg /dev/mapper/cryptbtrfs /mnt/var/cache/pacman/pkg/\nmount -o defaults,noatime,discard,ssd,subvol=@docker /dev/mapper/cryptbtrfs /mnt/var/lib/docker\nmount -o defaults,noatime,discard,ssd,subvol=.@snapshots /dev/mapper/cryptbtrfs /mnt/.snapshots"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava oddílu EFI"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte souborový systém FAT32 na systémovém oddílu EFI"
+    },
+    {
+      "type": "code",
+      "text": "mkfs.fat -F32 /dev/nvme0n1p1"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte bod připojení pro systémový oddíl EFI na /efi pro kompatibilitu s grub-install a připojte jej"
+    },
+    {
+      "type": "code",
+      "text": "mkdir /mnt/efi\nmount /dev/nvme0n1p1 /mnt/efi"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace Arch Base"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nainstalujte potřebné balíčky"
+    },
+    {
+      "type": "code",
+      "text": "pacstrap /mnt/ base base-devel linux linux-headers linux-firmware polkit git btrfs-progs efibootmgr dhcpcd bash-completion sudo neovim nano"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nakonfigurujte systém"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vygenerujte soubor /etc/fstab"
+    },
+    {
+      "type": "code",
+      "text": "genfstab -U /mnt >> /mnt/etc/fstab"
+    },
+    {
+      "type": "text",
+      "text": "Zkontrolujte, zda fstabje správně vytvořen s definovanými parametry btrfs z předchozí kapitoly s editorem neovim.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 18,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vstupne do svého nového systému pomocí arch-chroot"
+    },
+    {
+      "type": "code",
+      "text": "arch-chroot /mnt"
+    },
+    {
+      "type": "text",
+      "text": "V tomto okamžiku byste měli mít následující oddíly a logické svazky:"
+    },
+    {
+      "type": "code",
+      "text": "lsblk"
+    },
+    {
+      "type": "text",
+      "text": "NAMEMAJ:MINRMSIZEROTYPEMOUNTPOINTnvme0n1259:00465.8G0disk├─nvme0n1p1259:50256M0part/efi├─nvme0n1p2259:60465.2G0part/.snapshots      └─cryptbtrfs254:00465.2G0crypt/var/lib/docker/var/cache/pacman/pkg/var/log/tmp/home/"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Časové pásmo"
+    },
+    {
+      "type": "text",
+      "text": "Nahradit Europe/Pragues vaším příslušným časovým pásmem nalezeným v /usr/share/zoneinfo",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 22
+        },
+        {
+          "type": "code",
+          "start": 68,
+          "end": 87
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "ln -sf /usr/share/zoneinfo/Europe/Prague /etc/localtime"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Běh hwclock vygeneruje /etc/adjtime",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 4,
+          "end": 11
+        },
+        {
+          "type": "code",
+          "start": 23,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Hardwarové hodiny budou nastaveny na UTC a synchronizovány s aktuálním systémovým časem."
+    },
+    {
+      "type": "code",
+      "text": "hwclock --systohc --utc"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Lokalizace"
+    },
+    {
+      "type": "text",
+      "text": "Odkomentovat řádku en_US.UTF-8 UTF-8 v  /etc/locale.gen a vygenerovat národní prostředí.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 19,
+          "end": 36
+        },
+        {
+          "type": "code",
+          "start": 40,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "locale-gen"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořit locale.conf a nastavte LANG proměnnou prostředí",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 20
+        },
+        {
+          "type": "code",
+          "start": 32,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "echo LANG=en_US.UTF-8 > /etc/locale.conf\nexport LANG=en_US.UTF-8"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Konfigurace sítě"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte soubor /etc/hostname s názvem počítače"
+    },
+    {
+      "type": "code",
+      "text": "echo myhostname > /etc/hostname"
+    },
+    {
+      "type": "text",
+      "text": "Toto je jedinečný název pro identifikaci vašeho zařízení v síti."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Přidejte odpovídající záznamy do /etc/hosts"
+    },
+    {
+      "type": "code",
+      "text": "nvim /etc/hosts"
+    },
+    {
+      "type": "code",
+      "text": "127.0.0.1 localhost\n::1 localhost\n127.0.1.1 myhostname"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "(Volitelné) Vytváření swap souboru"
+    },
+    {
+      "type": "text",
+      "text": "Nyní vytvořte prázdný (s velikostí 0) odkládací soubor. Vytvořte samostatný podsvazek pro odkládací soubor. Tento podsvazek je potřebný k tomu, abyste mohli vytvořit snímek /, což by nebylo možné s žádným souborem v něm s vypnutým CoW!"
+    },
+    {
+      "type": "code",
+      "text": "btrfs su create /swap\nchattr +C /swap\n\n# Copy on Write should always be disabled on swap file, so it will be done in the next step\ntouch /swap/swapfile\n\n# Check if C attribute is enabled (should be already if created in folder with disabled CoW attribute)\nlsattr /swap/swapfile\n\n# If not then disable CoW for swapfile manually\nchattr +C /swap/swapfile  \n\n# Expanding empty file to 4GiB swap file\ndd if=/dev/zero of=/swap/swapfile bs=1024K count=4096  \nchmod 600 /swap/swapfile\n\n# Format the swap file.\nmkswap /swap/swapfile\n\n# Turn swap file on.\nswapon /swap/swapfile  \n\n# You also need to update /etc/fstab to mount swapfile on boot\n/swap/swapfile none swap sw 0 0"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Initramfs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Přidat encrypt, a btrfs háčky (hooks) na /etc/mkinitcpio.conf",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 7,
+          "end": 14
+        },
+        {
+          "type": "code",
+          "start": 18,
+          "end": 23
+        },
+        {
+          "type": "code",
+          "start": 41,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Poznámka:  Záleží na pořádí!",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block encrypt btrfs filesystems fsck)\n\n# Add btrfsck to binaries\nBINARIES=(btrfsck)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Znovu vytvořte obraz initramfs"
+    },
+    {
+      "type": "code",
+      "text": "mkinitcpio -P"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace základního softwaru"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S openssh networkmanager wpa_supplicant netctl\nsystemctl enable NetworkManager\nsystemctl enable sshd\n\npacman -S amd-ucode (for AMD), pacman -S intel-ucode (for INTEL)\nmkinitcpio -p linux"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Grafické ovladače a Xorg"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Karty AMD"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S xorg xorg-xinit\npacman -S mesa"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Karty Nvidia"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S xorg xorg-xinit\npacman -S nvidia nvidia-utils\n\nsudo vim /etc/mkinitcpio.conf\n# edit Modules and Files\nMODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm ...)\nFILES=\"/etc/modprobe.d/nvidia.conf\"\n\nsudo mkinitcpio -P\nnvim /etc/modprobe.d/nvidia.conf\n# Add row to the file\noptions nvidia_drm modeset=1"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Podpora Virtualboxu"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S virtualbox-guest-utils"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Heslo uživatele root"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavte heslo uživatele root"
+    },
+    {
+      "type": "code",
+      "text": "passwd"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přidat uživatele Linuxu"
+    },
+    {
+      "type": "code",
+      "text": "useradd -m -g users -G wheel,storage,power -s /bin/bash \npasswd \npacman -S sudo\nEDITOR=nvim visudo,  (uncomment) %wheel ALL=(ALL:ALL) ALL"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zavaděč (bootloader)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nainstalujte GRUB"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S grub efibootmgr os-prober dosfstools mtools"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nakonfigurujte GRUB tak, aby umožňoval spouštění z /boot na šifrovaném oddílu LUKS1"
+    },
+    {
+      "type": "code",
+      "text": "nvim /etc/default/grub"
+    },
+    {
+      "type": "code",
+      "text": "GRUB_ENABLE_CRYPTODISK=y"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavte parametr jádra pro odemknutí fyzického svazku BTRFS při spouštění pomocí encrypt hook",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 82,
+          "end": 89
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "UUID je oddíl obsahující kontejner LUKS"
+    },
+    {
+      "type": "code",
+      "text": "blkid"
+    },
+    {
+      "type": "code",
+      "text": "/dev/nvme0n1p2: UUID=\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\" TYPE=\"crypto_LUKS\" PARTLABEL=\"Linux LUKS\" PARTUUID=\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\""
+    },
+    {
+      "type": "code",
+      "text": "/etc/default/grub"
+    },
+    {
+      "type": "code",
+      "text": "# allow-discards is only for ssd to let trim work with encryption enabled\nGRUB_CMDLINE_LINUX=\"... cryptdevice=UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:cryptbtrfs:allow-discards\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nainstalujte GRUB do připojeného ESP pro spouštění UEFI"
+    },
+    {
+      "type": "code",
+      "text": "grub-install --target=x86_64-efi --bootloader-id=ARCH --efi-directory=/efi --recheck"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vygenerujte konfigurační soubor GRUB"
+    },
+    {
+      "type": "code",
+      "text": "grub-mkconfig -o /boot/grub/grub.cfg"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "(doporučeno) Vložte soubor s klíčem do initramfs"
+    },
+    {
+      "type": "text",
+      "text": "To se provádí proto, abyste nemuseli zadávat heslo pro dešifrování dvakrát (jednou pro GRUB, jednou pro initramfs.)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvořte soubor s klíčem a přidejte jej jako klíč LUKS"
+    },
+    {
+      "type": "code",
+      "text": "mkdir /root/secrets && chmod 700 /root/secrets\nhead -c 64 /dev/urandom > /root/secrets/crypto_keyfile.bin && chmod 600 /root/secrets/crypto_keyfile.bin\ncryptsetup -v luksAddKey -i 1 /dev/nvme0n1p2 /root/secrets/crypto_keyfile.bin"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Přidejte soubor s klíčem do obrazu initramfs"
+    },
+    {
+      "type": "code",
+      "text": "nvim /etc/mkinitcpio.conf"
+    },
+    {
+      "type": "code",
+      "text": "FILES=(/root/secrets/crypto_keyfile.bin)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Znovu vytvořte obraz initramfs"
+    },
+    {
+      "type": "code",
+      "text": "mkinitcpio -P"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavte parametry jádra pro odemknutí oddílu LUKS pomocí souboru s klíčem v encrypt hook",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 77,
+          "end": 84
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "/etc/default/grub"
+    },
+    {
+      "type": "code",
+      "text": "GRUB_CMDLINE_LINUX=\"... cryptkey=rootfs:/root/secrets/crypto_keyfile.bin\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Znovu finálně vygenerujte konfigurační soubor GRUB"
+    },
+    {
+      "type": "code",
+      "text": "grub-mkconfig -o /boot/grub/grub.cfg"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Omezit /bootoprávnění",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 7,
+          "end": 12
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "chmod 700 /boot"
+    },
+    {
+      "type": "text",
+      "text": "Instalace je nyní dokončena. Ukončete chroot a restartujte počítač."
+    },
+    {
+      "type": "code",
+      "text": "exit\nreboot"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Po instalaci (post-instalační kroky)"
+    },
+    {
+      "type": "text",
+      "text": "Váš systém by nyní měl být plně nainstalován, spustitelný a plně zašifrovaný."
+    },
+    {
+      "type": "text",
+      "text": "Pokud jste soubor s klíčem vložili do obrazu initramfs, měl by k odemknutí do systému počítač vyžadovat vaše heslo pro dešifrování pouze jednou před GRUB tabulkou. Narozdíl od archinstall skriptu, toto je daleko více bezpečnostní zabezpečení.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 144,
+          "end": 162
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro další standardní kroky po instalaci Arch Linuxu RTFM .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/General_recommendations",
+          "start": 52,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zrychlení dešifrování LUKS v GRUB po zadání hesla"
+    },
+    {
+      "type": "text",
+      "text": "Upozornění: Před pokračováním v této části se ujistěte, že rozumíte důležitosti hesel s vysokou entropií. Informace o tom, jak generovat bezpečná hesla, naleznete na Wikipedii: Síla hesla.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "link",
+          "url": "https://cs.wikipedia.org/wiki/S%C3%ADla_hesla",
+          "start": 177,
+          "end": 187
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Při bootování může GRUB v některých případech trvat dlouho, než bude ověřeno heslo. To může být způsobeno vysokým počtem iterací PBKDF, který můžete zkontrolovat následovně:"
+    },
+    {
+      "type": "code",
+      "text": "cryptsetup luksDump /dev/nvme0n1p2"
+    },
+    {
+      "type": "text",
+      "text": "Problém je v tom, že iterace byly vypočteny pro daný keyslot při normálním běhu počítače (nikoliv při bootu), když byl klíč přidán, aby byla zajištěna rovnováha mezi dostatečně vysokou úrovní pro ochranu před útoky hrubou silou a dostatečně nízkou, aby umožnila rychlé odvození klíče pomocí odhadu schopností vašeho počítače. Když se však GRUB spustí, nemusí mít k dispozici stejné výpočetní zdroje, a proto je výrazně pomalejší .",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 53,
+          "end": 60
+        },
+        {
+          "type": "bold",
+          "start": 352,
+          "end": 362
+        },
+        {
+          "type": "bold",
+          "start": 411,
+          "end": 428
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud vaše heslo poskytuje dostatečnou entropii, aby samo čelilo běžným útokům, můžete toto číslo snížit:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 11,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "cryptsetup luksChangeKey --key-slot 1 --pbkdf-force-iterations 1000 /dev/nvme0n1p2"
+    },
+    {
+      "type": "text",
+      "text": "Podle RFC 2898 se doporučuje minimálně 1000 iterací, ale pokud je to možné, měli byste se zaměřit na vyšší hodnoty (náklady pro útočníka a také čas na odvození klíče lineárně škálují)."
+    },
+    {
+      "type": "text",
+      "text": "Tip: GRUB zkouší aktivované klíčové sloty postupně. Při přidávání klíčů se --key-slotlze použít k explicitnímu zadání klíčového slotu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "type": "code",
+          "start": 75,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "(doporučeno) Secure Boot – Odolávaní proti útokům Evil Maid"
+    },
+    {
+      "type": "text",
+      "text": "Se zašifrovaným zaváděcím oddílem nikdo nemůže vidět ani upravit váš obraz jádra nebo initramfs, ale stále byste byli zranitelní vůči útokům Evil Maid .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.schneier.com/blog/archives/2009/10/evil_maid_attac.html",
+          "start": 134,
+          "end": 150
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Jedním z možných řešení je použití UEFI Secure Boot. Zbavte se předinstalovaných klíčů Secure Boot (opravdu nechcete věřit Microsoftu a OEM), zaregistrujte si své vlastní klíče Secure Boot a podepište zavaděč GRUB svými klíči. Evil Maid by nemohla zavést upravený zavaděč (nepodepsaný vašimi klíči) a útoku je zabráněno.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/Secure_Boot#Using_your_own_keys",
+          "start": 156,
+          "end": 188
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytváření klíčů"
+    },
+    {
+      "type": "text",
+      "text": "Následující kroky by měly být provedeny pod rootuživatelem s doprovodnými soubory uloženými v /rootadresáři.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 44,
+          "end": 48
+        },
+        {
+          "type": "code",
+          "start": 94,
+          "end": 99
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Nainstalujte efitools",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "pacman -S efitools"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Vytvořte GUID pro identifikaci vlastníka"
+    },
+    {
+      "type": "code",
+      "text": "uuidgen --random > GUID.txt"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Platformový klíč"
+    },
+    {
+      "type": "text",
+      "text": "CN je běžné jméno, které lze zapsat jako cokoliv."
+    },
+    {
+      "type": "code",
+      "text": "openssl req -newkey rsa:4096 -nodes -keyout PK.key -new -x509 -sha256 -days 3650 -subj \"/CN=my Platform Key/\" -out PK.crt\nopenssl x509 -outform DER -in PK.crt -out PK.cer\ncert-to-efi-sig-list -g \"$(/dev/null | /usr/bin/grep -q \"signature certificates\"; then /usr/bin/sbsign --key /root/db.key --cert /root/db.crt --output {} {}; fi' \\ ;\nDepends = sbsigntools\nDepends = findutils\nDepends = grep"
+    },
+    {
+      "type": "code",
+      "text": "/etc/pacman.d/hooks/98-secureboot-grub.hook"
+    },
+    {
+      "type": "code",
+      "text": "[Trigger]\nOperation = Install\nOperation = Upgrade\nType = Package\nTarget = grub\n\n[Action]\nDescription = Signing GRUB for SecureBoot\nWhen = PostTransaction\nExec = /usr/bin/find /efi/ -name 'grubx64*' -exec /usr/bin/sh -c 'if ! /usr/bin/sbverify --list {} 2>/dev/null | /usr/bin/grep -q \"signature certificates\"; then /usr/bin/sbsign --key /root/db.key --cert /root/db.crt --output {} {}; fi' \\ ;\nDepends = sbsigntools\nDepends = findutils\nDepends = grep"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zaregistrujte klíče do firmwaru"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Zkopírujte vše *.cer, *.esl, *.authdo systémového oddílu EFI",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 15,
+          "end": 20
+        },
+        {
+          "type": "code",
+          "start": 22,
+          "end": 27
+        },
+        {
+          "type": "code",
+          "start": 29,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "cp /root/*.cer /root/*.esl /root/*.auth /efi/"
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Spusťte nástroj pro nastavení firmwaru UEFI (často nesprávně označovaný jako „BIOS“)"
+    },
+    {
+      "type": "code",
+      "text": "systemctl reboot --firmware"
+    },
+    {
+      "type": "text",
+      "text": "Firmware má různá rozhraní, viz Výměna klíčů pomocí nástroje pro nastavení firmwaru, pokud jsou následující pokyny nejasné nebo neúspěšné.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "http://www.rodsbooks.com/efi-bootloaders/controlling-sb.html#setuputil",
+          "start": 28,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Nastavte Typ OS na Windows UEFI mode",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 19,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Najděte možnosti Secure Boot a nastavte typ OS na Windows UEFI mode(Ano, i když nejsme na Windows.) To může být nezbytné pro funkci Secure Boot.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 50,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Vymažte předinstalované klíče Secure Boot"
+    },
+    {
+      "type": "text",
+      "text": "Pomocí Key Management vymažte všechny předinstalované klíče Secure Boot (Microsoft a OEM)."
+    },
+    {
+      "type": "text",
+      "text": "Vymazáním všech klíčů Secure Boot vstoupíte do režimu nastavení (takže si můžete zaregistrovat své vlastní klíče Secure Boot)."
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Nastavte nebo připojte nové klíče"
+    },
+    {
+      "type": "text",
+      "text": "Klíče musí být nastaveny v následujícím pořadí:"
+    },
+    {
+      "type": "code",
+      "text": "db => KEK => PK"
+    },
+    {
+      "type": "text",
+      "text": "To je způsobeno tím, že některé systémy ukončí režim nastavení, jakmile PKje zadáno.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 72,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nenahrávejte výchozí tovární nastavení, místo toho procházejte dostupné souborové systémy při hledání souborů dříve zkopírovaných do systémového oddílu EFI."
+    },
+    {
+      "type": "text",
+      "text": "Vyberte některý z formátů. Firmware by vás měl vyzvat k zadání typu ( Poznámka: názvy typů se mohou mírně lišit.)",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 70,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "*.cer is a Public Key Certificate\n*.esl is a UEFI Secure Variable\n*.auth is an Authenticated Variable"
+    },
+    {
+      "type": "text",
+      "text": "Určitý firmware (například můj vlastní) vyžaduje použití souborů *.auth. Vyzkoušejte různé, dokud nebudou fungovat."
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Nastavte heslo správce (administrátora) UEFI"
+    },
+    {
+      "type": "text",
+      "text": "V nastavení zabezpečení musíte také nastavit heslo správce (administrátora) firmwaru UEFI, takže nikdo nemůže jednoduše spustit nástroj pro nastavení UEFI a vypnout zabezpečené spouštění."
+    },
+    {
+      "type": "text",
+      "text": "Nikdy byste neměli používat stejné heslo správce firmwaru UEFI jako heslo pro šifrování, protože na některých starých přenosných počítačích lze heslo správce obnovit jako prostý text z čipu EEPROM."
+    },
+    {
+      "type": "text",
+      "subtype": "heading5",
+      "text": "Ukončete a uložte změny"
+    },
+    {
+      "type": "text",
+      "text": "Jakmile načtete všechny tři klíče a nastavíte heslo správce, stiskněte F10 pro ukončení a uložení změn."
+    },
+    {
+      "type": "text",
+      "text": "Pokud bylo vše provedeno správně, měl by se při restartu objevit váš zavaděč."
+    },
+    {
+      "type": "text",
+      "text": ""
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zkontrolujte, zda byl povolen Secure Boot"
+    },
+    {
+      "type": "code",
+      "text": "od -An -t u1 /sys/firmware/efi/efivars/SecureBoot-XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+    },
+    {
+      "type": "text",
+      "text": "Znaky označené XXXX se liší stroj od stroje. Chcete-li s tím pomoci, můžete použít tab doplňování nebo seznam proměnných EFI."
+    },
+    {
+      "type": "text",
+      "text": "Pokud je povoleno Secure Boot, tento příkaz vrátí 1 jako poslední celé číslo v seznamu pěti hodnot, například:"
+    },
+    {
+      "type": "code",
+      "text": "6  0  0  0  1"
+    },
+    {
+      "type": "text",
+      "text": "Pokud bylo aktivováno Secure Boot a bylo nastaveno heslo správce UEFI, můžete se nyní považovat za chráněného před útokům Evil Maid!"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Docker používaný s BTRFS souborovým systémem"
+    },
+    {
+      "type": "text",
+      "text": "Seznámení se s dockerem na Arch Linuxu na wiki Docker on Arch.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/docker",
+          "start": 47,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "BTRFS je idální pro správu docker snapshotů. Pro nastavení postupujte podle originálního článku.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://docs.docker.com/storage/storagedriver/btrfs-driver/",
+          "start": 76,
+          "end": 95
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Celé prostředí máme pro dockerizaci již nachystané. Mělo by stačit nastavit pouze v /etc/docker/daemon.json",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 84,
+          "end": 107
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "{\n  \"storage-driver\": \"btrfs\"\n}"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Kompletní video návod"
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=YdqGsv3tmN4"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Odkazy na zdroje"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "HLAVNÍ ČLÁNEK: https://gist.github.com/huntrar/e42aee630bee3295b2c671d098c81268",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            },
+            {
+              "type": "link",
+              "url": "https://gist.github.com/huntrar/e42aee630bee3295b2c671d098c81268",
+              "start": 15,
+              "end": 79
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://www.nishantnadkarni.tech/posts/arch_installation/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.nishantnadkarni.tech/posts/arch_installation/",
+              "start": 0,
+              "end": 57
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://www.dwarmstrong.org/archlinux-install/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.dwarmstrong.org/archlinux-install/",
+              "start": 0,
+              "end": 46
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://btrfs.readthedocs.io/en/latest/btrfs-man5.html#compression",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://btrfs.readthedocs.io/en/latest/btrfs-man5.html#compression",
+              "start": 0,
+              "end": 66
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/Szwendacz99/Arch-install-encrypted-btrfs",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/Szwendacz99/Arch-install-encrypted-btrfs",
+              "start": 0,
+              "end": 59
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://gist.github.com/mruiz42/83d9a232e7592d65d953671409a2aab9",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://gist.github.com/mruiz42/83d9a232e7592d65d953671409a2aab9",
+              "start": 0,
+              "end": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/btrfs",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/btrfs",
+              "start": 0,
+              "end": 38
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system",
+              "start": 0,
+              "end": 69
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.tnonline.net/w/Btrfs/Compression",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.tnonline.net/w/Btrfs/Compression",
+              "start": 0,
+              "end": 45
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/arch-linux-pruvodce-instalaci-zakladniho-sifrovani-celeho-disku.md"
+  }
+}

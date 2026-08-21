@@ -1,0 +1,764 @@
+{
+  "slug": "spravce-hesel-bitwarden",
+  "title": "Správce hesel Bitwarden",
+  "date": "2022-12-02T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "bitwarden",
+    "Návody",
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je Bitwarden"
+    },
+    {
+      "type": "text",
+      "text": "Bitwarden je všestranný správce hesel s otevřeným zdrojovým kódem, který může být použit nejen jednotlivci k ukládání jejich kritických a důležitých informací, ale také jej mohou nasadit podniky na všech úrovních. Bitwarden lze stáhnout na mobilní telefony se systémem iOS i Android a poskytuje spoustu rozšíření prohlížeče pro automatické vyplňování hesel. Je to jeden z nejlepších open source správců hesel.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 214,
+          "end": 223
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nejen to, Bitwarden také poskytuje webové a desktopové aplikace spolu s rozhraním příkazového řádku, díky kterému je jedním z nejlepších multiplatformních správců hesel, které pokrývají všechny klientské aplikace. Můžete jej snadno použít jako desktopovou aplikaci pro macOS, Linux a Windows.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 10,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud jde o ochranu informací uložených na Bitwarden, správce hesel používá 256bitový šifrovací protokol AES, který znemožňuje hackování a vloupání. Kromě toho jsou všechny informace uloženy v zašifrovaném trezoru, ke kterému má vlastník přístup pouze prostřednictvím hlavního klíče.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 43,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytvořte si účet Bitwarden"
+    },
+    {
+      "type": "text",
+      "text": "Na námi hostovaný  Bitwarden se můžete registrovat zde",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 18,
+          "end": 28
+        },
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/register",
+          "start": 51,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Na obrazovce Vytvořit účet vyplňte všechna pole (Nápověda k hlavnímu heslu je volitelná) a vyberte Odeslat .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 99,
+          "end": 106
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vytvořte si účet"
+    },
+    {
+      "type": "text",
+      "text": "Jakmile si vytvoříte svůj účet, požádejte Bitwarden, aby vám poslal ověřovací e-mail tak, že se přihlásíte do svého webového trezoru a vyberete tlačítko Ověřit e-mail .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 116,
+          "end": 132
+        },
+        {
+          "type": "bold",
+          "start": 153,
+          "end": 166
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Začněte s Web Vault"
+    },
+    {
+      "type": "text",
+      "text": "Webový trezor Bitwarden poskytuje osobním uživatelům a organizacím nejbohatší prostředí Bitwarden. Mnoho důležitých funkcí, jako je nastavení dvoufázového přihlášení nebo správa organizace , musí být prováděno z webového trezoru.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 14,
+          "end": 23
+        },
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 88,
+          "end": 97
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Když se poprvé přihlásíte do svého webového trezoru, dostanete se do zobrazení  Trezoru. V tomto prostoru budou uvedeny všechny položky trezoru, včetně přihlašovacích údajů, karet, identit a bezpečnostních poznámek .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 69,
+          "end": 79
+        },
+        {
+          "type": "bold",
+          "start": 80,
+          "end": 87
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Na předchozím snímku obrazovky se v zobrazení Trezoru zobrazuje Všechny položky v mém trezoru . Uživatelé organizací zde budou mít uvedeny další trezory. Pomocí sloupce Filtry můžete uspořádat úschovnu do Oblíbených a Složek .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 36,
+          "end": 52
+        },
+        {
+          "type": "bold",
+          "start": 64,
+          "end": 79
+        },
+        {
+          "type": "bold",
+          "start": 82,
+          "end": 93
+        },
+        {
+          "type": "bold",
+          "start": 161,
+          "end": 175
+        },
+        {
+          "type": "bold",
+          "start": 205,
+          "end": 215
+        },
+        {
+          "type": "bold",
+          "start": 218,
+          "end": 224
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Začněme nastavením nové složky a přidáním nového přihlašovacího jména:"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li vytvořit složku:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vyberte ikonu  Přidat vedle části Složky ve sloupci Filtry.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 15,
+              "end": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zadejte název (např. Sociální sítě) pro vaši složku a vyberte Uložit .",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 21,
+              "end": 34
+            },
+            {
+              "type": "bold",
+              "start": 62,
+              "end": 68
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přidejte položku přihlášení"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li přidat novou položku přihlášení:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vyberte tlačítko  Přidat položku .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 18,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Z rozevírací nabídky vyberte možnost Přihlásit (pokud místo toho přidáváte kartu, identitu nebo zabezpečenou poznámku, vyberte tuto možnost).",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 37,
+              "end": 46
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zadejte název položky. Názvy vám pomohou snadno identifikovat položky ve vašem trezoru, proto dejte této položce rozpoznatelnou (např. Mastodon Arch Linux).",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 8,
+              "end": 13
+            },
+            {
+              "type": "code",
+              "start": 135,
+              "end": 154
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zadejte své uživatelské jméno a heslo . Prozatím zadejte své stávající heslo. vám jej pomůžeme nahradit silnějším heslem později.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 12,
+              "end": 29
+            },
+            {
+              "type": "bold",
+              "start": 32,
+              "end": 37
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Do pole URI 1 zadejte adresu URL webové stránky (např. https://mastodon.arch-linux.cz). Pokud nevíte, jakou adresu URL použít, přejděte na přihlašovací obrazovku webové stránky a zkopírujte ji z adresního řádku.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 8,
+              "end": 13
+            },
+            {
+              "type": "code",
+              "start": 55,
+              "end": 85
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Z rozevíracího seznamu Složka vyberte název složky, do které chcete přidat tuto položku (např Sociální sítěsložku, kterou jsme vytvořili dříve). Chcete -li tuto položku přidat mezi oblíbené, vyberte ikonu hvezdičky.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 23,
+              "end": 29
+            },
+            {
+              "type": "code",
+              "start": 94,
+              "end": 107
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Klepnutím na tlačítko Uložit dokončíte přidávání této položky.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 13,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vygenerujte si silné heslo"
+    },
+    {
+      "type": "text",
+      "text": "Nyní, když je ve vašem trezoru uloženo nové přihlášení, vylepšete jeho zabezpečení nahrazením stávajícího hesla silnějším:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Ve svém trezoru vyberte položku, kterou chcete zabezpečit."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Na nové kartě nebo okně otevřete odpovídající webovou stránku a přihlaste se ke svému účtu."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Na tomto webu přejděte do oblasti, kde můžete změnit heslo . Obvykle to najdete v části Váš účet , Zabezpečení , Nastavení přihlášení nebo Nastavení přihlášení .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 46,
+              "end": 58
+            },
+            {
+              "type": "bold",
+              "start": 82,
+              "end": 96
+            },
+            {
+              "type": "bold",
+              "start": 99,
+              "end": 110
+            },
+            {
+              "type": "bold",
+              "start": 113,
+              "end": 122
+            },
+            {
+              "type": "bold",
+              "start": 139,
+              "end": 159
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Většina webových stránek vyžaduje nejprve zadání aktuálního hesla . Vraťte se do svého trezoru a vyberte ikonu Kopírovat vedle pole Heslo . Poté se vraťte na web a vložte jej do pole Aktuální heslo . Možná si staré heslo zapamatujete, ale je dobré si zvyknout heslo zkopírovat a vložit. Takto se budete přihlašovat, jakmile bude vaše heslo nahrazeno silnějším.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 49,
+              "end": 65
+            },
+            {
+              "type": "bold",
+              "start": 111,
+              "end": 120
+            },
+            {
+              "type": "bold",
+              "start": 127,
+              "end": 137
+            },
+            {
+              "type": "bold",
+              "start": 183,
+              "end": 197
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vraťte se do svého trezoru a klikněte na ikonu  Generovat vedle pole Heslo . Budete dotázáni, zda chcete přepsat aktuální heslo, takže výběrem Ano . pokračujte Toto nahradí vaše heslo náhodně vygenerovaným silným heslem. Přesun z hesla jako 1234na x*wNvUpKagnv^5q9m74X může zastavit hackera.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 48,
+              "end": 57
+            },
+            {
+              "type": "bold",
+              "start": 64,
+              "end": 74
+            },
+            {
+              "type": "bold",
+              "start": 135,
+              "end": 148
+            },
+            {
+              "type": "bold",
+              "start": 178,
+              "end": 183
+            },
+            {
+              "type": "code",
+              "start": 241,
+              "end": 245
+            },
+            {
+              "type": "code",
+              "start": 248,
+              "end": 268
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zkopírujte své nové heslo pomocí stejné ikony  Kopírovat , kterou jste použili dříve, a vyberte tlačítko Uložit .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 47,
+              "end": 56
+            },
+            {
+              "type": "bold",
+              "start": 105,
+              "end": 111
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vraťte se na druhý web a vložte své silné heslo do Nové heslo a Potvrdit nové heslo .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 51,
+              "end": 61
+            },
+            {
+              "type": "bold",
+              "start": 64,
+              "end": 85
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Jakmile uložíte změnu hesla, máte nové heslo hotovo!",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 8,
+              "end": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "**tip**:  Nedělejte si starosti s přepsáním svého stávajícího hesla! Pokud se něco pokazí, Bitwarden udržuje **historii hesel** posledních pěti hesel pro každé přihlášení: ![View Password History]()"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zabezpečte svůj trezor"
+    },
+    {
+      "type": "text",
+      "text": "Nyní, když je váš trezor plný dat, pojďme podniknout kroky k jeho ochraně nastavením dvoufázového přihlášení. Dvoufázové přihlášení vyžaduje, abyste při přihlašování ověřili svou identitu pomocí dalšího tokenu, který je obvykle načten z jiného zařízení."
+    },
+    {
+      "type": "text",
+      "text": "Existuje mnoho dostupných metod pro dvoufázové přihlášení, ale doporučenou metodou pro bezplatný účet Bitwarden je použití aplikace pro ověřování mobilních zařízení, jako je Authy :",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://authy.com/",
+          "start": 174,
+          "end": 179
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stáhněte si Authy do svého mobilního zařízení."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Ve svém webovém trezoru vyberte ikonu profilu a účtu : vyberte Nastavení z rozbalovací nabídky",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 48,
+              "end": 54
+            },
+            {
+              "type": "bold",
+              "start": 55,
+              "end": 72
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Z nabídky Nastavení účtu vyberte stránku Zabezpečení a kartu Dvoufázové přihlášení",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 2,
+              "end": 24
+            },
+            {
+              "type": "bold",
+              "start": 41,
+              "end": 52
+            },
+            {
+              "type": "bold",
+              "start": 55,
+              "end": 82
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vyhledejte možnost Authenticator App a vyberte Spravovat : ![Manage Authenticator App]() Správa aplikace Authenticator Budete vyzváni k zadání hlavního hesla, abyste mohli pokračovat",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 19,
+              "end": 36
+            },
+            {
+              "type": "bold",
+              "start": 47,
+              "end": 56
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Na mobilním zařízení otevřete Authy a klepněte na tlačítko  Přidat účet .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 60,
+              "end": 71
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Naskenujte QR kód umístěný ve vašem webovém trezoru pomocí Authy. Po naskenování Authy zobrazí šestimístný ověřovací kód."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zadejte šestimístný ověřovací kód do dialogového okna ve vašem webovém trezoru a vyberte tlačítko Povolit .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 98,
+              "end": 105
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Klepnutím na tlačítko Zavřít se vraťte na obrazovku dvoufázového přihlášení a vyberte tlačítko Zobrazit kód obnovení . Váš obnovovací kód lze použít v případě, že ztratíte své mobilní zařízení. Toto je kritický krok, který zajistí, že se nikdy nedostanete do svého trezoru , takže ho nepřeskakujte!",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 13,
+              "end": 28
+            },
+            {
+              "type": "bold",
+              "start": 95,
+              "end": 116
+            },
+            {
+              "type": "bold",
+              "start": 194,
+              "end": 272
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zadejte své hlavní heslo a kliknutím na tlačítko Pokračovat získejte kód pro obnovení. ![Example Recovery Code ]() Př",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 40,
+              "end": 59
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Uložte si kód pro obnovení způsobem, který vám dává největší smysl. Věřte tomu nebo ne, vytištění kódu pro obnovení a jeho uložení na bezpečném místě je jedním z nejlepších způsobů, jak zajistit, aby kód nebyl zranitelný vůči krádeži nebo nechtěnému smazání."
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/spravce-hesel-bitwarden.md"
+  }
+}

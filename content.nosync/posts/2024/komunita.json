@@ -1,0 +1,104 @@
+{
+  "slug": "komunita",
+  "title": "Komunita",
+  "date": "2024-01-01T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Připoj se k české komunitě Arch Linuxu na těchto platformách:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Fediverse / GoToSocial",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://gts.arch-linux.cz/@arch",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        },
+        {
+          "text": "PeerTube",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://peertube.arch-linux.cz/c/videa_archlinuxcz/videos",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Pixelfed CZ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://pixelfed.cz",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "Matrix",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://matrix.to/#/#archlinuxcz:matrix.org",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        },
+        {
+          "text": "Fórum",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.arch-linux.cz/",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Discord",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://discord.gg/sJYcCdENCT",
+              "start": 0,
+              "end": 7
+            }
+          ]
+        },
+        {
+          "text": "Gitea",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://git.arch-linux.cz/ArchlinuxCz",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "komunita.md"
+  },
+  "page": true
+}

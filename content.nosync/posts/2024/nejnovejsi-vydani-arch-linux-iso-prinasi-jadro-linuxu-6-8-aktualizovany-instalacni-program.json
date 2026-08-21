@@ -1,0 +1,35 @@
+{
+  "slug": "nejnovejsi-vydani-arch-linux-iso-prinasi-jadro-linuxu-6-8-aktualizovany-instalacni-program",
+  "title": "Nejnovější vydání Arch Linux ISO přináší jádro Linuxu 6.8, aktualizovaný instalační program",
+  "date": "2024-04-01T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "zprávy",
+    "archlinux",
+    "rychlé zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux představil novou ISO verzi s Linux jádrem 6.8 a vylepšeným instalačním procesem. Tato aktualizace byla zrychlena kvůli bezpečnostním obavám s balíčkem XZ Utils. Nové jádro nabízí lepší podporu pro nový hardware a instalátor archinstall, nyní ve verzi 2.7.2, zlepšuje práci se sjednocenými obrazy jádra a prostředím KDE Plasma. ISO je ke stažení na oficiálních stránkách a stávající uživatelé mohou aktualizovat systém příkazem.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/download/",
+          "start": 359,
+          "end": 380
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/nejnovejsi-vydani-arch-linux-iso-prinasi-jadro-linuxu-6-8-aktualizovany-instalacni-program.md"
+  }
+}

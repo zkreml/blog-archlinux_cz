@@ -1,0 +1,960 @@
+{
+  "slug": "gnome-jednoduche-krasne-elegantni",
+  "title": "GNOME - Jednoduché, krásné, elegantní.",
+  "date": "2022-06-25T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "gnome",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Další díl seriálu o Arch Linuxu od Tondy Fischera. V dnešním díle se podíváme  desktopové prostředí Gnome.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 35,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "GNOME - Jednoduché, krásné, elegantní."
+    },
+    {
+      "type": "text",
+      "text": "GNOME ((ɡ)noʊm, GNU Network Object Model Environment) je desktopové prostředí, jehož cílem je být jednoduché a snadno použitelné. Je navržen GNOME Project a skládá se výhradně z bezplatného a open-source softwaru. Největším firemním přispěvatelem je Red Hat. Výchozí zobrazení je Wayland místo Xorg a dostupné relace jsou",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 7,
+          "end": 14
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/The_GNOME_Project",
+          "start": 141,
+          "end": 154
+        },
+        {
+          "type": "bold",
+          "start": 250,
+          "end": 257
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME, výchozí, spouští GNOME Shell na Wayland. Tradiční X aplikace běží přes Xwayland.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Classic poskytuje „tradiční pracovní prostředí“ (s rozhraním podobným GNOME 2) pomocí určitých rozšíření a hodnot. Jedná se tedy spíše o upravenou formu prostředí GNOME než o skutečně odlišný režim.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME na Xorg spouští prostředí GNOME pomocí Xorg.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nostalgie Gnome 2"
+    },
+    {
+      "type": "text",
+      "text": "GNOME 2.20 je nejnovější verze GNOME Desktop: oblíbené, multiplatformní desktopové prostředí. GNOME se zaměřuje na snadnost použití, stabilitu a prvotřídní podporu internacionalizace a usnadnění. Takto o něm kdysi psali ve zlatém věku Gnome.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Důležité GNOME odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Arch Wiki",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/GNOME",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Home Page",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.gnome.org",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Contribution Tutorial",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.gnome.org/Newcomers/",
+              "start": 0,
+              "end": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME DocumentationProject",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.gnome.org/DocumentationProject",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Source Codes and Report Issues",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://gitlab.gnome.org/explore/groups",
+              "start": 0,
+              "end": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Wiki",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.gnome.org/Home",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNOME Developer Site",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://developer.gnome.org/",
+              "start": 0,
+              "end": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Instalace"
+    },
+    {
+      "type": "text",
+      "text": "Sledujte stránku Arch Wiki Gnome. Přečtěte si podrobnosti o krocích instalace.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/GNOME",
+          "start": 17,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nainstalujte základní a doplňkové komponenty. Poté Gnome Extensions (rozšíření gnome) a nainstalujte volitelná rozšíření."
+    },
+    {
+      "type": "code",
+      "text": "paru -S gnome gnome-extra\n# Optional Dependencies\nparu -S chrome-gnome-shell-git\nparu -S gnome-shell-extension-pop-shell-git --overwrite '*'\n/usr/share/gnome-shell/extensions/pop-shell@system76.com/scripts/configure.sh\npop-shell-shortcuts"
+    },
+    {
+      "type": "text",
+      "text": "Spouštěč gnome je připraven v mém .xinitrc, který používáme v celé naší sérii. Viz odkaz .dotfiles níže pro Github. Takže vše, co musíte udělat, je spustit startx ~/.xinitrc gnome, nebo pomocí správce zobrazení vybrat xinitrc-gnome ze souborů mých relací v adresáři .root.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 34,
+          "end": 42
+        },
+        {
+          "type": "code",
+          "start": 89,
+          "end": 98
+        },
+        {
+          "type": "code",
+          "start": 156,
+          "end": 179
+        },
+        {
+          "type": "code",
+          "start": 218,
+          "end": 231
+        },
+        {
+          "type": "code",
+          "start": 266,
+          "end": 271
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Volitelná rozšíření"
+    },
+    {
+      "type": "text",
+      "text": "Tato rozšíření používám pro náš demo projekt. Nainstalujte rozšíření Gnome z https://extensions.gnome.org/#",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://extensions.gnome.org/#",
+          "start": 77,
+          "end": 107
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "GNOME Seznam Rozšíření",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Dash to Panel"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Fly-Pie"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "System-monitor-next"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Unite"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pop Shell"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Několik vestavěných rozšíření: Pamac Updates Indicator, Places Status Indicator, Workspace Indicator, Applications Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Fly-Pie Extension"
+    },
+    {
+      "type": "text",
+      "text": "Zde je video ukázka Fly-Pie Intro.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.youtube.com/watch?v=BGXtckqhEIk",
+          "start": 20,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Fly-Pie je rozšíření pro GNOME Shell, které umožňuje otevírat nabídky označení pomocí klávesových zkratek. A — podle mého nejlepšího vědomí — je to první rozšíření GNOME Shell s úspěchy!",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 148,
+          "end": 186
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "06.png",
+          "width": 64,
+          "height": 64,
+          "src": "https://github.githubassets.com/images/icons/emoji/unicode/1f3c6.png"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přidejte toto rozšíření fly-pie do svého projektu, nainstalujte jej."
+    },
+    {
+      "type": "text",
+      "text": "Konfigurace, spusťte aplikaci Rozšíření, vyberte tlačítko Konfigurace Fly-Pie. Nakonfigurujte si nabídky fly-pie a zkratku aktivity pomocí ctrl+mezera a super+myš-pravé-tlačítko.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 139,
+          "end": 150
+        },
+        {
+          "type": "code",
+          "start": 153,
+          "end": 177
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Pop!_OS Shell Rozšíření"
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=-fltwBKsMY0"
+    },
+    {
+      "type": "text",
+      "text": "Zdrojový kód zde. Nyní funguje s GNOME >=42.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/pop-os/shell",
+          "start": 13,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Představil System76. Zaměřte se na Pop!_OS Page.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://pop.system76.com/",
+          "start": 35,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Auto-Tiling Pop!_OS feature here.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.youtube.com/watch?v=-fltwBKsMY0",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Stacking support here.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.youtube.com/watch?v=1TSdFWY_U9A",
+          "start": 0,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=1TSdFWY_U9A"
+    },
+    {
+      "type": "text",
+      "text": "Úplnou konfiguraci a ovládání naleznete v našem videu."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Konfigurace prostředí"
+    },
+    {
+      "type": "text",
+      "text": "Nakonfigurujte doporučená rozšíření a přizpůsobte prostředí Gnome. Viz video."
+    },
+    {
+      "type": "text",
+      "text": "Konečně se dostaneme k horním snímkům obrazovky"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "GNOME Ergonomické nastavení"
+    },
+    {
+      "type": "text",
+      "text": "Rozšíření shellu Pop!_OS přepíše zkratky voláním /usr/share/gnome-shell/extensions/pop-shell@system76.com/scripts/configure.sh výchozí zkratky. Nyní musíme nakonfigurovat a překonfigurovat zkratky do naší ergonomické podoby.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 49,
+          "end": 126
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Původní nastavení prostředí Pop!_OS: pop-shell-shortcuts",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 37,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Seznam našich změn Výběr Gnome Settings > Keyboard > Keyboard Shortcuts",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        },
+        {
+          "type": "code",
+          "start": 25,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Accessibility"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Launchers"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Move, size, and swap windows / Přesun, velikost a výměna oken"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Adjustment mode [ctrl+super+return], remove default [super+return]"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "All next is same"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Navigate applications and windows / Procházení aplikací a oken"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Launch and switch applications [super+s], remove [super+/]"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Navigation"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Move window to left and right [shift+super+left/right]"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Switch to workspaces: [super+F1,…F4]"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Move to workspace left and right [super+left/right], or default [ctrl+alt+left/right]"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Screenshots"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Sound and Media"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "System"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Tiling"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Default"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Typing"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Switch to next input source [alt+space],[super+space] (alt+shift nemůže být v gnome použit!)"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Windows"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Window menu [alt+space]"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Close window [shift+super+c]"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Toggle fullscreen mode [super+f]"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Toggle maxmization state [super+m]"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Custom Shortcuts"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Alacritty [super+return]"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "kitty [super+alt+return]"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=cNmYBWblra0&t=1555s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Forum Arch Linux CZ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.arch-linux.cz/",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch Linux CZ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://arch-linux.cz/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/public-wallpapers",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/global-colorschemes",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/global-colorscheme",
+              "start": 0,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/gnome-jednoduche-krasne-elegantni.md"
+  }
+}

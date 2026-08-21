@@ -1,0 +1,342 @@
+{
+  "slug": "awesomewm-basics",
+  "title": "AwesomeWM Basics",
+  "date": "2022-04-17T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "awesome",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "AwesomeWM patří k nejlepším window managerům s podporou vyššího programovacího jazyka Lua. Ukážeme si, proč tento WM má takový význam a jeho nesporné výhody. Naučíme se jej nainstalovat, nastavit základní témata a testovat svá nastavení v testovacím prostředí. Nakonec vyzkoušíme základní ovládání a nápovědu klávesových zkratek. Součástí nahrávky je rovněž velmi jemný úvod do programovacího jazyka Lua. Další díl seriálu Tondy Fischera.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 423,
+          "end": 438
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Awesome Window Manager"
+    },
+    {
+      "type": "text",
+      "text": "Awesome je vysoce konfigurovatelný správce oken nové generace pro Xorg. Je velmi rychlý a rozšiřitelný pomocí perfektně zdokumentovaného API. Primárně se zaměřuje na pokročilé uživatele, vývojáře a všechny lidi, kteří se zabývají každodenními složitějšími úkoly a chtějí mít plnou kontrolu nad ovládáním jejich vlastního grafického prostředí.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "type": "bold",
+          "start": 311,
+          "end": 341
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Základní stránka: https://awesomewm.org/- Arch Wiki: https://wiki.archlinux.org/title/Awesome- Screenshot Gallery: https://mipmip.github.io/awesomewm-screenshots/- API Dokumentace: https://awesomewm.org/apidoc/- Ukázka mého ricing YouTube nahrávka: Awesome není pouze Tiling Window Manager",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://awesomewm.org/",
+              "start": 18,
+              "end": 40
+            },
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Awesome",
+              "start": 53,
+              "end": 93
+            },
+            {
+              "type": "link",
+              "url": "https://mipmip.github.io/awesomewm-screenshots/",
+              "start": 115,
+              "end": 162
+            },
+            {
+              "type": "link",
+              "url": "https://awesomewm.org/apidoc/",
+              "start": 181,
+              "end": 210
+            },
+            {
+              "type": "link",
+              "url": "https://youtu.be/-Fo7mB6_Wtg",
+              "start": 249,
+              "end": 289
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "LUA - Programovací jazyk"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Základní web: https://www.lua.org/, https://www.lua.org/start.html- Vynikající kniha (nutno přečíst): https://www.lua.org/pil/- Programming in Lua, fourth edition",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.lua.org/",
+              "start": 14,
+              "end": 34
+            },
+            {
+              "type": "link",
+              "url": "https://www.lua.org/start.html",
+              "start": 36,
+              "end": 66
+            },
+            {
+              "type": "link",
+              "url": "https://www.lua.org/pil/",
+              "start": 102,
+              "end": 126
+            },
+            {
+              "type": "bold",
+              "start": 128,
+              "end": 162
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Lua Wiki Info"
+    },
+    {
+      "type": "text",
+      "text": "Lua je odlehčený, reflexivní, imperativní a procedurální programovací jazyk navržený jako skriptovací jazyk s rozšiřitelnou sémantikou. Název je odvozen z portugalského slova pro měsíc.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Jazyk Lua je určen jako rozšiřující nebo skriptovací jazyk a je dostatečně malý, aby se vešel na nejrůznější hostitelské platformy. Podporuje jen malé množství atomárních datových struktur jako jsou boolovské hodnoty, čísla (implicitně s dvojitou přesností plovoucí čárky) a řetězce. Běžné datové struktury jako jsou pole, množiny, hashovací tabulky, seznamy a záznamy mohou být reprezentovány použitím jediné nativní datové struktury – tabulky, která je v podstatě heterogenním asociativním polem. Jmenné prostory a objekty mohou být vytvořeny taktéž za použití tabulek. Zahrnutím minimálního počtu datových typů se Lua pokouší dosáhnout rovnováhy mezi sílou a velikostí."
+    },
+    {
+      "type": "text",
+      "text": "Sémantika Lua může být rozšiřována a měněna předefinováním některých zabudovaných funkcí v metatabulkách. Navíc podporuje Lua pokročilé vlastnosti, jako jsou funkce vyššího řádu a garbage collector. Kombinací mnoha těchto vlastností je možné v Lua psát i objektově orientované programy."
+    },
+    {
+      "type": "text",
+      "text": "Lua se uplatňuje především v mnoha hrách, jako je World of Warcraft, masivní onlinová multiplayerová hra na hrdiny, ve které si mohou uživatelé přizpůsobit uživatelské rozhraní, animace postav a vzhled světa právě v jazyku Lua, a sérii Baldur’s Gate a videohře MDK2, kde je použit jako skriptovací jazyk pro moduly. Také se objevuje v některých open source hrách, jakými jsou Battle for Wesnoth, Daimonin a hry ve stylu Rogue: ToME a H-World. Skripty v jazyce Lua jsou také využity u her Worms 3D, Worms 4: Mayhem, Mafia II a v modifikaci pro GTA V, FiveM. Therescript, použitý k řízení vozidel a animací v There, je mírně upravená verze Lua. Správce oken Ion používá Lua pro své přizpůsobování a rozšiřování. Program Chat Mapper pro zapisování a ukládání rozhovorů (například mezi postavami ve hrách) používá jazyk Lua k řízení rozhovoru. Program LuaTeX rozšiřuje primitivní příkazy TeXu o možnost zadávání kódu v jazyce Lua.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 50,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "V našem případě budeme Lua používat pro AwesomeWM a Neovim.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 40,
+          "end": 49
+        },
+        {
+          "type": "code",
+          "start": 52,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "The Eight-Queen in Programming in Lua Fourth Edition (8 královen z knihy programování Lua 4. vydání)"
+    },
+    {
+      "type": "code",
+      "text": "N = 8 -- board size\n\n-- check whether position (n, c) is free from attacks\nfunction isplaceok (a, n ,c)\n    for i = 1, n - 1 do -- for each queen already placed\n        if (a[i] == c) or           -- same column?\n        (a[i] - i == c - n) or      -- same diagonal?\n        (a[i] + i == c + n) then    -- same diagonal?\n            return false -- place can be attacked\n        end\n    end\n    return true -- no attacks; place is OK\nend\n\n-- print a board\nfunction printsolution (a)\n    for i = 1, N do                 -- for each row\n        for j = 1, N do             -- and for each column\n            -- write \"X\" or \"-\" plus a space\n            io.write(a[i] == j and \"X\" or \"-\", \" \")\n        end\n        io.write(\"\\n\")\n    end\n    io.write(\"\\n\")\nend\n\n-- add to board 'a' all queens from 'n' to 'N'\nfunction addqueen (a, n)\n    if n > N then -- all queens have been placed?\n        printsolution(a)\n    else -- try to place n-th queen\n        for c = 1, N do\n            if isplaceok(a, n, c) then\n                a[n] = c -- place n-th queen at column 'c'\n                addqueen(a, n + 1)\n            end\n        end\n    end\nend\n\n-- run the program\naddqueen({}, 1)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Awesome základní instalace"
+    },
+    {
+      "type": "code",
+      "text": "paru -S awesome-git\nmkdir -p ~/.config/awesome\ncp /etc/xdg/awesome/rc.lua ~/.config/awesome/\nnvim ~/.xinitrc"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Awesome základní konfigurace před spuštěním"
+    },
+    {
+      "type": "text",
+      "text": "Editujte ~/.config/awesome/rc.lua Zkopírujte požadované themes do vašeho prostředí: /usr/share/awesome/themes/ Copy it to ~/.config/awesome/themes/",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 33
+        },
+        {
+          "type": "code",
+          "start": 84,
+          "end": 147
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "-- theme examples: default, zenburn\n-- beautiful.init(gears.filesystem.get_configuration_dir() .. \"/themes/default/theme.lua\")\nlocal theme_path = string.format(\"%s/.config/awesome/themes/%s/theme.lua\", os.getenv(\"HOME\"), \"default\")\nbeautiful.init(theme_path)\n-- terminal and editor settings\nterminal = \"kitty\"\neditor = os.getenv(\"EDITOR\") or \"nvim\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Ověření a testování AwesomeWW Sandbox"
+    },
+    {
+      "type": "text",
+      "text": "Použijeme Xephyr pro testování Xorg."
+    },
+    {
+      "type": "code",
+      "text": "paru -S xorg-server-xephyr\nXephyr :1 -ac -br -noreset -screen 1980x1024 &\nDISPLAY=:1.0 awesome -c ~/.config/awesome/rc.lua"
+    },
+    {
+      "type": "text",
+      "text": "Volitlně použít wrapper: awmtt (Awesome WM Testing Tool) z AUR",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 25,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Defaultní ovládání awesome (AwesomeWM Default Keybindings)"
+    },
+    {
+      "type": "text",
+      "text": "awesome-keybindings-default",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 26
+        },
+        {
+          "type": "italic",
+          "start": 0,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Defaultní rc.lua"
+    },
+    {
+      "type": "text",
+      "text": "Pojďme si projít základní sekce a organizaci nvim ~/.config/awesome/rc.lua",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 45,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=wi_EM5zXt8s&t=112s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu- archlinux.org- wiki.achlinux.org- fishlive.org/blog- github/raven2cz/tux- github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            },
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 34,
+              "end": 47
+            },
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 49,
+              "end": 66
+            },
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 68,
+              "end": 85
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 87,
+              "end": 106
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 108,
+              "end": 132
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/%ef%bf%bcawesomewm-basics.md"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "slug": "novy-web-arch-linux-cz",
+  "title": "Nový web Arch Linux CZ",
+  "date": "2026-05-10T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Arch Linux",
+    "web",
+    "Hugo",
+    "Zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Přecházíme na statický web"
+    },
+    {
+      "type": "text",
+      "text": "Po několika letech na WordPressu jsme se rozhodli přejít na modernější řešení. Nový web arch-linux.cz běží na statickém generátoru Hugo s tématem Blowfish.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 88,
+          "end": 101
+        },
+        {
+          "type": "link",
+          "url": "https://gohugo.io/",
+          "start": 131,
+          "end": 135
+        },
+        {
+          "type": "link",
+          "url": "https://blowfish.page/",
+          "start": 146,
+          "end": 154
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co se změnilo?"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Rychlost — statický web se načítá okamžitě, žádné PHP, žádná databáze",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Vyhledávání — nový fulltext search přímo na webu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "Dark mode — přepínání světlého a tmavého režimu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "Přehlednější navigace — návody, zprávy, archiv a tagy na jednom místě",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 21
+            }
+          ]
+        },
+        {
+          "text": "Open source — zdrojový kód webu je veřejně dostupný na naší Gitea - kdokoliv může přispět článkem nebo vylepšením",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            },
+            {
+              "type": "link",
+              "url": "https://git.arch-linux.cz/ArchlinuxCz/web-archlinux_cz",
+              "start": 60,
+              "end": 65
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Proč Hugo?"
+    },
+    {
+      "type": "text",
+      "text": "WordPress nám sloužil dobře, ale pro technický blog o Arch Linuxu nedával smysl. Potřebovali jsme něco, co odpovídá filozofii Archu — jednoduché, rychlé a pod plnou kontrolou."
+    },
+    {
+      "type": "text",
+      "text": "Hugo generuje čisté HTML soubory z Markdownu. Žádné pluginy, žádné aktualizace, žádné bezpečnostní díry. Články píšeme v Markdownu, commitujeme do Gitu a nasadíme jedním příkazem."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kde web běží?"
+    },
+    {
+      "type": "text",
+      "text": "Web i všechny komunitní služby jsou hostovány na OSCloud — české cloudové platformě postavené na svobodném softwaru.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://oscloud.cz",
+          "start": 49,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co zůstává?"
+    },
+    {
+      "type": "text",
+      "text": "Všechny staré články jsme přemigrovali. Adresy článků zůstávají stejné, takže staré odkazy z vyhledávačů i záložek budou fungovat."
+    },
+    {
+      "type": "text",
+      "text": "Fediverse identita @<arch@arch-linux.cz> zůstává beze změny.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 19,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Zapojte se"
+    },
+    {
+      "type": "text",
+      "text": "Máte nápad na vylepšení webu? Chcete přispět článkem? Zdrojový kód je na Gitea — pull requesty vítány!",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://git.arch-linux.cz/ArchlinuxCz/web-archlinux_cz",
+          "start": 73,
+          "end": 78
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Sledujte nás:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Fediverse",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://gts.arch-linux.cz/@arch",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "Matrix",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://matrix.to/#/#archlinuxcz:matrix.org",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        },
+        {
+          "text": "Fórum",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.arch-linux.cz/",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Discord",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://discord.gg/sJYcCdENCT",
+              "start": 0,
+              "end": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/novy-web-arch-linux-cz.md"
+  }
+}

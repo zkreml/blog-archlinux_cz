@@ -1,0 +1,58 @@
+{
+  "slug": "novy-diskuzni-kanal-arch-linux-cz",
+  "title": "Nový diskuzní kanál Arch Linux Cz",
+  "date": "2022-05-26T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "matrix",
+    "Naše komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V posledních dnech se na naši  instanci Mastodon, registrovalo několik nových uživatelů. Rozhodl jsem se vytvořit diskusní kanál na našem serveru Matrix.  Matrix je open source projekt, pro bezpečnou decentralizovanou komunikaci v reálném čase. Pro ty co nemají na Matrixu vytvořený uživatelský účet,  je zde možnost registrace na na našem serveru.  Samozřejmě je zde i  naše diskuzní fórum , ale třeba někdo rád využije i jinou komunikaci a pomůžeme nám trochu oživit naší komunitu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://mastodon.arch-linux.cz",
+          "start": 39,
+          "end": 48
+        },
+        {
+          "type": "link",
+          "url": "https://matrix.to/#/#Archlinux_Cz:archoslinux.cz",
+          "start": 114,
+          "end": 128
+        },
+        {
+          "type": "link",
+          "url": "https://matrix.org/",
+          "start": 146,
+          "end": 152
+        },
+        {
+          "type": "link",
+          "url": "https://element.archoslinux.cz",
+          "start": 340,
+          "end": 347
+        },
+        {
+          "type": "link",
+          "url": "https://forum.arch-linux.cz/",
+          "start": 376,
+          "end": 391
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Archos."
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/novy-diskuzni-kanal-arch-linux-cz.md"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "aur-incident-2026-06",
+  "title": "Bezpečnostní incident: škodlivé balíčky v AUR",
+  "date": "2026-06-12T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "aur",
+    "bezpečnost",
+    "arch linux",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux tým dnes oznámil aktivní bezpečnostní incident v AUR (Arch User Repository)."
+    },
+    {
+      "type": "text",
+      "text": "V repozitáři bylo detekováno velké množství škodlivých adoptací a aktualizací balíčků. Tým aktivně pracuje na jejich identifikaci a zamezení dalších škodlivých commitů."
+    },
+    {
+      "type": "text",
+      "text": "Co to znamená pro tebe:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Dočasně mohou být omezeny: registrace nových účtů, push aktualizací, adopce balíčků"
+        },
+        {
+          "text": "Před každou aktualizací AUR balíčku pečlivě zkontroluj PKGBUILD a install skripty",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 81
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud narazíš na podezřelý commit, nahlásit ho můžeš na mailing listu aur-general.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 70,
+          "end": 81
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zdroj: archlinux.org",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/news/active-aur-malicious-packages-incident/",
+          "start": 7,
+          "end": 20
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/aur-incident-2026-06.md"
+  }
+}

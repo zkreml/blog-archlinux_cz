@@ -1,0 +1,184 @@
+{
+  "slug": "jak-nainstalovat-aur-pomocnika-yay",
+  "title": "Jak nainstalovat  AUR pomocníka yay",
+  "date": "2022-01-29T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "AUR",
+    "yay",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Upozornění: Instalace balíčků z AUR není podporována Arch Linuxem. Instalace z něj může způsobit selhání systému.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 113
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je  AUR"
+    },
+    {
+      "type": "text",
+      "text": "Arch User Repository (AUR) je komunitou řízené úložiště pro uživatele Arch Linuxu. Obsahuje popisy balíčků ( PKGBUILDs ), které vám umožňují sestavit balíček ze zdrojového kódu pomocí makepkg a poté jej nainstalovat přes pacman . AUR byl vytvořen, aby organizoval a sdílel nové balíčky z komunity a pomohl urychlit začlenění oblíbených balíčků do komunitního úložiště .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/PKGBUILD",
+          "start": 109,
+          "end": 118
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Makepkg",
+          "start": 184,
+          "end": 191
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Pacman#Additional_commands",
+          "start": 221,
+          "end": 227
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Community_repository",
+          "start": 347,
+          "end": 367
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Velký počet nových balíčků, které vstupují do oficiálních repozitářů, začíná v AUR. V AUR mohou uživatelé přispívat vlastním sestavením balíčků (PKGBUILD a související soubory)."
+    },
+    {
+      "type": "text",
+      "text": "Komunita AUR má možnost hlasovat pro balíčky v AUR. Pokud se balíček stane dostatečně populárním – za předpokladu, že má kompatibilní licenci a dobrou balicí techniku ​​– může být vložen do komunitního úložiště."
+    },
+    {
+      "type": "text",
+      "text": "Na rozdíl od balíčků v repozitáři Archu jsou balíčky AUR spravovány uživateli Archu a většina to dělá jako koníčka vedle svého běžného života. Aktualizace balíčků proto nejsou rozsáhle testovány a mohou způsobit potíže nereagující aplikací nebo dokonce způsobit poškození systému, takže jejich použití je na vaši vlastní odpovědnost."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je yay",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Yay je zkratka pro 'Yet Another Yogurt'. Technicky jde o pacmana a pomocníka AUR napsaný v programovacích jazycích Go . Je to nejpopulárnější Arch User Repository (AUR) pomocník. S Yay můžete využít výhody obrovského Arch User Repository balíčků a snadno zkompilovat a nainstalovat  software.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/pacman",
+          "start": 57,
+          "end": 64
+        },
+        {
+          "type": "link",
+          "url": "https://golang.org/",
+          "start": 91,
+          "end": 117
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/Arch_User_Repository",
+          "start": 142,
+          "end": 168
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "V podstatě automatizuje mnoho úloh správy balíčků, jako je vyhledávání, řeší závislosti za běhu, kompiluje a sestavuje balíčky a samozřejmě publikuje vaše vlastní balíčky pro AUR."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nainstalujte yay v Arch Linuxu"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Požadavky"
+    },
+    {
+      "type": "text",
+      "text": "Tyto kroky vyžadují base-devel ke kompilaci a instalaci balíček Otevřete terminál a spusťte níže uvedené příkazy. Po zobrazení výzvy zadejte heslo správce.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://aur.archlinux.org/packages/meta-group-base-devel/",
+          "start": 20,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S --needed git base-devel\ngit clone https://aur.archlinux.org/yay.git\ncd yay\nmakepkg -si"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace balíčků"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li nainstalovat balíčky pomocí yay, můžete použít tento příkaz."
+    },
+    {
+      "type": "code",
+      "text": "yay -S název_balíčku"
+    },
+    {
+      "type": "text",
+      "text": "Poté uvidíte očíslovaný seznam názvů balíčků v nainstalovaných úložištích vašeho systému. Jednoduše zadejte číslo verze balíčku, kterou chcete nainstalovat, a yay ji nainstaluje do vašeho systému."
+    },
+    {
+      "type": "text",
+      "text": "Balíčky můžete také vyhledávat jednoduchým zadáním:"
+    },
+    {
+      "type": "code",
+      "text": "yay název_balíčku"
+    },
+    {
+      "type": "text",
+      "text": "Pokud chcete další informace o balíčku, můžete zadat:"
+    },
+    {
+      "type": "code",
+      "text": "yay -Si název_balíčku"
+    },
+    {
+      "type": "text",
+      "text": "Yay může také aktualizovat balíčky Pacman a AUR najednou pomocí tohoto příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "yay -Syu"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/jak-nainstalovat-aur-pomocnika-yay.md"
+  }
+}

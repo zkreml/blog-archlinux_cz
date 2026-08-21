@@ -1,0 +1,93 @@
+{
+  "slug": "nova-verze-instalacniho-programu-arch-linux",
+  "title": "Nová verze Instalačního programu Arch Linux",
+  "date": "2022-05-29T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Vývojáři Arch Linuxu dnes vydali novou verzi (2.5.0) svého instalačního programu založeného na menu archinstall, který přináší další vrstvu nových funkcí a oprav chyb, které usnadňují instalace Arch Linuxu. Hlavní nabídka Archinstallu byla v tomto vydání obohacena o nový náhled disku, nový náhled rozložení disku a také uživatelský náhled do hlavní nabídky."
+    },
+    {
+      "type": "text",
+      "text": "Kromě jiných změn, archinstall 2.5.0 zavádí Ctrl+C klávesová zkratka pro vymazání aktuální možnosti se automaticky nainstaluje network-manager-applet při výběru profilu počítače a NetworkManageru a přidává nové jazykové překlady, včetně češtiny.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 44,
+          "end": 50
+        },
+        {
+          "type": "code",
+          "start": 127,
+          "end": 149
+        },
+        {
+          "type": "bold",
+          "start": 237,
+          "end": 244
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Na poznámky k vydání se můžete podívat stránce projektu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/archlinux/archinstall/releases/tag/v2.5.0",
+          "start": 39,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "9to5Linux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://9to5linux.com/arch-linuxs-menu-based-installer-gets-new-disk-preview-fido2-support-and-more",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Github",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/archlinux/archinstall/releases/tag/v2.5.0",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/nova-verze-instalacniho-programu-arch-linux.md"
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "slug": "privatebin",
+  "title": "PrivateBin",
+  "date": "2023-04-15T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Naší další open-source aplikací, kterou lze zdarma použít je PrivateBin.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://privatebin.arch-linux.cz/",
+          "start": 61,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je PrivateBin"
+    },
+    {
+      "type": "text",
+      "text": "PrivateBin je open-source aplikace pro sdílení textových zpráv, ukázek kódu, které jsou šifrovány  a jsou uchovávány na serveru pouze dočasně. Aplikace využívá technologii Zero-Knowledge, což znamená, že samotný server nemá přístup k obsahu sdílených zpráv. Tato aplikace je ideální pro ty, kteří potřebují sdílet citlivé informace a zároveň chránit své soukromí.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://privatebin.arch-linux.cz/",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "type": "link",
+          "url": "https://de.wikipedia.org/wiki/Open_Source",
+          "start": 14,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PrivateBin je minimalistický online open source pastebin kde server nemá žádné znalosti o vložených datech.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://privatebin.arch-linux.cz/",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Pastebin",
+          "start": 48,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Data jsou šifrována a dešifrována v prohlížeči pomocí 256bit AES in Režim Galois Counter .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Galois/Counter_Mode",
+          "start": 68,
+          "end": 88
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co PrivateBin poskytuje"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Systém podobný pastebinu pro ukládání textových dokumentů, ukázek kódu atd."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Šifrování dat odesílaných na server."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Možnost nastavení hesla, které je vyžadováno pro čtení pasty. To dále chrání pastu a zabraňuje lidem narazit na odkaz vaší pasty aby jej nebylo možné číst bez hesla."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Jak funguje PrivateBin"
+    },
+    {
+      "type": "text",
+      "text": "PrivateBin je webová aplikace, kterou můžete použít k vytvoření textové zprávy, ukázek kódu, které můžete sdílet s ostatními. Když vytvoříte zprávu, aplikace ji zašifruje pomocí AES-256 šifrování, což je jedno z nejbezpečnějších šifrování v současné době. Poté se šifrovaná zpráva odešle na server, kde je uložena dočasně. Uživatelé mohou pak sdílet odkaz na tuto zprávu s ostatními, kteří mohou přistoupit k obsahu zprávy pouze s heslem, které bylo zadáno při vytváření zprávy.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://privatebin.arch-linux.cz/",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Další výhodou je, že PrivateBin neprovádí žádnou formu analýzy nebo zpracování kódu. To znamená, že kód bude zobrazen přesně tak, jak byl napsán, uživatelé si tak mohou být jisti, že kód bude zobrazen v originálním stavu a nedojde k žádným úpravám nebo změnám.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://privatebin.arch-linux.cz/",
+          "start": 21,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Další zdroje"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GitHub",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/PrivateBin/PrivateBin",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "PrivateBin Arch LInux CZ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://privatebin.arch-linux.cz/",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stránka projektu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://privatebin.arch-linux.cz/",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/privatebin.md"
+  }
+}

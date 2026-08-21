@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="<%= SITE_LANG %>">
+<head>
+  <meta charset="utf-8">
+  <!-- CSP as a meta tag, not an HTTP header -- some static hosts (e.g. Cloudron
+       Surfer) don't let you set custom response headers.
+       script-src has no 'unsafe-inline' -- the one inline <script> the layout
+       emits (window.BLOG_I18N below) is allowlisted by its exact content hash
+       instead (CLIENT_I18N_SCRIPT_HASH in build/build_blog.rb), so an actual
+       injected script still can't run just by getting itself onto the page.
+       style-src has 'unsafe-inline' for post text color (formatting: color) and
+       for inline styles carried over by imported embeds (e.g. an Instagram
+       blockquote from a migration).
+       frame-src allows both youtube.com and youtube-nocookie.com -- posts
+       imported with a raw embed_html may point at youtube.com, new videos use
+       the nocookie domain.
+       script-src/connect-src only add the analytics and Mastodon origins when
+       those integrations are actually configured (see csp_content in
+       build/build_blog.rb) -- a site with neither configured gets a tighter
+       policy for free. -->
+  <meta http-equiv="Content-Security-Policy" content="<%= csp_content(page_frame_origins, page_comment_origins) %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="<%= h(THEME_COLOR_LIGHT) %>" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="<%= h(THEME_COLOR_DARK) %>" media="(prefers-color-scheme: dark)">
+  <title><%= h(page_title) %></title>
+  <meta name="description" content="<%= h(page_description) %>">
+  <link rel="canonical" href="<%= h(page_url) %>">
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png"><%# Same file: iOS scales it down, so adding a home-screen icon doesn't mean
+      maintaining a second image. Without this link iOS uses a screenshot of
+      the page instead. /favicon.ico needs no link -- the clients that want it
+      probe the root path blindly (see build_favicon_ico).
+
+      It opens at the END of the line above rather than on one of its own,
+      and that is not formatting: these templates compile without ERB trim
+      mode, so a comment sitting on its own line leaves its indentation and
+      its newline in the output -- two spaces on every page of every site
+      built with this engine. %>
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+  <link rel="stylesheet" href="/assets/css/colors.css">
+  <link rel="stylesheet" href="/assets/css/site.css"><%= extra_css_links %>
+  <link rel="alternate" type="application/rss+xml" title="<%= h(SITE_SHORT_NAME) %> RSS" href="/rss.xml">
+  <meta property="og:type" content="<%= og_type %>">
+  <meta property="og:site_name" content="<%= h(SITE_SHORT_NAME) %>">
+  <meta property="og:locale" content="<%= SITE_LOCALE %>">
+  <meta property="og:title" content="<%= h(page_title) %>">
+  <meta property="og:description" content="<%= h(page_description) %>">
+  <meta property="og:url" content="<%= h(page_url) %>">
+  <meta property="og:image" content="<%= h(og_image) %>">
+  <meta name="twitter:card" content="summary_large_image"><%= fediverse_creator_meta %><%= extra_head %>
+<% if ANALYTICS %>
+  <script defer src="<%= h(ANALYTICS['src']) %>" data-website-id="<%= h(ANALYTICS['website_id']) %>"></script>
+<% end %>
+</head>
+<body<%= body_attr %>>
+  <div class="wrap">
+    <div class="banner-wrap">
+      <a href="/" class="banner-link"><img class="banner" src="<%= h(BANNER['src']) %>" alt="<%= h(BANNER['alt']) %>" width="<%= BANNER['width'] %>" height="<%= BANNER['height'] %>"></a>
+      <% if BANNER_SHOW_TITLE || BANNER_SHOW_CLAIM %><div class="banner-overlay"><%# One box holding both overlay lines, so the stylesheet can lay them out as a column instead of pinning each to its own corner of a picture whose height it does not control. Two items in a column cannot print over each other; two pinned corners can, and on a phone they did. The wrapper is skipped entirely when neither line is shown, so a site with both off keeps a banner with nothing over it. %>
+        <% if BANNER_SHOW_TITLE %><p class="banner-title"><%= h(SITE_SHORT_NAME) %></p><% end %>
+        <% if BANNER_SHOW_CLAIM %><p class="banner-claim"><%= banner_claim_html %></p><% end %>
+      </div><% end %>
+      <button id="theme-toggle" type="button" title="<%= h(t('ui.theme_auto')) %>" aria-label="<%= h(t('ui.theme_auto')) %>">☀︎/☾︎</button><%# Both the symbol and the label are what "follow the system" looks like --
+      the page is built once and served to everyone, so the server can't know
+      which of the three states a given reader is in. theme-toggle.js corrects
+      both on load. Without the label a screen reader announces the raw sun and
+      moon glyphs. %>
+    </div>
+    <%= partial('nav', search: true, active: nav_active) %>
+
+    <div class="layout<%= LAYOUT_SIDEBAR ? '' : ' layout--no-aside' %>">
+      <main>
+<%= main_html %>
+      </main>
+
+      <% if LAYOUT_SIDEBAR %><%= partial('aside') %><% end %>
+    </div>
+
+    <%= partial('footer') %>
+  </div>
+
+  <button id="scroll-top" type="button" title="<%= h(t('ui.scroll_top')) %>">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg>
+  </button>
+
+  <script><%= CLIENT_I18N_SCRIPT %></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/theme-toggle.js"></script>
+  <script src="/assets/js/nav-toggle.js"></script>
+  <script src="/assets/js/scroll-top.js"></script>
+  <script src="/assets/js/sidebar.js"></script>
+  <script src="/assets/js/comments.js"></script>
+  <script src="/assets/js/search.js"></script>
+  <script src="/assets/js/lightbox.js"></script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+{
+  "slug": "instalace-xorg-a-window-manageru-dwm",
+  "title": "Instalace Xorg a window manageru DWM",
+  "date": "2022-02-05T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "DWM",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Další díl seriálu o Arch Linuxu od Tondy Fischera. Tento 4. díl pojednává o instalaci Xorg a dynamického tiling window manageru DWM. Provede Vás postupně základní instalací v OS Arch Linux a seznámí se základním ovládáním prostředí. Ve finále budete mít systém nachystán pro svou běžnou práci a budete se moci pustit do studia systému",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 34,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Instalace Xorg a vysvětlení .xinitrc"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S xorg xorg-xinit xterm\nstartx"
+    },
+    {
+      "type": "text",
+      "text": "Zobrazí se 3x xterms, vlevo je hlavní xterm. Pokud jej ukončíte zkratkou ctrl+d, dojde k ukončení celého xorg.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 73,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Instalace a kompilace DWM ručně"
+    },
+    {
+      "type": "text",
+      "text": "DWM má domov zde https://suckless.org/",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 3
+        },
+        {
+          "type": "link",
+          "url": "https://suckless.org/",
+          "start": 17,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Povídání o DWM na suckless stránkách https://dwm.suckless.org/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://dwm.suckless.org/",
+              "start": 37,
+              "end": 62
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Velmi důležitý tutoriál k DWM https://dwm.suckless.org/tutorial/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://dwm.suckless.org/tutorial/",
+              "start": 30,
+              "end": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch wiki stránky Arch Wiki DWM",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/dwm",
+              "start": 18,
+              "end": 31
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Seriál na root.cz Suckless: dynamický správce oken dwm a https://www.root.cz/serialy/suckless-project/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.root.cz/clanky/suckless-dynamicky-spravce-oken-dwm/",
+              "start": 18,
+              "end": 54
+            },
+            {
+              "type": "link",
+              "url": "https://www.root.cz/serialy/suckless-project/",
+              "start": 57,
+              "end": 102
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "DWM kompilace a instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S git\nmkdir -p ~/git/github\ncd ~/git/github\ngit clone git://git.suckless.org/dwm\ngit clone git://git.suckless.org/st\ngit clone git://git.suckless.org/dmenu\ncd dwm ## toto proved pro kazdy adresar dwm, st a dmenu\nsudo make clean install ## postupne nainstalovat dwm, st, dmenu"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Konfigurace .xinitrc a Xresources"
+    },
+    {
+      "type": "text",
+      "text": "Zde již si připravíme .xinitrc komplexnější pro testy a spoštění WM (window managers) a DE (desktop environements) používaných v celém seriálu. Stažení provedeme z mých dofiles následujícím postupem."
+    },
+    {
+      "type": "code",
+      "text": "cd ~/git/github\ngit clone https://github.com/raven2cz/dotfiles dotfiles-raven2cz\ncd dotfiles-raven2cz\ncp .xinitrc ~\ncp .Xresources ~\nnvim ~/.xinitrc ## zakomentovat setxkbmap -layout \"us,cz\" - prekryva hodne kl.zkratek s DWM!"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Spuštění DWM"
+    },
+    {
+      "type": "code",
+      "text": "startx ~/.xinitrc dwm"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "První Bash Script"
+    },
+    {
+      "type": "text",
+      "text": "Ukázka prvního jednoduchého bash skriptu pro zobrazení hodin vpravo nahoře v xsetroot sekci.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 77,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "nvim ~/.local/bin/dwm_time\n#!/bin/bash\nwhile true; do\n   xsetroot -name \"$( date +\"%F %R\" )\"\n   sleep 1m    # Update time every minute\ndone\n\nchmod ug+x ~/.local/bin/dwm_time"
+    },
+    {
+      "type": "text",
+      "text": "Nutno přidat $HOME/.local/bin do /etc/profile Přidejte se sudo do tohoto souboru řádku: appendpath '/home/box/.local/bin'= za ostatní již existující a soubor uložte. Nutný restart nebo zavolání z daného terminálu příkaz =source /etc/profile.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 29
+        },
+        {
+          "type": "code",
+          "start": 33,
+          "end": 45
+        },
+        {
+          "type": "code",
+          "start": 88,
+          "end": 240
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "První Wallpaper"
+    },
+    {
+      "type": "text",
+      "text": "Provede alespoň základní nastavení pozadí, jsme suckless, víc zatím dělat nebudeme, záleží nám na efektivě a minimalismu. Stáhněte si své oblíbené obrázky pomocí firefox nebo přes /mnt sdílený adresář. Pro ostatní mohu nabídnout sbírku mých public wallpapers pro demonstraci.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 180,
+          "end": 184
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "cd ~/git/github\ngit clone https://github.com/raven2cz/public-wallpapers"
+    },
+    {
+      "type": "text",
+      "text": "Použijeme prohlížeč obrázků feh pro nastavení pozadí. Arch-Wiki FEH",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 28,
+          "end": 31
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/feh#Set_the_wallpaper",
+          "start": 54,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S feh\nfeh --bg-scale ~/git/github/public-wallpapers/00007-minimal-forest.jpg"
+    },
+    {
+      "type": "text",
+      "text": "Později si ukážeme, jak tyto změny zahrnout do našeho autorun skriptu při spuštění DWM.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 54,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "DWM-Flexipatch"
+    },
+    {
+      "type": "text",
+      "text": "Zjednodušená možnost patches pro DWM pomocí flexipatch project."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/bakkeby/dwm-flexipatch Nutné provést git clone repository. Editovat soubor config.def.h. na hodnotu 1 nastavit patches, které chcete aktivovat, uložit soubor. Na závěř standardně zavolat sudo make install, zkompiluje dwm a umístí jej do spouštěcích adresářů.",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/bakkeby/dwm-flexipatch",
+              "start": 0,
+              "end": 41
+            },
+            {
+              "type": "code",
+              "start": 94,
+              "end": 106
+            },
+            {
+              "type": "code",
+              "start": 206,
+              "end": 223
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=Z9grvRgriX4"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/instalace-xorg-a-window-manageru-dwm.md"
+  }
+}

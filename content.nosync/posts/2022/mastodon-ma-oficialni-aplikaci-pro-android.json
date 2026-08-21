@@ -1,0 +1,146 @@
+{
+  "slug": "mastodon-ma-oficialni-aplikaci-pro-android",
+  "title": "Mastodon má oficiální aplikaci pro Android",
+  "date": "2022-04-29T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "mastodon",
+    "Naše komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Mastodon, populární alternativa k mikroblogovací platformě Twitter, má nyní oficiálně aplikaci pro Android. Aplikace pro iOS byla spuštěna  v červenci loňského roku.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://play.google.com/store/apps/details?id=org.joinmastodon.android",
+          "start": 99,
+          "end": 106
+        },
+        {
+          "type": "link",
+          "url": "https://apps.apple.com/us/app/mastodon-for-iphone/id1571998974",
+          "start": 121,
+          "end": 124
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je Mastodon"
+    },
+    {
+      "type": "text",
+      "text": "Mastodon je decentralizovaná, open-source sociální síť s více než dvěma miliony uživatelů, pro zveřejňování krátkého textu o délce až 500 znaků.  Má mikroblogovací funkce podobné jako Twitter , které nabízí velké množství nezávisle provozovaných uzlů (známých jako „instance“), z nichž každá instance má svůj vlastní kodex chování , podmínky služby , možnosti ochrany osobních údajů a moderování .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Microblogging",
+          "start": 149,
+          "end": 164
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Twitter",
+          "start": 184,
+          "end": 192
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Každý uživatel je členem konkrétní instance Mastodon, která může spolupracovat jako federovaná sociální síť , což umožňuje uživatelům na různých uzlech vzájemně komunikovat. To poskytuje uživatelům flexibilitu při výběru serveru, jehož zásady preferují, ale zachovat si tak přístup k větší sociální síti. Mastodon je také součástí skupiny Fediverse , které používají sdílené protokoly umožňující uživatelům komunikovat také s uživateli na jiných kompatibilních platformách, jako jsou PeerTube , Friendica  a Pixelfed. Uživatel Mastodon tedy může komunikovat s uživateli na jakémkoli jiném serveru ve Fediverse , který podporuje ActivityPub.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://mastodon.arch-linux.cz",
+          "start": 44,
+          "end": 52
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Federated_social_network",
+          "start": 84,
+          "end": 108
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Fediverse",
+          "start": 339,
+          "end": 349
+        },
+        {
+          "type": "link",
+          "url": "https://peertube.arch-linux.cz/c/videa_archlinuxcz/videos",
+          "start": 484,
+          "end": 493
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Friendica",
+          "start": 495,
+          "end": 505
+        },
+        {
+          "type": "link",
+          "url": "https://pixelfed.cz/",
+          "start": 508,
+          "end": 516
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Fediverse",
+          "start": 600,
+          "end": 610
+        },
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/ActivityPub",
+          "start": 628,
+          "end": 639
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Jak začít s Mastodon"
+    },
+    {
+      "type": "text",
+      "text": "Pro všechny zájemce tak stačí stáhnout aplikaci  z Google Play a při registraci, do  vyhledávacího pole zadat cz a vybrat náš server mastodon.arch-linux.cz , vyplnit registrační údaje, odsouhlasit pravidla serveru a pak už jen  publikovat cokoliv, co chcete: odkazy, obrázky, text či videa. To vše na platformě, kterou vlastní komunita a je bez reklam.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://play.google.com/store/apps/details?id=org.joinmastodon.android",
+          "start": 51,
+          "end": 62
+        },
+        {
+          "type": "bold",
+          "start": 110,
+          "end": 113
+        },
+        {
+          "type": "link",
+          "url": "https://mastodon.arch-linux.cz",
+          "start": 133,
+          "end": 155
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/mastodon-ma-oficialni-aplikaci-pro-android.md"
+  }
+}

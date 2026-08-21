@@ -1,0 +1,1110 @@
+{
+  "slug": "instalace-xfce",
+  "title": "Instalace Xfce",
+  "date": "2022-03-18T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "Xfce",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V osmém díle seriálu o instalaci Arch Linuxu  od Tondy Fischera se podíváme, jak instalovat a nastavit desktopové prostředí Xfce.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/series/arch-linux-instalace/",
+          "start": 33,
+          "end": 45
+        },
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 49,
+          "end": 63
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Xfce_(%C4%8Ce%C5%A1tina)",
+          "start": 124,
+          "end": 128
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "XFCE"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je XFCE?"
+    },
+    {
+      "type": "text",
+      "text": "Xfce je lehké a modulární desktopové prostředí, které je v současné době založeno na GTK 3. Pro zajištění úplného uživatelského komfortu obsahuje správce oken, správce souborů, plochu a panely. Xfce lze jednoduše rozšiřovat pomocí extra pluginů.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Xfce_(%C4%8Ce%C5%A1tina)",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Dokumentace"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://docs.xfce.org/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://docs.xfce.org/",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://www.xfce.org/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.xfce.org/",
+              "start": 0,
+              "end": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://gitlab.xfce.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://gitlab.xfce.org",
+              "start": 0,
+              "end": 23
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch-Wiki:Xfce(čeština)",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Xfce_(%C4%8Ce%C5%A1tina)",
+              "start": 0,
+              "end": 23
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Moje Xfce Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Toto repo samozřejmě nemůže obsahovat veškeré nutné části, protože se jedná o DE, které by vyžadovalo spíše distro. Bylo by nutné použít několik konfiguračních adresářů a zdrojových témat. Nicméně kompletní základní xfce konfigurace je systematicky oddělena a uložena ve formátu XML, který zde přikládám s MIT licencí."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/raven2cz/xfce-config",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/xfce-config",
+              "start": 0,
+              "end": 39
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Základní Instalace"
+    },
+    {
+      "type": "text",
+      "text": "Vše jsou meta balíky. Doporučuji nainstalovat celou tuto základnu meta balíků. Oproti jiným full DE, je toto pořád silně lightweight."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S xfce4 xfce4-goodies\n\nnvim ~/.xinitrc\n# Overit umisteni radky\nexec startxfce4"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Xfce4 Settings Manager"
+    },
+    {
+      "type": "text",
+      "text": "Spusťe z terminálu"
+    },
+    {
+      "type": "code",
+      "text": "xfce4-settings-manager"
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=tehEIbcYn8U"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Volba Sound Systemu"
+    },
+    {
+      "type": "text",
+      "text": "Zvuk je velký topic. Stejně jako grafické karty na linuxu. Toto je pouze minimální zmínka o této problematice."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture",
+              "start": 0,
+              "end": 66
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/PulseAudio",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/PulseAudio",
+              "start": 0,
+              "end": 43
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/PipeWire",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/PipeWire",
+              "start": 0,
+              "end": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Doinstalovat uřčitě při pulseaudio ještě pavucontrol, alsa-utils. alsamixer. PipeWire je separátní topic a bylo by vhodné oddělené video, pokud bude zájem.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 24,
+          "end": 34
+        },
+        {
+          "type": "code",
+          "start": 41,
+          "end": 52
+        },
+        {
+          "type": "code",
+          "start": 54,
+          "end": 64
+        },
+        {
+          "type": "code",
+          "start": 66,
+          "end": 75
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/PipeWire",
+          "start": 77,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Graphical Drivers a Picom aktivace"
+    },
+    {
+      "type": "text",
+      "text": "Grafické drivers byly instalovány při základní instalaci, odkazuji tak na video základní instalace systému. Nyní je potřeba nahradit defaultní kompozitor naším picom nastaveným dle zlaté střední cesty z minulého dílu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://youtu.be/gpIFaCIB9Cg",
+          "start": 80,
+          "end": 106
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Window Manager Tweaks > Compositor > Deaktivujte Enable display compositing",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 49,
+              "end": 75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Session and Startup > Application Autostart > + > přidejte name: picom command: picom --experimental-backends --config $HOME/.config/picom/picom.conf",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 65,
+              "end": 70
+            },
+            {
+              "type": "code",
+              "start": 80,
+              "end": 149
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Picom bude spuštěn v autostart xfce po novém spuštění xfce."
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Instalace Terminal Emulator (GPU Support)"
+    },
+    {
+      "type": "text",
+      "text": "Doporučuji tyto terminal emulatory. V mém případě používám oba, aby se nehádaly."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S kitty\nsudo pacman -S alacritty"
+    },
+    {
+      "type": "text",
+      "text": "O terminálech si více povíme jindy. Nyní alespoň základní instalace a umět je spustit a používat v základní vanilla podobě."
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Přidání Whisker Menu"
+    },
+    {
+      "type": "text",
+      "text": "Whisker menu je základní Xfce kvalitní menu a spouštěč aplikací. Přidání extra pluginu do Panel1 instance na první místo v Items."
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Klávesové zkratky, buď Linux Pro"
+    },
+    {
+      "type": "text",
+      "text": "Vytvoř klávosvé zkratky používané v profi window managers, jako je dwm, xmonad, awesome, qtile, i3, bspwm."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Klávesové zkratky Xfce ArchWiki",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Xfce_(%C4%8Ce%C5%A1tina)#Kl%C3%A1vesov%C3%A9_zkratky",
+              "start": 0,
+              "end": 31
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Klávesové zkratky pro ovládání hlasitosti"
+    },
+    {
+      "type": "text",
+      "text": "https://wiki.archlinux.org/title/PulseAudio#Keyboard_volume_control",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/PulseAudio#Keyboard_volume_control",
+          "start": 0,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "XFCE Ricing - Dracula Ricing"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je Ricing?"
+    },
+    {
+      "type": "text",
+      "text": "https://jie-fang.github.io/blog/basics-of-ricing",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://jie-fang.github.io/blog/basics-of-ricing",
+          "start": 0,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=VspS7Q9Spjs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je Dracula a DraculaPro?"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://draculatheme.com/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://draculatheme.com/",
+              "start": 0,
+              "end": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://draculatheme.com/pro ($49)",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://draculatheme.com/pro",
+              "start": 0,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "02.png",
+          "width": 1397,
+          "height": 814,
+          "src": "https://github.com/raven2cz/tux/raw/main/211012-xfce-instalace/images/dracula-color-palette.png"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aplikace základních themes a color schemes"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Postupujte podle pokynů na dracula stánkách pro jednotlivé aplikace a GTK3."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Přejděte na záložku GTK na webu, nainstalujte gtk-master.zip",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 46,
+              "end": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Použijte z mých dotfiles konfigurace pro kitty a alacritty. obsahují dracula pro kitty a postelové barvy pro alacritty",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 41,
+              "end": 46
+            },
+            {
+              "type": "code",
+              "start": 49,
+              "end": 58
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nainstalujte a použijte fonty dle videa: paru -S tty-droid tty-play",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 41,
+              "end": 67
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Aplikujte theme pro Midnight Commander z webu dracula256.ini",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 46,
+              "end": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Použijte zlatou střední cestu pro picom z dotfiles."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Icons a Mouse Cursors"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "sudo paru -S papirus-icon-theme",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 31
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "sudo paru -S numix-cursor-theme xcursor-comix-opaque xcursor-comix",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 66
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Změna základního Panel1"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Použijte mojí konfiguraci panelu, nebo manuálně nastavte komponenty dle videa"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Aplikujte/zkopírujte gtk.css styling do vašeho ~/.config/gtk-3.0",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 21,
+              "end": 28
+            },
+            {
+              "type": "code",
+              "start": 47,
+              "end": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Alternativně můžete použít polybar (pozor je to výhoda i nevýhoda), viz můj projekt Polybar-config",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/polybar-config",
+              "start": 84,
+              "end": 98
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Public-Wallpapers"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stáhněte si moje public wallpapers public-wallpapers",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 35,
+              "end": 52
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Link public-wallpapers přes mkdir ~/Pictures/wallpapers && ln -s ~/git/github/public-wallpapers ~/Pictures/wallpapers/",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 28,
+              "end": 118
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Qt a Gtk jednotný vzhled aplikací"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "pročíst Uniform look for Qt and GTK applications",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Uniform_look_for_Qt_and_GTK_applications",
+              "start": 8,
+              "end": 48
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Gtk již máme zařízeno, neboť xfce staví na gtk-3.0 a s dracula theme jsme toto pořešili pro gnome aplikace automaticky"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pro Qt aplikace nutno pořešit"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nainstalujte sudo pacman -S kvantum-qt5",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Checkout git repozitář cd ~/git/github && git clone https://github.com/dracula/gtk.git",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 23,
+              "end": 86
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Spustit Kvantum Manager, nainstalovat Dracula (dle svého vkusu)"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Aplikovat v aplikaci Dracula jako aktvní téma"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zkontrolovat si svůj ~/.xinitrc nastavení export QT_STYLE_OVERRIDE=kvantum",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 21,
+              "end": 31
+            },
+            {
+              "type": "code",
+              "start": 42,
+              "end": 74
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Doplňková rožšíření"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Aplikace pro nastavení osobních uživatelských detailů sudo pacman -S mugshot",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 54,
+              "end": 76
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Editor nabídek pro Gnome s podporou XFCE sudo pacman -S alacarte",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 41,
+              "end": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Odstranění ikon na ploše xfconf-query -c xfce4-desktop -v --create -p /desktop-icons/style -t int -s 0 (obnova nastavit 2)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 25,
+              "end": 102
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nastavení zvukového motivu Smooth"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nainstalujte libcanberra pro PulseAudio",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zahrnout canerra-gtk-module do proměnné prostředí GTK_MODULES",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 9,
+              "end": 27
+            },
+            {
+              "type": "code",
+              "start": 50,
+              "end": 61
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "V Settings Manager > Appearance > Settings nastavit =”Enable event sounds”=",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 2,
+              "end": 42
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nainstalujte z AUR paru -S sound-theme-smooth",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 19,
+              "end": 45
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "V Editoru nastavení (xfce4-settings-editor) nastavte v xsettings/Net/SoundThemeName na Smooth (pozor na velké písmeno)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 21,
+              "end": 42
+            },
+            {
+              "type": "code",
+              "start": 55,
+              "end": 83
+            },
+            {
+              "type": "code",
+              "start": 87,
+              "end": 93
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zapněte a zvyšte hlasitost u System Sounds v mixéru zvuku, např. pavucontrol.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 29,
+              "end": 42
+            },
+            {
+              "type": "code",
+              "start": 65,
+              "end": 76
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "arch wiki:Xfce",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Xfce_(%C4%8Ce%C5%A1tina)",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/instalace-xfce.md"
+  }
+}

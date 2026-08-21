@@ -1,0 +1,447 @@
+{
+  "slug": "ivpn-soukroma-vpn-sluzba-pro-arch-linux-a-android",
+  "title": "IVPN: Soukromá VPN služba pro Arch Linux a Android",
+  "date": "2025-06-07T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "opensource",
+    "vpn",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "IVPN patří mezi VPN služby, které berou soukromí vážně. Na rozdíl od většiny komerčních VPN poskytovatelů, IVPN funguje bez logování, podporuje anonymní platby a má otevřený zdrojový kód svých aplikací. Pro uživatele Arch Linuxu a mobilních zařízení nabízí solidní řešení s důrazem na bezpečnost."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Proč IVPN?"
+    },
+    {
+      "type": "text",
+      "text": "Žádné logování: IVPN nemá co logovat - nesbírají IP adresy, DNS dotazy ani metadata o připojení.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Anonymní registrace: Účet si vygeneruješ bez osobních údajů, e-mail není potřeba. Můžete platit i kryptoměnami nebo hotovostí.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Open source klienti: Všechny aplikace mají otevřený zdrojový kód, takže můžete ověřit, co skutečně dělají.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "WireGuard a OpenVPN: Podporují moderní WireGuard protokol i klasické OpenVPN.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Multihop: Možnost směrování přes dva VPN servery pro extra ochranu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace na Arch Linux"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Oficiální aplikace"
+    },
+    {
+      "type": "code",
+      "text": "yay -S ivpn-ui",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Nebo z AUR ručně:"
+    },
+    {
+      "type": "code",
+      "text": "git clone https://aur.archlinux.org/ivpn-ui.git\ncd ivpn-ui\nmakepkg -si",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Spuštění a přihlášení"
+    },
+    {
+      "type": "code",
+      "text": "# Spustit daemon\nsudo systemctl enable --now ivpn-daemon\n\n# Spustit GUI\nivpn-ui",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "V aplikaci se přihlásíte pomocí Account ID, který dostanete po registraci na webu IVPN."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Ruční konfigurace WireGuard"
+    },
+    {
+      "type": "text",
+      "text": "Pokud preferujete čistý WireGuard bez GUI:"
+    },
+    {
+      "type": "code",
+      "text": "# Instalace WireGuard\nsudo pacman -S wireguard-tools\n\n# Stáhnout konfiguraci z IVPN účtu\n# Uložit jako /etc/wireguard/ivpn.conf",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Příklad konfigurace:"
+    },
+    {
+      "type": "code",
+      "text": "[Interface]\nPrivateKey = YOUR_PRIVATE_KEY\nAddress = 10.0.0.2/32\nDNS = 172.16.0.1\n\n[Peer]\nPublicKey = SERVER_PUBLIC_KEY\nEndpoint = SERVER_IP:2049\nAllowedIPs = 0.0.0.0/0",
+      "lang": "ini"
+    },
+    {
+      "type": "text",
+      "text": "Spuštění:"
+    },
+    {
+      "type": "code",
+      "text": "sudo wg-quick up ivpn\nsudo wg-quick down ivpn",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Automatické spuštění"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl enable wg-quick@ivpn",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení na Android"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace aplikace"
+    },
+    {
+      "type": "text",
+      "text": "IVPN aplikaci najdete v Google Play Store nebo F-Droid:"
+    },
+    {
+      "type": "code",
+      "text": "F-Droid: https://f-droid.org/packages/net.ivpn.client/\nGoogle Play: IVPN"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Konfigurace"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Otevřete aplikaci a přihlaste se pomocí Account ID"
+        },
+        {
+          "text": "Vyberte server (doporučuji nejbližší pro rychlost)"
+        },
+        {
+          "text": "Zapněte VPN přepínačem"
+        },
+        {
+          "text": "V nastavení můžete povolit:"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Auto-connect při startu - Kill switch (přeruší internet při výpadku VPN) - Custom DNS servery"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "WireGuard konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Alternativně můžete použít oficiální WireGuard aplikaci:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stáhněte si konfigurační soubor z IVPN účtu"
+        },
+        {
+          "text": "Importujte do WireGuard aplikace"
+        },
+        {
+          "text": "Aktivujte profil"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Tipy pro maximální soukromí"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "DNS leak protection"
+    },
+    {
+      "type": "code",
+      "text": "# Ověření DNS úniku\ndig +short myip.opendns.com @resolver1.opendns.com",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Firewall pravidla"
+    },
+    {
+      "type": "code",
+      "text": "# Blokovat provoz mimo VPN interface\nsudo iptables -A OUTPUT ! -o tun0 -m owner --uid-owner $(id -u) -j DROP",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Kill switch pro systemd"
+    },
+    {
+      "type": "text",
+      "text": "Vytvořte službu, která vypne internet při odpojení VPN:"
+    },
+    {
+      "type": "code",
+      "text": "# /etc/systemd/system/vpn-killswitch.service\n[Unit]\nDescription=VPN Kill Switch\nAfter=network.target\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/local/bin/killswitch-on\nExecStop=/usr/local/bin/killswitch-off\n\n[Install]\nWantedBy=multi-user.target",
+      "lang": "ini"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Rychlost a výkon"
+    },
+    {
+      "type": "text",
+      "text": "IVPN servery jsou obvykle rychlé, ale výkon závisí na:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vzdálenosti k serveru"
+        },
+        {
+          "text": "Vytížení serveru"
+        },
+        {
+          "text": "Vaší rychlosti internetu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro testování rychlosti:"
+    },
+    {
+      "type": "code",
+      "text": "speedtest-cli --secure",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Nebo pokud nemáš speedtest-cli nainstalovaný:"
+    },
+    {
+      "type": "code",
+      "text": "# Instalace\nsudo pacman -S speedtest-cli",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Cena a plány"
+    },
+    {
+      "type": "text",
+      "text": "IVPN má dva plány:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Standard: $6/měsíc (2 současná zařízení)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Pro: $10/měsíc (7 zařízení + multihop)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Platit můžete kartou, PayPal, kryptoměnami nebo hotovostí poštou."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Alternativy"
+    },
+    {
+      "type": "text",
+      "text": "Pokud IVPN nevyhovuje, zvažte:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Mullvad VPN: Podobná filozofie, €5/měsíc",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "ProtonVPN: Free tier dostupný, Swiss privacy",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "Vlastní VPN: WireGuard na VPS serveru",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Závěr"
+    },
+    {
+      "type": "text",
+      "text": "IVPN je solidní volba pro uživatele, kteří chtějí skutečné soukromí bez kompromisů. Open source aplikace, žádné logování a možnost anonymní registrace z něj dělají jednu z nejdůvěryhodnějších VPN služeb na trhu."
+    },
+    {
+      "type": "text",
+      "text": "Pro Arch Linux uživatele je integrace bezproblémová díky AUR balíčku, a na Androidu funguje spolehlivě s pokročilými funkcemi jako kill switch."
+    },
+    {
+      "type": "text",
+      "text": "Jestli bereš soukromí vážně a nechceš řešit složitou konfiguraci vlastního VPN serveru, IVPN stojí za zvážení."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "🌐 Oficiální web: https://www.ivpn.net/en/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.ivpn.net/en/",
+              "start": 17,
+              "end": 41
+            }
+          ]
+        },
+        {
+          "text": "💻 GitHub repozitář: https://github.com/ivpn",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/ivpn",
+              "start": 20,
+              "end": 43
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/ivpn-soukroma-vpn-sluzba-pro-arch-linux-a-android.md"
+  }
+}

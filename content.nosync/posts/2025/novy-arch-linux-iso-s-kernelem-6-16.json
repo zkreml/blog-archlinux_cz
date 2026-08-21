@@ -1,0 +1,222 @@
+{
+  "slug": "novy-arch-linux-iso-s-kernelem-6-16",
+  "title": "Nový Arch Linux ISO s kernelem 6.16",
+  "date": "2025-09-01T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "iso",
+    "archlinux",
+    "Arch Linux",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Nový Arch Linux ISO s kernelem 6.16"
+    },
+    {
+      "type": "text",
+      "text": "1. září 2025 - Je tu nový Arch Linux ISO snapshot pro září 2025, první který běží na Linux kernelu 6.16. Hlavní novinky:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "bold",
+          "start": 85,
+          "end": 103
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je nového"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Linux Kernel 6.16"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Lepší detekce hardware, zejména na novějších zařízeních"
+        },
+        {
+          "text": "Vylepšená podpora i pro starší komponenty, kde předchozí ISO selhávala"
+        },
+        {
+          "text": "Obecně stabilnější základ systému"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Archinstall 3.0.9"
+    },
+    {
+      "type": "text",
+      "text": "Nová verze instalátoru přináší několik užitečných funkcí:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "LUKS iteration time - možnost změnit čas iterací pro šifrování",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        },
+        {
+          "text": "U2F autentifikace - podpora pro hardware klíče",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        },
+        {
+          "text": "Bluetooth během instalace - nastavení BT spojení přímo v instalátoru",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 25
+            }
+          ]
+        },
+        {
+          "text": "--skip-boot parametr - přeskočení instalace bootloaderu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 20
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "Lepší COSMIC podpora - vylepšená integrace nového DE",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "text": "Btrfs + GRUB combo - automatická instalace inotify-tools a grub-btrfs",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 18
+            },
+            {
+              "type": "code",
+              "start": 43,
+              "end": 56
+            },
+            {
+              "type": "code",
+              "start": 59,
+              "end": 69
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pro koho je určený"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nové instalace - pokud chystáš čistou instalaci",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        },
+        {
+          "text": "Rescue situace - pro opravy systému",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        },
+        {
+          "text": "Hardware testing - nový kernel může rozchodit problémové komponenty",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Existující Arch systémy aktualizuješ klasicky:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Stažení"
+    },
+    {
+      "type": "text",
+      "text": "ISO je dostupný na oficiálních stránkách Arch Linuxu. Snapshot obsahuje všechny balíčky aktualizované během srpna 2025.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/download/",
+          "start": 41,
+          "end": 52
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/novy-arch-linux-iso-s-kernelem-6-16.md"
+  }
+}

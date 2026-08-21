@@ -1,0 +1,80 @@
+{
+  "slug": "aktualizace-skriptu-archinstall",
+  "title": "Aktualizace skriptu archinstall",
+  "date": "2022-04-30T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Instalační skript archinstall  byl aktualizován na verzi 2.4.1. Toto vydání přináší, řadu nových funkcí, vylepšení a také mnoho oprav chyb."
+    },
+    {
+      "type": "text",
+      "text": "Největší novinkou vydání Archinstall 2.4.1 je zcela nový systém nabídek, který můžete vidět na snímku obrazovky. Zcela nový systém nabídek používá balík simple-term-menu Python, který vytváří jednoduché interaktivní nabídky na příkazovém řádku a je snadno přístupný. Kromě toho byl průvodce aktualizován, aby používal nový systém nabídek."
+    },
+    {
+      "type": "text",
+      "text": "Nový systém nabídek by měl instalaci Arch Linuxu  ještě více usnadnit. Mezi další nové funkce verze Archinstall 2.4.1 patří podpora komprese Btrfs při jeho výběru jako hlavního souborového systému,  stejně jako podpora pro bezproblémové načítání konfigurací a jejich ukládání. pomocí formátu „archinstall“.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 37,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Instalační skript Arch Linuxu nyní navíc umožňuje složitější rozvržení Btrfs,  přidává podporu pro instalaci správce oken Qtile během instalace a přidává profil pro správnou konfiguraci PipeWire."
+    },
+    {
+      "type": "text",
+      "text": "Mechanismus rozdělení byl vylepšen také v této nové verzi Archinstall, která také přidává nový plugin pro provádění akcí po vytvoření na uživatelských profilech, nahrazuje textový editor Kate za KWrite v profilu KDE, přidává podporu psaní v celém instalačním skriptu, a zlepšuje xorgprofil správně nastavit amdgpumoduly v hácích mkinitcpio.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 279,
+          "end": 283
+        },
+        {
+          "type": "code",
+          "start": 307,
+          "end": 313
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Samozřejmě je v této aktualizaci zahrnuto mnoho dalších změn, které budou součástí příštího snímku Arch Linux ISO, jehož vydání je naplánováno na 1. května 2022. Pro více podrobností byste se měli podívat na poznámky k vydání na stránce projektu GitHub .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/archlinux/archinstall/releases/tag/v2.4.1",
+          "start": 208,
+          "end": 226
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "zdroj:  9to5Linux",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://9to5linux.com/arch-linuxs-archinstall-gets-a-brand-new-menu-system-many-other-new-features",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/aktualizace-skriptu-archinstall.md"
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "slug": "co-je-arch-linux",
+  "title": "O Arch Linuxu",
+  "date": "2021-12-11T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux  je nezávislá linuxová distribuce vytvořená Juddem Vinetem, jenž se inspiroval distribucí CRUX Linux. Arch Linux je vyvíjen jako nenáročný, odlehčený a snadno přizpůsobitelný systém.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "type": "link",
+          "url": "https://cs.wikipedia.org/wiki/Linuxov%C3%A1_distribuce",
+          "start": 25,
+          "end": 44
+        },
+        {
+          "type": "link",
+          "url": "https://cs.wikipedia.org/wiki/Judd_Vinet",
+          "start": 55,
+          "end": 69
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vývoj začal již v roce 2001 a první verzi Archu vydal Judd Vinet v roce 2002. Ten také byl do roku 2007 hlavním vývojářem. Od roku 2007 je hlavním vývojářem Archu Aaron Griffin.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://cs.wikipedia.org/wiki/Judd_Vinet",
+          "start": 54,
+          "end": 64
+        },
+        {
+          "type": "link",
+          "url": "https://www.Archlinux.org/people/developers/",
+          "start": 163,
+          "end": 176
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Arch je od začátku svého vývoje až do dneška nezávisle vyvíjenou komunitní distribucí."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Zásady"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Jednoduchost"
+    },
+    {
+      "type": "text",
+      "text": "Arch je v základu odlehčená a vysoce flexibilní distribuce, která po instalaci poskytuje pouze minimální prostředí bez grafického uživatelského rozhraní. Většina ostatních distribucí nabízí tuto možnost také, ale většinou ne jako hlavní a už vůbec ne jedinou variantu pro instalaci."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Modernost"
+    },
+    {
+      "type": "text",
+      "text": "Arch Linux se snaží udržovat nejnovější stabilní verze svého softwaru, pokud lze rozumně zabránit systémovému rozbití balíčků. Je založen na systému rolling-release , který umožňuje jednorázovou instalaci s průběžnými aktualizacemi.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://en.wikipedia.org/wiki/Rolling_release",
+          "start": 149,
+          "end": 164
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Arch obsahuje mnoho novějších funkcí dostupných uživatelům GNU/Linuxu, včetně systemd init systému, moderních souborových systémů ,  LVM2, softwarového RAID, podpory udev a initcpio (s mkinitcpio ), stejně jako nejnovější dostupná jádra.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Systemd",
+          "start": 78,
+          "end": 85
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/File_systems",
+          "start": 110,
+          "end": 129
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Mkinitcpio",
+          "start": 185,
+          "end": 195
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Všestrannost"
+    },
+    {
+      "type": "text",
+      "text": "Arch Linux je univerzální distribuce. Po instalaci je k dispozici pouze prostředí příkazového řádku: namísto trhání nepotřebných a nechtěných balíčků je uživateli nabídnuta možnost vytvořit si vlastní systém výběrem z tisíců vysoce kvalitních balíčků poskytovaných v oficiálních repozitářích.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Official_repositories",
+          "start": 267,
+          "end": 291
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Balíčkovací systém"
+    },
+    {
+      "type": "text",
+      "text": "Jako většina jiných distribucí poskytuje Arch správce balíčků, jeho grafické uživatelské nadstavby a sadu oficiálních repozitářů. Kromě toho poskytuje ale i další možnosti: uživatelský repozitář AUR, kde jsou tisíce balíčků, které lze velmi snadno překládat a instalovat pomocí vlastních nástrojů Archu."
+    },
+    {
+      "type": "text",
+      "text": "Arch User Repository (AUR) je komunitou řízené úložiště pro uživatele Archu. Obsahuje popisy balíčků ( PKGBUILDs ), které vám umožňují sestavit balíček ze zdrojového kódu pomocí makepkg a poté jej nainstalovat přes pacman . AUR byl vytvořen, aby organizoval a sdílel nové balíčky z komunity a pomohl urychlit začlenění oblíbených balíčků do komunitního úložiště . Tento dokument vysvětluje, jak mohou uživatelé přistupovat a využívat AUR.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/PKGBUILD",
+          "start": 103,
+          "end": 112
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Makepkg",
+          "start": 166,
+          "end": 170
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Makepkg",
+          "start": 178,
+          "end": 185
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Pacman#Additional_commands",
+          "start": 215,
+          "end": 221
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Community_repository",
+          "start": 341,
+          "end": 361
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Velký počet nových balíčků, které vstupují do oficiálních repozitářů, začíná v AUR. V AUR mohou uživatelé přispívat svými vlastními sestaveními balíčků ( PKGBUILDa souvisejícími soubory). Komunita AUR má možnost hlasovat pro balíčky v AUR. Pokud se balíček stane dostatečně populárním – za předpokladu, že má kompatibilní licenci a dobrou balicí techniku ​​– může být vložen do komunitního úložiště (přímo přístupné pacmanem nebo abs ).",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 154,
+          "end": 162
+        },
+        {
+          "type": "italic",
+          "start": 378,
+          "end": 389
+        },
+        {
+          "type": "italic",
+          "start": 416,
+          "end": 424
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Abs",
+          "start": 430,
+          "end": 433
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "co-je-arch-linux.md"
+  },
+  "page": true
+}

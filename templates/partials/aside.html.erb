@@ -1,0 +1,41 @@
+<%# The card comes and goes with its text, like the headings in the footer
+    and every widget below: an empty about left <h3></h3> over an empty box
+    on every page of the site. The tags hug the markup rather than sitting
+    on lines of their own because partials compile without a trim mode --
+    a guard on its own line would add a blank line to every page that does
+    have an about text. Same reason as in nav.html.erb. %><aside><% unless ABOUT['html'].to_s.strip.empty? %>
+        <div class="card">
+          <h3><%= h(ABOUT['heading']) %></h3>
+          <div class="chrome-text"><%= config_html(ABOUT['html']) %></div>
+        </div><% end %>
+<% if WIDGETS['toots'] %>
+        <div class="card">
+          <h3><%= h(WIDGETS['toots']['heading']) %></h3>
+          <div id="last-toots"></div>
+        </div>
+<% end %>
+<% if WIDGETS['pixelfed'] %>
+        <div class="card">
+          <h3><%= h(WIDGETS['pixelfed']['heading']) %></h3>
+          <div id="last-pixelfeds"></div>
+        </div>
+<% end %>
+<% if WIDGETS['commits'] %>
+        <div class="card">
+          <h3><%= h(WIDGETS['commits']['heading']) %></h3>
+          <div id="last-commits"></div>
+        </div>
+<% end %>
+<% if WIDGETS['bluesky'] %>
+        <div class="card">
+          <h3><%= h(WIDGETS['bluesky']['heading']) %></h3>
+          <div id="last-bluesky"></div>
+        </div>
+<% end %>
+<% if WIDGETS['rss'] %>
+        <div class="card">
+          <h3><%= h(WIDGETS['rss']['heading']) %></h3>
+          <div id="last-rss"></div>
+        </div>
+<% end %>
+      </aside>

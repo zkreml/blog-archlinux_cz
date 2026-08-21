@@ -1,0 +1,214 @@
+{
+  "slug": "sifrovana-instalace-arch-linux-pomoci-calam-arch-installer",
+  "title": "Šifrovaná instalace Arch Linux pomocí Calam-Arch-Installer",
+  "date": "2022-03-03T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "btrfs",
+    "calamares",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Úvod"
+    },
+    {
+      "type": "text",
+      "text": "Pro začátečníka může být složité až skoro nemožné Arch Linux nainstalovat a nakonfigurovat podle svých potřeb. Někoho může i instalace v příkazovém řádku odradit. V dnešním návodu si ukážeme, jak nainstalovat Arch Linux pomocí instalátoru Calam-Arch-installer. Tento návod předpokládá,že Arch Linux bude jediným OS v zařízení."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co získáme instalací"
+    },
+    {
+      "type": "text",
+      "text": "• Plně LUKS šifrovaný oddíl obsahující souborový systém BTRFS s / boot, / root a / home • / a /home jako samostatné dílčí svazky, které umožňují snadnou a úložnou úsporu místa snímků kořenového systému • automatické vytváření snímků (při upgradu systému a každodenním a bootování) • schopnost zavést do funkčního snímku z nabídky grub (automatické vytváření spouštěcích položek) a poté nastavit tento nebo jiný snímek jako nový výchozí systém (z grafického uživatelského rozhraní)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Stažení a příprava instalačního USB"
+    },
+    {
+      "type": "text",
+      "text": "Nejprve si stáhneme ISO Calam-Arch-Installer  Obraz zapíšeme na USB disk třeba pomocí nástroje Etcher.Restartujeme počítač a při zavádění systému v BIOSu nastavíme zavádění systému pomocí USB. Pří zavádění z USB se vám ukáže úvodní obrazovka instalátoru",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://sourceforge.net/projects/blue-arch-installer/",
+          "start": 24,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Příprava instalace"
+    },
+    {
+      "type": "text",
+      "text": "Nejdříve je třeba udělat pár maličkostí před instalací našeho nového systému. Změňte výchozí nastavení btrfs calamar pro fstab.Následující krok vynutí, aby calamar přiřadil a používal kompresi na všech instalačních zařízeních btrfs; bez ohledu na to, zda jsou ssd nebo hdd. Použijeme kompresi zstd. Otevřete Terminal,Firefox s naším návodem a zadejte (nebo označte a zkopírujte níže uvedené příkazy pomocí ctrl-c a vložte do terminálu pomocí shift-ctrl-v | vždy můžete kopírovat a vložit všechny řádky zobrazené v jednom bloku najednou)"
+    },
+    {
+      "type": "code",
+      "text": "sudo sed -i 's/compress=lzo/compress=zstd/'\n/usr/share/calamares/modules/fstab.conf\nsudo sed -i 's/autodefrag/autodefrag,compress=zstd/'\n/usr/share/calamares/modules/fstab.conf"
+    },
+    {
+      "type": "text",
+      "text": "Terminál necháme otevřený a můžeme přistoupit k samotné instalaci."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace systému"
+    },
+    {
+      "type": "text",
+      "text": "Instalátor Calam-Arch-Installer je založený na instalačním frameworku Calamares, který používají i jiné linuxové distribuce EndeavourOS, Manjaro, Arcolinux a mnoho dalších. Instalátor nám položí několik otázek. Nejdříve nastavíme jazyk systému.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://sourceforge.net/projects/blue-arch-installer/",
+          "start": 11,
+          "end": 31
+        },
+        {
+          "type": "link",
+          "url": "https://calamares.io/",
+          "start": 70,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nastavíme časové pásmo."
+    },
+    {
+      "type": "text",
+      "text": "V dalším kroku vybereme požadované rozložení klvesnice"
+    },
+    {
+      "type": "text",
+      "text": "Nyní přejdeme k rozdělení disku.Nejdříve vytvoříme novou tabulku oddílů a jako typ oddílu zvolíme GPT zadáním ok,vytvoříme tabulku.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://cs.wikipedia.org/wiki/GUID_Partition_Table",
+          "start": 98,
+          "end": 101
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Dále zvolíme ruční rozdělení disku a vytvoříme oddíl 512MB Fat 32 s přípojným bodem /boot a s příznakem boot. Tímto vytvoříme systémový oddíl EFI."
+    },
+    {
+      "type": "text",
+      "text": "Na zbytku volného místa vytvoříme souborový systém BTRFS, zaškrtneme šifrování a zvolíme heslo. Přípojný bod pro tento oddíl bude /"
+    },
+    {
+      "type": "text",
+      "text": "V dalším kroku vybereme jaké chceme použít grafické prostředí, ovladače grafické karty a nebo veškeré balíčky pro správu tisku."
+    },
+    {
+      "type": "text",
+      "text": "V dalším kroku vytvoříme uživatele, heslo pro přihlášení do systému."
+    },
+    {
+      "type": "text",
+      "text": "Klikneme na další a systém se nám nainstaluje. Po dokončení instalace systém NERESTARTOVAT, ale zadáme ještě několik příkazů. Prvním příkazem vytvoříme odkládací prostor. 8G nahradíme  požadovanou velikostí.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 77,
+          "end": 90
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "swapsize=8G"
+    },
+    {
+      "type": "text",
+      "text": "Po vytvoření oddílu spustíme další příkazy.Stáčí je jen všechny zkopírovat (ctrl+c) a následně vložit do terminálu (ctrl+shift+v)"
+    },
+    {
+      "type": "code",
+      "text": "sudo mkdir /mnt/btrfs\nbtrfsonluks=`sudo blkid -o device | grep luks`\nsudo mount -o subvolid=5 $btrfsonluks /mnt/btrfs\nsudo sed -i 's/compress=zstd 0 1/compress=zstd 0 0/' /mnt/btrfs/@/etc/fstab\nsudo sed -i 's/compress=zstd 0 2/compress=zstd 0 0/' /mnt/btrfs/@/etc/fstab\nsudo btrfs subvolume create /mnt/btrfs/@var-cache-pacman-pkg\nfstabstr=`grep \"/home\" /mnt/btrfs/@/etc/fstab`\nfstabstr=${fstabstr//\\/home/\\/var\\/cache\\/pacman\\/pkg}\nfstabstr=${fstabstr//@home/@var-cache-pacman-pkg}\nsudo sh -c \"echo $fstabstr >> /mnt/btrfs/@/etc/fstab\"\nsudo btrfs subvolume create /mnt/btrfs/@swap\nsudo mkdir /mnt/btrfs/@/swap\nsudo sh -c \"printf '\\n$btrfsonluks /swap\nbtrfs\nsubvol=@swap,defaults,compress=no 0 0\\n' >> /mnt/btrfs/@/etc/fstab\"\nsudo truncate -s 0 /mnt/btrfs/@swap/swapfile\nsudo chattr +C /mnt/btrfs/@swap/swapfile\nsudo btrfs property set /mnt/btrfs/@swap/swapfile compression none\nsudo fallocate -l $swapsize /mnt/btrfs/@swap/swapfile\nsudo chmod 600 /mnt/btrfs/@swap/swapfile\nsudo mkswap /mnt/btrfs/@swap/swapfile\nsudo swapon /mnt/btrfs/@swap/swapfile\nsudo sh -c \"echo '/swap/swapfile none swap defaults 0 0' >>\n/mnt/btrfs/@/etc/fstab\"\nwget https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/\nbtrfs_map_physical.c\ngcc -O2 -o btrfs_map_physical btrfs_map_physical.c\noffset=`sudo ./btrfs_map_physical /mnt/btrfs/@swap/swapfile`\noffset_arr=(`echo ${offset}`)\noffset_pagesize=(`getconf PAGESIZE`)\noffset=$(( offset_arr[25] / offset_pagesize ))\nsudo sed -i \"s/loglevel=3/loglevel=3 resume_offset=$offset/\"\n/mnt/btrfs/@/etc/default/grub\nsudo sed -i \"s#loglevel=3#resume=$btrfsonluks loglevel=3#\"\n/mnt/btrfs/@/etc/default/grub\nsudo sed -i 's/keymap encrypt filesystems/keymap encrypt filesystems resume/'\n/mnt/btrfs/@/etc/mkinitcpio.conf\nsudo mkdir /mnt/chroot\nsudo mount -o compress=zstd,subvol=@ $btrfsonluks /mnt/chroot\nefidevice=`sudo blkid -o device -l -t TYPE=vfat`\nsudo mount $efidevice /mnt/chroot/boot/efi\nsudo arch-chroot /mnt/chroot\nsudo pacman --noconfirm -S cronie\nsudo systemctl enable cronie.service\nsudo grub-mkconfig -o /boot/grub/grub.cfg\nsudo mkinitcpio -p linux"
+    },
+    {
+      "type": "text",
+      "text": "Nyní můžeme restartovat počítač."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nový systém"
+    },
+    {
+      "type": "text",
+      "text": "Po restartu a přihlášení do nového systému, musíme nejdřív nainstalovat pomocníka YAY pro AUR repozitář. V AUR repozitáři se nachází zálohovací program Timeshift."
+    },
+    {
+      "type": "code",
+      "text": "pacman -S --needed git base-devel\ngit clone https://aur.archlinux.org/yay.git\ncd yay\nmakepkg -si"
+    },
+    {
+      "type": "text",
+      "text": "Nyní nainstalujeme program Timeshift a potřebné závislosti."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman --noconfirm -Syy &&\nyay --noconfirm -S timeshift timeshift-autosnap grub-btrfs"
+    },
+    {
+      "type": "text",
+      "text": "Poté spustíme následující příkazy"
+    },
+    {
+      "type": "code",
+      "text": "sudo cp /etc/timeshift/default.json /etc/timeshift/timeshift.json &&\nfs_uuid=`sudo blkid -o device | grep luks` &&\nfs_uuid=`sudo blkid -o value -s UUID $fs_uuid` &&\nsudo sed -i \"s/backup_device_uuid\\\" : \\\"/backup_device_uuid\\\" : \\\"$fs_uuid/\"\n/etc/timeshift/timeshift.json &&\nfs_uuid=`sudo blkid -o device -l -t TYPE=crypto_LUKS` &&\nfs_uuid=`sudo blkid -o value -s UUID $fs_uuid` &&\nsudo sed -i \"s/parent_device_uuid\\\" : \\\"/parent_device_uuid\\\" : \\\"$fs_uuid/\"\n/etc/timeshift/timeshift.json &&\nsudo sed -i 's/run\" : \"true/run\" : \"false/' /etc/timeshift/timeshift.json &&\nsudo sed -i 's/btrfs_mode\" : \"false/btrfs_mode\" : \"true/'\n/etc/timeshift/timeshift.json &&\nsudo sed -i 's/ \"include_btrfs_home\" : \"false\",/\n\"include_btrfs_home_for_backup\" : \"false\",\\n \"include_btrfs_home_for_restore\" :\n\"false\",/' /etc/timeshift/timeshift.json &&\nsudo sed -i 's/schedule_daily\" : \"false/schedule_daily\" : \"true/'\n/etc/timeshift/timeshift.json &&\nsudo sed -i 's/schedule_boot\" : \"false/schedule_boot\" : \"true/'\n/etc/timeshift/timeshift.json &&\nsudo sed -i 's/count_boot\" : \"5/count_boot\" : \"3/' /etc/timeshift/timeshift.json\nsudo timeshift --create --comments \"1st\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Omezení maximálního počtu snímků"
+    },
+    {
+      "type": "code",
+      "text": "max_snapshots=6"
+    },
+    {
+      "type": "text",
+      "text": "A jako poslední spustgíme příkazy."
+    },
+    {
+      "type": "code",
+      "text": "sudo sh -c '\ncat > /etc/systemd/system/limit-timeshift-snapshots-update-grub.service $max_snapshots'\\` \\&\\& /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg\\\"#\"\n/etc/systemd/system/limit-timeshift-snapshots-update-grub.service &&\nsudo systemctl enable limit-timeshift-snapshots-update-grub.service &&\nsudo systemctl start limit-timeshift-snapshots-update-grub.service"
+    },
+    {
+      "type": "text",
+      "text": "A je to nyní máte plně šifrovaný systém Arch Linux, s aumaticky vytvořenými snímky. Stačí jen při botování vybrat k jakému snímku se potřebujete vrátit.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 7
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/sifrovana-instalace-arch-linux-pomoci-calam-arch-installer.md"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "slug": "jak-opravit-poskozeny-soubor-historie-zsh",
+  "title": "Jak opravit poškozený soubor historie zsh",
+  "date": "2022-11-04T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "zsh",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Občas můžete zjistit, že máte poškozený soubor historie zsh, který vám brání v použití příkazu fc nebo v prohledávání historie. Zde je návod, jak to opravit.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 95,
+          "end": 97
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Poškozený soubor historie ZSH"
+    },
+    {
+      "type": "text",
+      "text": "Pokud použijete zsh pro váš shell, velmi příležitostně můžete najít následující zprávu, která označuje poškozený soubor historie. To je obvykle po restartu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "http://www.zsh.org/",
+          "start": 16,
+          "end": 19
+        },
+        {
+          "type": "code",
+          "start": 16,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "zsh: corrupt history file /home/george/.zsh_history"
+    },
+    {
+      "type": "text",
+      "text": "Tím se zabrání vyhledávání zpět v historii pomocí CTRL+R a editaci předchozích příkazů pomocí fc.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 50,
+          "end": 56
+        },
+        {
+          "type": "link",
+          "url": "https://shapeshed.com/unix-fc/",
+          "start": 94,
+          "end": 96
+        },
+        {
+          "type": "code",
+          "start": 94,
+          "end": 96
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Jak to opravit"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li to opravit, spusťte následující příkazy"
+    },
+    {
+      "type": "code",
+      "text": "cd ~\nmv .zsh_history .zsh_history_bad\nstrings -eS .zsh_history_bad > .zsh_history\nfc -R .zsh_history"
+    },
+    {
+      "type": "text",
+      "text": "zdroj",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://shapeshed.com/zsh-corrupt-history-file/",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/jak-opravit-poskozeny-soubor-historie-zsh.md"
+  }
+}

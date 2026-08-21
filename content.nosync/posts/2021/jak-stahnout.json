@@ -1,0 +1,136 @@
+{
+  "slug": "jak-stahnout",
+  "title": "Jak stáhnou Arch Linux",
+  "date": "2021-12-11T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Získejte nejnovější obraz ISO"
+    },
+    {
+      "type": "text",
+      "text": "Nejnovější obraz ISO lze stáhnout ze stránek Arch Linuxu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/download/",
+          "start": 45,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Obraz ISO obsahuje pouze programy nezbytné k instalaci minimálního základního systému GNU / Linux. Všimněte si, že minimální základní systém neobsahuje grafické uživatelské rozhraní. Zbytek systému Arch Linux – včetně grafického rozhraní – se nastavuje z příkazové řádky.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 99,
+          "end": 183
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zkontrolujte obraz ISO"
+    },
+    {
+      "type": "text",
+      "text": "Při stahování přes torrent nebo magnetický odkaz je po stažení ISO soubor automaticky zkontrolován na shodu s originálem. Pokud je obraz ISO stažen přes HTTPS, měla by proběhnout kontrola se součtem SHA1. Pokud má být vytvořeno CD nebo DVD, je lepší zkontrolovat shodu až po vypálení na medium.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/releng/releases/2021.12.01/torrent/",
+          "start": 19,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sha1sum archlinux-*-x86_64.iso"
+    },
+    {
+      "type": "text",
+      "text": "( ***** musí být nahrazeno datem na staženém souboru Arch.iso.)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vypálit obraz ISO na CD nebo DVD"
+    },
+    {
+      "type": "text",
+      "text": "Ze systému Linux to lze provést pomocí aplikací jako k3b, Brasero nebo pomocí příkazu"
+    },
+    {
+      "type": "code",
+      "text": "wodim dev=/dev/sr0 speed=12 -dao -eject -v archlinux-*-x86_64.iso"
+    },
+    {
+      "type": "text",
+      "text": " ***** musí být nahrazeno datem na staženém souboru Arch.iso.)"
+    },
+    {
+      "type": "text",
+      "text": "Po vypálení by měl být kontrolní součet SHA1 na CD/DVD porovnán s informacemi na Arch Linux. (Cesta jednotky (sr0) se může lišit v závislosti na zařízení.)",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/download/",
+          "start": 80,
+          "end": 91
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sha1sum /dev/sr0"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přenesení ISO obrazu na USB flash disk"
+    },
+    {
+      "type": "text",
+      "text": "Nejprve je třeba určit označení oddílu USB klíče pomocí následujícího příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "fdisk -l"
+    },
+    {
+      "type": "text",
+      "text": "Soubor ISO lze poté přenést na klíčenku, pomocí příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "dd bs=4M if=/pfad/archlinux-*-x86_64.iso of=/dev/sdx status=progress oflag=sync"
+    },
+    {
+      "type": "text",
+      "text": "Použito  pokynů  pro začátečníky.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.de/title/Anleitung_f%C3%BCr_Einsteiger",
+          "start": 9,
+          "end": 16
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "jak-stahnout.md"
+  },
+  "page": true
+}

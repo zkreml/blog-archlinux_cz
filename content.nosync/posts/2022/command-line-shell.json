@@ -1,0 +1,451 @@
+{
+  "slug": "command-line-shell",
+  "title": "Command-Line Shell",
+  "date": "2022-04-01T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "shell",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V dalším díle seriálu Tondy Fischera se podíváme na prostředí příkazového řádku. Představíme si postupně 3 nejrozšířenější shelly v GNU/Linux (sh nepočítám). Shells si postupně nakonfigurujeme a přizpůsobíme opět pro nejlepší efektivitu svojí práce. Terminálové aplikace se tak dostanou na zcela jinou úroveň, se kterou se často nemohou měřit ani normální aplikace s tlačítky. Batch processing je nenahraditelnou součástí pokročilého používání počítačů, historie příkazů a fuzzy processing je něco, co se jiným operačním systémům ani nesnilo.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 22,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Popis shellů je uveden na arch wiki Command-Line Shell.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Command-line_shell",
+          "start": 36,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Základní shelly, které si ukážeme:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Bash - nejzákladnější shell v GNU/Linux. POSIX complient. Nutný znát v každém případě.https://www.gnu.org/software/bash/",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 4
+            },
+            {
+              "type": "link",
+              "url": "https://www.gnu.org/software/bash/",
+              "start": 86,
+              "end": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zsh - Interaktivní používání, silný skriptovací jazyk. POSIX complient. https://www.zsh.org/",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "type": "link",
+              "url": "https://www.zsh.org/",
+              "start": 72,
+              "end": 92
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Fish - Není POSIX, jde vlastní cestou. Inteligentní a uživatelsky přívětivý shell příkazového řádku. Fish provádí plnobarevné zvýraznění syntaxe příkazového řádku, stejně jako zvýraznění a dokončení příkazů a jejich argumentů, existence souboru a historie. Podporuje kompletní, jak píšete pro historii a příkazy. Fish je schopen analyzovat manuálové stránky systému, aby určil platné argumenty pro příkazy, což mu umožňuje zvýraznit a dokončit příkazy. Snadnou revizi posledního příkazu lze provést pomocí Alt+Up Pro další info https://fishshell.com/",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 4
+            },
+            {
+              "type": "code",
+              "start": 506,
+              "end": 512
+            },
+            {
+              "type": "link",
+              "url": "https://fishshell.com/",
+              "start": 528,
+              "end": 550
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Bash"
+    },
+    {
+      "type": "text",
+      "text": "Bash byl prezentován po celou dobu instalace a používání až do této nahrávky. Pro bash existuje bezpočet návodů, příkladů, psaní skriptů. Určitě doporučuji českou knihu pro shell https://www.alza.cz/media/prikazovy-radek-v-linuxu-d2366810.htm Dokumentace je zde https://www.gnu.org/software/bash/manual/bash.html",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.alza.cz/media/prikazovy-radek-v-linuxu-d2366810.htm",
+          "start": 179,
+          "end": 242
+        },
+        {
+          "type": "link",
+          "url": "https://www.gnu.org/software/bash/manual/bash.html",
+          "start": 262,
+          "end": 312
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Zsh"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Zsh Instalace"
+    },
+    {
+      "type": "text",
+      "text": "My použijeme jako náš systémový shell ZSH."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S zsh\nchsh -s /usr/bin/zsh \nnvim ~/.zshrc"
+    },
+    {
+      "type": "text",
+      "text": "Použijeme Oh My Zsh. Nebo GitHub OhMyZsh.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://ohmyz.sh/",
+          "start": 10,
+          "end": 19
+        },
+        {
+          "type": "link",
+          "url": "https://github.com/ohmyzsh/ohmyzsh",
+          "start": 26,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Zsh Prompt Themes"
+    },
+    {
+      "type": "code",
+      "text": "# Change theme\nZSH_THEME=\"robbyrussell\"\nZSH_THEME=\"agnoster\"\nZSH_THEME=\"dst\"\nZSH_THEME_RANDOM_CANDIDATES=(\n  \"robbyrussell\"\n  \"agnoster\"\n  \"dst\"\n)\n# Need install p10k!\nZSH_THEME=\"powerlevel10k/powerlevel10k\""
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace Zsh plugins"
+    },
+    {
+      "type": "code",
+      "text": "plugins=(git zsh-autosuggestions zsh-syntax-highlighting z fzf sudo pass)\n\n# Instalace plginu\ngit clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions\ngit clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting\n#fzf\ngit clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf\n~/.fzf/install"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace Colorscriptů"
+    },
+    {
+      "type": "text",
+      "text": "Colorscripty zkrášlují shell a uvozují danou instanci terminálu."
+    },
+    {
+      "type": "code",
+      "text": "# DT Colorscript\ngit clone https://gitlab.com/dwt1/shell-color-scripts.git\nmakepkg -cf\nsudo pacman -U *.pkg.tar.zst\n\n# pokemon-colorscript\nparu -S pokemon-colorscripts-git"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Fish"
+    },
+    {
+      "type": "text",
+      "text": "Arch wiki https://wiki.archlinux.org/title/Fish",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Fish",
+          "start": 10,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Fish Instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S fish\n# plugin manager - nutno spoustet z fish shell\ncurl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher\nfisher list\nfisher update jorgebucaran/fisher\nfisher remove jorgebucaran/nvm.fish@2.1.0\nfisher list | fisher remove\n# next useful scripts\nparu -S lolcat exa fd bat timg p7zip glow"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "STARSHIP Cross-Shell Prompt Instalace"
+    },
+    {
+      "type": "text",
+      "text": "Hlavní stránka https://starship.rs/",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://starship.rs/",
+          "start": 15,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sh -c \"$(curl -fsSL https://starship.rs/install.sh)\"\n# add last line to your config.fish\nstarship init fish | source"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Personal Starship Settings"
+    },
+    {
+      "type": "text",
+      "text": "Moje osobní nastavení starship je v dotfiles uloženo v ~/.config/starship.toml Toto moje nastavení nepoužívá dvě prompt řádky, ale pouze jednu, plus změnu symbolu. Nejprve zkuste defaultní nastavení a teprve potom můžete testovat tyto změny.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 55,
+          "end": 78
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# Don't print a new line at the start of the prompt\nadd_newline = false\n\n# Make prompt a single line instead of two lines\n[line_break]\ndisabled = true\n\n# Replace the \"❯\" symbol in the prompt with \"➜\"\n[character]                         # The name of the module we are configuring is \"character\"\nsuccess_symbol = \"[➜](bold green)\"  # The \"success_symbol\" is set to \"➜\" with color \"bold green\"\n\n# Use custom format\n# format = \"\"\"\n# [┌───────────────────>](bold green)\n# [│](bold green)$directory$rust$package\n# [└─>](bold green) \"\"\"\n\n# Disable the package module, hiding it from the prompt completely\n[package]\ndisabled = false"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Fish jako uživatelský interaktivní shell"
+    },
+    {
+      "type": "text",
+      "text": "Fish budeme používat jako uživatelský interaktivní shell, nikoliv jako systémový (pro init si ponecháme POSIX support). Do našeho .zshrc vložíme na konec toto",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 26,
+          "end": 56
+        },
+        {
+          "type": "code",
+          "start": 130,
+          "end": 136
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# jump from zsh to fish\nif [[ $(ps --no-header --pid=$PPID --format=cmd) != \"fish\" ]]\nthen\n\texec fish\nfi"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Fish Raven2cz Dotfiles"
+    },
+    {
+      "type": "text",
+      "text": "Zkopírujte fish adresář do ~/.config/fish z raven2cz dotfiles.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 27,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "nvim ~/.config/fish/config.fish"
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=_K4ESyYuzE0"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Peertube kanál Arch Linux Cz",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://peertube.arch-linux.cz/w/dnyPyhvscq4bBRb6zNSNUk",
+              "start": 0,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/command-line-shell.md"
+  }
+}

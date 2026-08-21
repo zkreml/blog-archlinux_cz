@@ -1,0 +1,762 @@
+{
+  "slug": "openbox-velikostne-maly-rychly-window-manager-plne-v-souladu-s-icccm-a-ewmh",
+  "title": "Openbox- velikostně malý, rychlý window manager plně v souladu s ICCCM a EWMH",
+  "date": "2022-05-21T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "openbox",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Openbox - velikostně malý, rychlý window manager plně v souladu s ICCCM a EWMH"
+    },
+    {
+      "type": "text",
+      "text": "V dalším díle seriálu Tondy Fischera, se podíváme na instalaci a nastavení správce oken Openbox."
+    },
+    {
+      "type": "text",
+      "text": "Openbox je vysoce konfigurovatelný správce oken s rozsáhlou podporou standardů ICCCM a EWMH."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vizuální styl *box je dobře známý pro svůj minimalistický vzhled. Openbox používá vizuální styl *box a zároveň poskytuje větší počet možností pro vývojáře témat než předchozí implementace *box. Dokumentace k tématu popisuje celou řadu možností, které lze nalézt v Openbox tématech.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 14,
+              "end": 18
+            },
+            {
+              "type": "code",
+              "start": 96,
+              "end": 100
+            },
+            {
+              "type": "code",
+              "start": 188,
+              "end": 192
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Openbox vám umožňuje přenést nejnovější aplikace mimo plnohodnotné desktopové prostředí. Většina moderních aplikací byla napsána s ohledem na GNOME a KDE. S podporou standardů freedesktop.org a pečlivým dodržováním předchozích standardů poskytuje Openbox prostředí, kde aplikace fungují tak, jak byly navrženy."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Openbox vám umožňuje změnit téměř každý aspekt vaší interakce s vaším desktopem a vymýšlet zcela nové způsoby, jak jej používat a ovládat. Pro ovládání oken to může být jako videohra. Ale Openbox může být také extrémně jednoduchý, protože je ve výchozím nastavení, což znamená, že může vyhovovat téměř každému. Openbox vám dává kontrolu, aniž byste museli dělat všechno."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Openbox vylepšuje desktopová prostředí. Spuštěním Openboxu v GNOME nebo KDE můžete spojit jejich snadnost a funkčnost se silou Openboxu. Když používáte Openbox, vaše plocha bude čistší a rychlejší a máte ji pod kontrolou."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Podívejte se na příručku Začínáme a změňte způsob správy pracovní plochy. Viz hlavní stránky openbox.org.",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://openbox.org/wiki/Main_Page",
+              "start": 93,
+              "end": 104
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Oficiální dokumentace Openboxu je zde.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 30
+            },
+            {
+              "type": "link",
+              "url": "http://openbox.org/wiki/Help:Contents",
+              "start": 34,
+              "end": 37
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Openbox Instalace"
+    },
+    {
+      "type": "text",
+      "text": "Prostudujte stránku Arch Wiki Openbox. Přečtěte si podrobnosti o krocích instalace a komponentách OB.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Openbox",
+          "start": 20,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "paru -S openbox ttf-dejavu ttf-liberation obfilebrowser\n# Optional Dependencies\nparu -S picom nitrogen tint2 polybar volctl clipmenu parcellite xfce4-notify"
+    },
+    {
+      "type": "text",
+      "text": "Než začnete, upravte svůj ~/.config/openbox/autostart, definujte své služby a aplikace, které budou použity s relací openboxu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Výchozí nastavení Openboxu - použijte tyto příkazy"
+    },
+    {
+      "type": "code",
+      "text": "$ mkdir -p ~/.config/openbox\n$ cp -a /etc/xdg/openbox/ ~/.config/"
+    },
+    {
+      "type": "text",
+      "text": "Pokud plánujete používat můj projekt openbox, postupujte podle pokynů v GitHub Openbox Project.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/openbox-config",
+          "start": 72,
+          "end": 94
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "git clone git@github.com:raven2cz/openbox-config.git ~/.config/openbox"
+    },
+    {
+      "type": "text",
+      "text": "Spouštěč openboxu je připraven v mém .xinitrc, který používáme v celé naší video sérii. Viz níže uvedený odkaz .dotfiles pro Github. Takže vše, co musíte udělat, je spustit startx ~/.xinitrc openbox nebo použít správce zobrazení k výběru xinitrc-openbox ze souborů mých sessions (relací) v adresáři .root.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 37,
+          "end": 45
+        },
+        {
+          "type": "code",
+          "start": 111,
+          "end": 120
+        },
+        {
+          "type": "code",
+          "start": 173,
+          "end": 198
+        },
+        {
+          "type": "code",
+          "start": 238,
+          "end": 253
+        },
+        {
+          "type": "code",
+          "start": 299,
+          "end": 304
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Openbox Lego"
+    },
+    {
+      "type": "text",
+      "text": "Nejlepší a rychlé čtení je Arch Wiki Openbox, začněte od něj. Dokumentace k Openboxu je zde.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Openbox",
+          "start": 27,
+          "end": 44
+        },
+        {
+          "type": "link",
+          "url": "http://openbox.org/wiki/Help:Contents",
+          "start": 88,
+          "end": 91
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Můj příklad lega (sada komponentů) je následující:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "WM: openbox-session s automatickým spuštěním a soubory prostředí",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Kompositor: picom",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Bar: polybar polybar-config",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/polybar-config",
+              "start": 13,
+              "end": 27
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Conky: MX-CoreBlue",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles/tree/main/.config/conky/MX-CoreBlue",
+              "start": 7,
+              "end": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Menu: static menu openbox, podpora generátorů a pipes menu, obfilebrowser",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Navigace: rofi, rofi-themes",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/rofi-themes",
+              "start": 16,
+              "end": 27
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Wallpaper app: nitrogen",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zvukový systém: volctl",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/buzz/volctl",
+              "start": 16,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Notifikační služba: xfce4-notify",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Wallpaper: public-wallpapers - [tapeta openbox](https://github.com/raven2cz/public-wallpapers/blob/main/00046- openbox-1.jpg)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 11,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Máte mnoho možností, jak vybrat různé lego. Máte-li k tomuto tématu další dotazy; Issue můžete vytvořit pro Github nebo o něm diskutovat na forum.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://forum.arch-linux.cz/category/26/openbox",
+          "start": 140,
+          "end": 145
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Openbox Ergonomic Settings"
+    },
+    {
+      "type": "text",
+      "text": "Všechny klávesové zkratky musí být přidány do souboru ~/.config/openbox/rc.xml a pod nadpis ``. Ačkoli zde byl uveden stručný přehled, podrobnější vysvětlení klávesových zkratek lze nalézt na openbox.org.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 54,
+          "end": 78
+        },
+        {
+          "type": "link",
+          "url": "http://openbox/org",
+          "start": 192,
+          "end": 203
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Klávesové zkratky lze přidat do konfiguračního souboru pomocí následující syntaxe:"
+    },
+    {
+      "type": "code",
+      "text": "\n  \n    ...\n  \n"
+    },
+    {
+      "type": "text",
+      "text": "Název akce pro spuštění externího příkazu je Execute. K definování externího příkazu, který se má provést, použijte následující syntaxi:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 45,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "\n  my-command\n"
+    },
+    {
+      "type": "text",
+      "text": "Seznam všech dostupných akcí naleznete na Openbox wiki.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "http://openbox.org/wiki/Help:Actions",
+          "start": 42,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Kompletní ergonomická nastavení jsou připravena v mém GitHub Openbox Project v rc.xml. Kompletní průvodce a manipulace je vysvětlena ve videu. Ergonomie odpovídá předchozí sérii videí pro ostatní WM.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/openbox-config",
+          "start": 54,
+          "end": 76
+        },
+        {
+          "type": "code",
+          "start": 79,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Openbox Výkonná Menu"
+    },
+    {
+      "type": "text",
+      "text": "Hlavní předností *box jsou výkonná a kvalitní menu. Celé ovládání tohoto WM je založeno na nabídkách a menu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 17,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "V Openboxu je možné použít tři typy menu: static, pipes (dynamické) a generátory (statické nebo dynamické). Mohou být také použity samostatně nebo v jakékoli kombinaci. Více podrobností v OB Docs a Arch Wiki.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 42,
+          "end": 48
+        },
+        {
+          "type": "code",
+          "start": 50,
+          "end": 67
+        },
+        {
+          "type": "code",
+          "start": 70,
+          "end": 106
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Openbox#Menus",
+          "start": 198,
+          "end": 207
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro náš příklad jsem použil aktualizovanou strukturu menu v souboru menu.xml. Kromě toho je zde použití menu pipes s aplikací obfilebowser pro procházení vaší domovské složky - aktualizujte soubor menu.xml nabídky a upravte jej podle vašich požadavků.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 68,
+          "end": 76
+        },
+        {
+          "type": "code",
+          "start": 126,
+          "end": 138
+        },
+        {
+          "type": "code",
+          "start": 197,
+          "end": 205
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=E2aQfZNbPF0&t=7s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Forum Arch Linux CZ - naše české forum pro Arch!",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.arch-linux.cz/",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch Linux CZ - spuštění web server pro Arch",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://arch-linux.cz/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 9,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/public-wallpapers",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/global-colorschemes",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/global-colorscheme",
+              "start": 0,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/openbox-velikostne-maly-rychly-window-manager-plne-v-souladu-s-icccm-a-ewmh.md"
+  }
+}

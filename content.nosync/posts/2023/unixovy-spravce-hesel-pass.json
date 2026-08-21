@@ -1,0 +1,890 @@
+{
+  "slug": "unixovy-spravce-hesel-pass",
+  "title": "Unixový správce hesel Pass",
+  "date": "2023-02-10T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "pass",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je správce hesel PASS"
+    },
+    {
+      "type": "text",
+      "text": "Pass je správce hesel příkazového řádku vytvořený s ohledem na filozofii Unixu. Umožňuje vám pracovat s vašimi hesly pomocí běžných unixových příkazů. Přihlašovací údaje jsou uloženy v souborech zašifrovaných GPG."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "PASS je komplikovaný! Jen pro geeky!"
+    },
+    {
+      "type": "text",
+      "text": "Toto je typická odpověď mnoha uživatelů, kteří pláčou na fórech. Ale není to pravda. Jakákoli technologie potřebuje znát některé základy používání. Pokud chcete řídit auto nebo hrát World of Warcraft, musíte se nejprve naučit základy. Abyste byli PRO, potřebujete víc. Pro základní a standardní uživatelské použití je pass jednoduchý a efektivní nástroj .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 315,
+          "end": 353
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základy GnuPG"
+    },
+    {
+      "type": "text",
+      "text": "Prvním základním know-how pro *nix je použití pgp klíčů a možnost šifrovat/dešifrovat a podepisovat vaši práci a soubory."
+    },
+    {
+      "type": "text",
+      "text": "https://wiki.archlinux.org/title/GnuPG",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/GnuPG",
+          "start": 0,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S gnupg\nnvim ~/.gnupg/gpg-agent.conf \n  pinentry-program /usr/bin/pinentry-curses\n  pinentry-program /usr/bin/pinentry-gnome3\n  max-cache-ttl 60480000\n  default-cache-ttl 60480000\n\n# create new key-pair, follow questions, select master password reasonably\ngpg --full-gen-key\n\n# export/import your keys\ngpg --export --armor --output public.key user-id\ngpg --import public.key\ngpg --export-secret-keys --armor --output privkey.asc user-id\ngpg --import privkey.asc\n\n# make your key ultimate and default\ngpg --edit-key user-id/key\ntype in cli: trust, choice 5, save, quit\n\n# search your keys\ngpg --search-keys user-id\n\n# optional upload your gpg public key to key servers\nhttps://keys.openpgp.org\nhttps://keyserver.ubuntu.com/\n\n# encrypt/decrypt files example - asymmetric\ngpg --recipient user-id --encrypt doc\ngpg --output doc --decrypt doc.gpg"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pass základy"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Hierarchie adresářů"
+    },
+    {
+      "type": "text",
+      "text": "Adresářová struktura závisí na vás. Preferuji používání passu nejen pro správu přihlašivacích hesel!",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 62,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Moje hierarchie je následující"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "credit-cards"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "finance"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "local"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "login"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "ssid"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "token"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Podsložky v loginsyntaxe složky",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 12,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "url/uživatelské jméno (pokud je více uživatelů nebo účtů)"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "url (pouze jednoduchá adresa URL bez názvu účtu)"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Podsložky v loginpříklady složek",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 12,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "├── logitech.com\n   ├── mail.plzen-edu.cz\n   ├── malirskeplatna.cz\n   ├── mall.cz\n   ├── mastodon.arch-linux.cz\n   ├── jira.cloud.cz\n   │   ├── andrew\n   │   ├── antfis\n   │   └── petr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Syntaxe uvnitř zašifrovaného souboru gpg"
+    },
+    {
+      "type": "text",
+      "text": "První řádek patří heslu podle pass   syntax. Všechny další řádky jsou volitelné dle vašeho přání. U kreditních karet můžete pro podrobnosti potřebovat mnohem více řádků. Můžete si uložit vše, co potřebujete. Je to pouze textový soubor.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 34
+        },
+        {
+          "type": "bold",
+          "start": 170,
+          "end": 235
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Je tu jeden důležitý bod!"
+    },
+    {
+      "type": "text",
+      "text": "Pokud chcete použít passff nebo jiná rozšíření, musíte použít login: řádek s názvem vašeho účtu, do kterého bude automaticky vložen login field  v přihlašovacím formuláři webové stránky.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 20,
+          "end": 26
+        },
+        {
+          "type": "code",
+          "start": 62,
+          "end": 68
+        },
+        {
+          "type": "code",
+          "start": 132,
+          "end": 143
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "password\nlogin: account"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Základní příkazy"
+    },
+    {
+      "type": "code",
+      "text": "# initialize the password store\npass init gpg-id_or_email\n\n# insert new password for archlinux.org with defined username\n# this insert is optional, I'm using mainly 'generate' and 'edit' command\npass insert login/archilinux.org\npass insert login/archlinux.org/username\n\n# generate password with N symbols, example with length 20\npass generate archlinux.org/wiki/username -n 20\n\n# edit file to fill additional details - 'login:' row, etc.\n# edit command will use your $EDITOR, nvim, emacs etc.\npass edit archlinux.org/wiki/username\n\n# publish changes directly to git private repo, no commit needed!\n# needs linkage with git first, see next chapters...\npass git push\n\n# direct copy to clipboard\npass -c login/archlinux.org\n# or integration with rofi, dmenu\nrofi-pass\npassmenu\n\n# pass fulltext search\npass search archlinux"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Integrace soukromého Git repozitáře"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavení na  straně serveru"
+    },
+    {
+      "type": "text",
+      "text": "Nejprve vytvořte git bare private-repo  na vašem serveru, soukromém domácím cloudu nebo soukromém cloudovém úložišti git (tato poslední volba není z mé strany preferována). Je to standardní git repozitář, který bude ukládat vaše zakódované soubory gpg a adresářovou strukturu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 17,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud nevíte nic o git nebo git serverech. Postupujte podle předchozího článku git-bare-repo nebo si jen přečtěte články o GitHubu a základní tutoriály git.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 79,
+          "end": 92
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavení na straně klienta"
+    },
+    {
+      "type": "code",
+      "text": "# create local password store\npass init \n# Enable management of local changes through Git\npass git init\n# Add the the remote git repository as 'origin'\npass git remote add origin user@server:~/.password-store\n# Push your local pass history\npass git push -u --all\n\n# just work with pass and git\npass git pull\npass generate ...\npass edit ...\npass git push\n# DONE.\n\n# all git operations work normally just with prefix 'pass'"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Projděte kroky instalace nové stanice"
+    },
+    {
+      "type": "text",
+      "text": "Pokud máte nový počítač a potřebujete pass a vaše úložiště na nové stanici. Můžete vytvořit nějaký malý skript, nebo stačí napsat těchto pár příkazů.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 38,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# install software\nsudo pacman -S gnupg pass rofi-pass git\n\n# import public and private keys\ngpg --import gpg-public.key\ngpg --import privkey.asc\n\n# ultimate access for your gpg key for new station\ngpg --edit-key user-idOrkey-id\ntype in cli: trust, choice 5, save, quit \n\n# clone your git repostiory to .password-store\ngit clone gitlab@server:repo/pass-store.git ~/.password-store\n\n# configure your pass git\npass git config --global user.email \"email\" \npass git config --global user.name \"name\"\npass git config --global user.signingkey \n\n# gpg and pinetry check or add\nnvim ~/.gnupg/gpg-agent.conf \n\tpinentry-program /usr/bin/pinentry-gnome3"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Integrace Rofi/dmenu"
+    },
+    {
+      "type": "text",
+      "text": "pass-zx2c4-rofi",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/geek-room/blob/main/attachments/pass-zx2c4-rofi.png",
+          "start": 0,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Rofi a dmenu má rychlé a výkonné použití s ​​passem"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S rofi-pass \nrofi-pass\npassmenu"
+    },
+    {
+      "type": "code",
+      "text": "# example integration with awesomewm\nawful.key({modkey, altkey},\"p\",function() awful.spawn.with_shell(\"rofi-pass -t\") end,\n          {description=\"types password from pass\", group=\"launcher\"}),\nawful.key({modkey, ctrlkey},\"p\", function() awful.spawn.with_shell(\"rofi-pass\") end,\n          {description=\"copy password from pass\", group=\"launcher\"}),"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Passff - integrace do Firefoxu"
+    },
+    {
+      "type": "text",
+      "text": "Nainstalujte passffrozšíření do vašeho Firefoxu z Firefox Extension Storage.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vytvořit hostspojení, komunikační protokol mezi systémem a rozšířením passff. To se nazývá passff-host; tato aplikace má implementaci pro každou distribuci. Pro Arch můžete použít balíček AUR.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 13
+        },
+        {
+          "type": "code",
+          "start": 91,
+          "end": 102
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "% git clone https://aur.archlinux.org/passff-host.git/\n% cd passff-host\n% makepkg -si"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "browserpass – integrace Brave, Chromium, Firefox"
+    },
+    {
+      "type": "text",
+      "text": "Nainstalujte browserpass z úložiště rozšíření prohlížeče. O projektu zde .",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 24
+        },
+        {
+          "type": "link",
+          "url": "https://github.com/browserpass/browserpass-extension",
+          "start": 69,
+          "end": 72
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Integrace s vaším systémem, podobně jako passff-host",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 41,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "paru -S browserpass\nNainstalujte browserpass úložiště rozšíření prohlížeče.\n\nIntegrace s vaším systémem, podobně jako passff-host\n\nparu -S browserpass"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Password Store, OpenKeychain – integrace se systémem Android"
+    },
+    {
+      "type": "text",
+      "text": "Stačí nainstalovat obě aplikace pro Android. První PasswordStore aplikace musí být v telefonu prohozena s výchozím správcem hesel nebo pouze v nastavení prohlížeče. Druhý OpenKeychain aplikace je úložiště pro vaše soukromé a veřejné klíče gpg a poskytuje API pro PasswordStore.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 51,
+          "end": 64
+        },
+        {
+          "type": "code",
+          "start": 171,
+          "end": 183
+        },
+        {
+          "type": "code",
+          "start": 263,
+          "end": 276
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PasswordStore  má plnou podporu pro soukromé repozitáře git, git pull a push funguje z nabídky.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 13
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "S tímto řešením nemám žádné chyby a toto úložiště a správce hesel používám několik let."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Integrace Windows - WSL2"
+    },
+    {
+      "type": "text",
+      "text": "Integrace MS Windows a WSL2 je pokročilé téma. Napsal jsem   o tom jiný článek .",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://fishlive.org/en/blog-tech-art/pass-zx2c4-and-passff-for-wsl2-windows",
+          "start": 61,
+          "end": 78
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Další Aplikace a možnosti"
+    },
+    {
+      "type": "text",
+      "text": "Sledujte domovskou stránku pass dole!",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.passwordstore.org/",
+          "start": 9,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Kompatibilní klienti"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Migrace z jiných klientů"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Například Gopass .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 10,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://github.com/gopasspw/gopass",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/gopasspw/gopass",
+          "start": 0,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pass - Credit & License"
+    },
+    {
+      "type": "text",
+      "text": "pass was written by Jason A. Donenfeld of zx2c4.com and is licensed under the GPLv2+.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://zx2c4.com",
+          "start": 42,
+          "end": 51
+        },
+        {
+          "type": "link",
+          "url": "http://www.gnu.org/licenses/gpl-2.0.html",
+          "start": 78,
+          "end": 84
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=MrvWrBaYTyI"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Důležité odkazy:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://www.passwordstore.org/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.passwordstore.org/",
+              "start": 0,
+              "end": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/GnuPG",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/GnuPG",
+              "start": 0,
+              "end": 38
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://wiki.archlinux.org/title/Pass",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/title/Pass",
+              "start": 0,
+              "end": 37
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/passff/passff",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/passff/passff",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/passff/passff-host",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/passff/passff-host",
+              "start": 0,
+              "end": 37
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://github.com/browserpass/browserpass-extension",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/browserpass/browserpass-extension",
+              "start": 0,
+              "end": 52
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Password Store + OpenKeychain (Android Google Play)",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://play.google.com/store/apps/details?id=dev.msfjarvis.aps&hl=cs&gl=US",
+              "start": 0,
+              "end": 14
+            },
+            {
+              "type": "link",
+              "url": "https://play.google.com/store/apps/details?id=org.sufficientlysecure.keychain&hl=cs&gl=US",
+              "start": 17,
+              "end": 29
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "pass project source code a mirror",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://git.zx2c4.com/password-store",
+              "start": 0,
+              "end": 24
+            },
+            {
+              "type": "link",
+              "url": "https://github.com/zx2c4/password-store",
+              "start": 27,
+              "end": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "https://fishlive.org/en/blog-tech-art/pass-zx2c4-and-passff-for-wsl2-windows",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/pass-zx2c4-and-passff-for-wsl2-windows",
+              "start": 0,
+              "end": 76
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GitHub autora",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/geek-room/tree/main/pass-zx2c4",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Závisí na:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "bash http://www.gnu.org/software/bash/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://www.gnu.org/software/bash/",
+              "start": 5,
+              "end": 38
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GnuPG2 http://www.gnupg.org/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://www.gnupg.org/",
+              "start": 7,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "git http://www.git-scm.com/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://www.git-scm.com/",
+              "start": 4,
+              "end": 27
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "xclip (for X11 environments) http://sourceforge.net/projects/xclip/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://sourceforge.net/projects/xclip/",
+              "start": 29,
+              "end": 67
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wl-clipboard (for wlroots Wayland-based environments) https://github.com/bugaevc/wl-clipboard",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/bugaevc/wl-clipboard",
+              "start": 54,
+              "end": 93
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "tree >= 1.7.0 http://mama.indstate.edu/users/ice/tree/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://mama.indstate.edu/users/ice/tree/",
+              "start": 14,
+              "end": 54
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GNU getopt http://www.kernel.org/pub/linux/utils/util-linux/ http://software.frodo.looijaard.name/getopt/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "http://www.kernel.org/pub/linux/utils/util-linux/",
+              "start": 11,
+              "end": 60
+            },
+            {
+              "type": "link",
+              "url": "http://software.frodo.looijaard.name/getopt/",
+              "start": 61,
+              "end": 105
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "qrencode https://fukuchi.org/works/qrencode/",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fukuchi.org/works/qrencode/",
+              "start": 9,
+              "end": 44
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/unixovy-spravce-hesel-pass.md"
+  }
+}

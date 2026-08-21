@@ -1,0 +1,279 @@
+{
+  "slug": "picom-compositor",
+  "title": "Picom Compositor",
+  "date": "2022-03-06T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "xorg",
+    "picom",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V dalším díle seriálu Tondy Fischera si nainstalujeme kompozitor Picom. Provedeme jeho základní konfiguraci a spouštění. Soustředíme se na praktickou stránku tohoto nástroje a rovněž historii projektu a správnou funkcionalitu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 22,
+          "end": 36
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Picom",
+          "start": 54,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je yshui/Picom?"
+    },
+    {
+      "type": "text",
+      "text": "Picom-Compositor Picom je samostatný kompositor pro Xorg, vhodný pro použití se správci oken (Window Manager), kteří neposkytují kompozici. Picom vznikl jako fork z populárního compton.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Picom",
+          "start": 0,
+          "end": 16
+        },
+        {
+          "type": "code",
+          "start": 17,
+          "end": 22
+        },
+        {
+          "type": "code",
+          "start": 177,
+          "end": 184
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "paru -S picom-git # git next version (snapshots, rolling)\nparu -S picom # released version"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Picom není pouze o grafických vychytávkách a animacích"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Jeho silnou podporou je kvalitní vsynch, glx mode (gpu rendering) a vyhlazování."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Picom lze konfigurovat zcela minimalisticky pro striktně velmi svižné prostředí až po mnoho desítek grafických features a animací."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Jeho animační schopnosti jsou fakt omezené oproti KWin a dalším DE kompositorům."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Existují několik fork picoms, které se soustředí na skupinu animací, blur efektů a dalších grafických vylepšeních. Podívejte a sledujte toto issue Animation Support.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/yshui/picom/issues/217",
+          "start": 147,
+          "end": 164
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "picom ibhagwan"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "picom jonaburg"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "picom dccsillag"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Doporučená konfigurace (~/.config/picom/picom.conf)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Minimalistické řešení (vysoce efektivní)"
+    },
+    {
+      "type": "code",
+      "text": "backend = \"glx\";\nfading = false\nvsync = true\nwintypes:\n{\n  tooltip = { fade = true; shadow = true; opacity = 0.9; focus = true; full-shadow = false; };\n  dock = { shadow = false; }\n  dnd = { shadow = false; }\n  popup_menu = { opacity = 0.9; }\n  dropdown_menu = { opacity = 0.9; }\n};"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zlatá střední cesta"
+    },
+    {
+      "type": "code",
+      "text": "backend = \"glx\";\nvsync = true\nfading = false\nround-borders = 15;\ndetect-rounded-corners = true;\nshadow = true;\n# The blur radius for shadows. (default 12)\nshadow-radius = 14;\n# The left offset for shadows. (default -15)\nshadow-offset-x = -7;\n# The top offset for shadows. (default -15)\nshadow-offset-y = -7;\n# The translucency for shadows. (default .75)\nshadow-opacity = .5;\n# Dim inactive windows. (0.0 - 1.0)\ninactive-dim = 0.05;\n# Fade windows during opacity changes.\nfading = true;\n# Opacity change between steps while fading in. (default 0.028).\nfade-in-step = 0.056;\n# Opacity change between steps while fading out. (default 0.03).\nfade-out-step = 0.06;\n# Window type settings\nwintypes:\n{\n    tooltip =\n    {\n        # fade: Fade the particular type of windows.\n        fade = true;\n        # shadow: Give those windows shadow\n        shadow = false;\n        # opacity: Default opacity for the type of windows.\n        opacity = 0.85;\n        # focus: Whether to always consider windows of this type focused.\n        focus = true;\n    };\n};"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Spouštění picom v autorun skriptech"
+    },
+    {
+      "type": "text",
+      "text": "Picom nutno správně spouštět ve svých autorun skriptech s možností jeho opětovného spuštění v případě pádu."
+    },
+    {
+      "type": "code",
+      "text": "run picom --experimental-backends --config $HOME/.config/picom/picom.conf\n# run bash function\nfunction run {\n  if ! pgrep -f $1 ;\n  then\n    $@&\n  fi\n}"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Moje doporučení"
+    },
+    {
+      "type": "text",
+      "text": "Používat základní yshui/Picom, který má největší množství oprav, je velmi rychlý a stabilní. Sice zatím v této době neobsahuje blurr efekty, ale rounding cornes již podporovány jsou (pro rounding corners mám ale ještě jiné řešení).",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 18,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=gcIADxcE40I"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/picom-compositor.md"
+  }
+}

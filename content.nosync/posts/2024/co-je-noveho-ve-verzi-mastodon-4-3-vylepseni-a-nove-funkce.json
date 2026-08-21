@@ -1,0 +1,101 @@
+{
+  "slug": "co-je-noveho-ve-verzi-mastodon-4-3-vylepseni-a-nove-funkce",
+  "title": "Co je nového ve verzi Mastodon 4.3: Vylepšení a nové funkce",
+  "date": "2024-10-09T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "mastodon",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Mastodon, jako open-source sociální síť, pokračuje v inovacích a vývoji. Nová verze 4.3 přináší zajímavá vylepšení, která zlepší bezpečnost, objevování nového obsahu a celkový uživatelský zážitek."
+    },
+    {
+      "type": "text",
+      "text": "Lepší správa notifikací",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Jedním z klíčových bodů této verze je vylepšený systém oznámení. Pokud dojde k zásahu moderátorů, například ztratíte sledující nebo budete zablokováni na jiném serveru, budete o tom nyní informováni. Důležitou novinkou je i možnost seskupování notifikací. Pokud se některý z vašich příspěvků stane virálním, uvidíte shrnutí, kolik lidí ho podpořilo, což zpřehlední váš informační přehled."
+    },
+    {
+      "type": "text",
+      "text": "Další novinkou je pokročilá filtrace nevyžádaných oznámení, která umožní lépe kontrolovat, jaké zprávy od neznámých uživatelů nebo nových účtů se k vám dostanou."
+    },
+    {
+      "type": "text",
+      "text": "Nový design a zjednodušené užívání",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Mastodon 4.3 se zaměřuje i na zlepšení uživatelského rozhraní. Přepracován byl nástroj pro vytváření příspěvků, který je nyní přehlednější a intuitivnější. Máte větší kontrolu nad tím, jak bude váš příspěvek s nahranými médii vypadat, a zároveň bylo vylepšeno zobrazení obsahových varování a filtrů."
+    },
+    {
+      "type": "text",
+      "text": "Celkově se změnil vzhled aplikace, včetně nových ikon a vylepšených náhledů odkazů. Také byla přidána možnost rychlého zobrazení profilu uživatele pouhým najetím myší, což umožňuje rychlé sledování nebo odhlášení uživatele."
+    },
+    {
+      "type": "text",
+      "text": "Usnadnění pro nové uživatele",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Aby byl přechod na Mastodon pro nováčky jednodušší, přibyly nové doporučení lidí k následování přímo v hlavním feedu. Tyto návrhy kombinují populární účty s osobními doporučeními na základě toho, koho sledují vaši přátelé. Tento systém pomůže novým uživatelům rychleji objevit zajímavý obsah a vytvořit si kvalitní feed."
+    },
+    {
+      "type": "text",
+      "text": "Podpora autorů a novinářů",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Mastodon se více zaměřuje na autory a novináře. Webové stránky mohou nyní jednoduše přidat odkaz na fediverse profil autora přímo do náhledu odkazu. Čtenáři tak mohou snadno najít a sledovat tvůrce obsahu, jehož články se na Mastodonu šíří."
+    },
+    {
+      "type": "text",
+      "text": "Více na blogu joinmastodon.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://blog.joinmastodon.org/2024/10/mastodon-4.3/",
+          "start": 8,
+          "end": 26
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/co-je-noveho-ve-verzi-mastodon-4-3-vylepseni-a-nove-funkce.md"
+  }
+}

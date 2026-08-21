@@ -1,0 +1,147 @@
+{
+  "slug": "xfce-4-20-nova-kapitola-pro-oblibene-desktopove-prostredi-v-arch-linuxu",
+  "title": "XFCE 4.20: Nová kapitola pro oblíbené desktopové prostředí v Arch Linuxu",
+  "date": "2024-12-24T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "Zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "XFCE, známé svým lehkým a stabilním provedením, přichází s verzí 4.20, která je nyní dostupná v repozitářích Arch Linuxu. Tato aktualizace přináší důležité novinky, lepší výkon a přizpůsobitelnost, díky nimž zůstává XFCE jedním z nejpopulárnějších prostředí pro Linux."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nejzajímavější novinky ve verzi 4.20"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "1. HDR podpora a vylepšení správce oken (Xfwm4)"
+    },
+    {
+      "type": "text",
+      "text": "XFCE nyní podporuje High Dynamic Range (HDR), což ocení majitelé moderních displejů. Kromě toho správce oken prošel optimalizací, což přináší plynulejší animace a lepší práci s okny."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "2. Modernizace klíčových aplikací"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Thunar: Správce souborů získal nové možnosti, například filtrování pomocí vzorců při hledání souborů a vylepšené zobrazení náhledů.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Panel XFCE: Rozšířila se podpora přizpůsobení, což umožňuje lépe spravovat pluginy a jejich rozložení.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "Nastavení XFCE: Uživatelské rozhraní je nyní intuitivnější a snazší na ovládání, což usnadňuje nastavení systému.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "3. Výkon a efektivita na prvním místě"
+    },
+    {
+      "type": "text",
+      "text": "XFCE je známé svou nízkou náročností na systémové prostředky, což platí i u této nové verze. Výkon byl dále optimalizován, což zajišťuje rychlou odezvu i na starších zařízeních."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "4. Další vylepšení a funkce"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Přesnější ovládání velikosti oken při maximalizaci."
+        },
+        {
+          "text": "Rozšířená podpora pro více monitorů, včetně lepší konfigurace."
+        },
+        {
+          "text": "Vylepšené ovládání zvuku s integrací PulseAudio a PipeWire."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Jak aktualizovat na XFCE 4.20?"
+    },
+    {
+      "type": "text",
+      "text": "Pokud již používáte Arch Linux, stačí aktualizovat systém příkazem:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Uživatelé, kteří chtějí XFCE nainstalovat poprvé, mohou použít:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S xfce4 xfce4-goodies",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Proč vyzkoušet XFCE 4.20?"
+    },
+    {
+      "type": "text",
+      "text": "Díky svému důrazu na stabilitu, nízkou náročnost a široké možnosti přizpůsobení zůstává XFCE ideální volbou pro ty, kteří chtějí rychlé a spolehlivé prostředí. Verze 4.20 je dalším krokem vpřed a přináší nové funkce, které uživatele potěší."
+    },
+    {
+      "type": "text",
+      "text": "Pokud hledáte prostředí, které je výkonné, nenáročné a flexibilní, XFCE 4.20 rozhodně stojí za vyzkoušení!"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/xfce-4-20-nova-kapitola-pro-oblibene-desktopove-prostredi-v-arch-linuxu.md"
+  }
+}

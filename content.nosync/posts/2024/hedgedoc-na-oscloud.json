@@ -1,0 +1,278 @@
+{
+  "slug": "hedgedoc-na-oscloud",
+  "title": "HedgeDoc na OSCloud",
+  "date": "2024-11-17T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "HedgeDoc na OSCloud"
+    },
+    {
+      "type": "text",
+      "text": "HedgeDoc je otevřená platforma pro týmovou spolupráci, která umožňuje uživatelům společně vytvářet, sdílet a editovat dokumenty v reálném čase. Tento nástroj je založený na Markdownu, jednoduchém jazyku pro formátování textu, který je vhodný jak pro začátečníky, tak pro pokročilé uživatele. HedgeDoc je ideální pro psaní poznámek, vytváření dokumentace nebo sdílení nápadů a poznatků v rámci týmu."
+    },
+    {
+      "type": "text",
+      "text": "Na OSCloud je HedgeDoc přístupný bez nutnosti samostatné registrace. Každý uživatel se může přihlásit přímo pomocí svého OSCloud účtu, což usnadňuje a zjednodušuje přístup k aplikaci."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Funkce a výhody HedgeDocu"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "1. Markdown formátování"
+    },
+    {
+      "type": "text",
+      "text": "HedgeDoc podporuje psaní a úpravu dokumentů v jazyce Markdown, který nabízí snadné formátování textu. Markdown je intuitivní a umožňuje:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Používat nadpisy, seznamy, odkazy a obrázky."
+        },
+        {
+          "text": "Přidávat kódové bloky a tabulky."
+        },
+        {
+          "text": "Vytvářet přehledné a strukturované dokumenty."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "2. Spolupráce v reálném čase"
+    },
+    {
+      "type": "text",
+      "text": "HedgeDoc umožňuje uživatelům pracovat společně na jednom dokumentu současně. Každá změna se okamžitě projeví všem připojeným uživatelům, což usnadňuje týmovou spolupráci, ať už se jedná o psaní poznámek ze schůzky nebo sdílení informací o projektu."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "3. Sdílení dokumentů"
+    },
+    {
+      "type": "text",
+      "text": "Každý dokument v HedgeDocu má svůj unikátní odkaz, který lze snadno sdílet s ostatními členy týmu nebo externími spolupracovníky. Díky tomu lze dokument zpřístupnit i těm, kteří nemají OSCloud účet, pokud to nastavení přístupu povoluje."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "4. Přístupnost a bezpečnost"
+    },
+    {
+      "type": "text",
+      "text": "Přihlášení probíhá pomocí OSCloud účtu, což zvyšuje bezpečnost přístupu a umožňuje centralizovanou správu uživatelů. Dokumenty jsou ukládány bezpečně, a uživatelé mají plnou kontrolu nad tím, kdo může k jejich dokumentům přistupovat."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Jak začít s HedgeDocem"
+    },
+    {
+      "type": "text",
+      "text": "-"
+    },
+    {
+      "type": "text",
+      "text": "Přístup a přihlášení:"
+    },
+    {
+      "type": "text",
+      "text": "Navštivte https://hedgedoc.arch-linux.cz/. - Klikněte na tlačítko Přihlásit se a vyberte možnost Přihlásit se pomocí Cloudron.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://hedgedoc.arch-linux.cz/",
+          "start": 10,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "-"
+    },
+    {
+      "type": "text",
+      "text": "Vytvoření nového dokumentu:"
+    },
+    {
+      "type": "text",
+      "text": "Po přihlášení můžete vytvořit nový dokument kliknutím na Nový dokument. - Zobrazí se prázdná stránka, kde můžete začít psát svůj obsah v Markdownu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 57,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní formátování v Markdownu"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "1. Nadpisy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "# Nadpis 1 pro hlavní nadpis",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "## Nadpis 2 pro podnadpis",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "*kurzíva* pro kurzívu a **tučné písmo** pro tučné písmo",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "code",
+              "start": 24,
+              "end": 39
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "2. Odkazy"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li vytvořit odkaz, použijte formát [název odkazu](URL). Například:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 42,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "[Přejít na Mamutovo](https://mamutovo.cz)",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "3. Seznamy"
+    },
+    {
+      "type": "text",
+      "text": "Pro vytvoření seznamu použijte - nebo *:"
+    },
+    {
+      "type": "code",
+      "text": "- První položka\n- Druhá položka\n- Třetí položka",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "text": "Číslované seznamy vytvoříte jednoduše:"
+    },
+    {
+      "type": "code",
+      "text": "1. První položka\n2. Druhá položka\n3. Třetí položka",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "4. Úkoly (Check-list)"
+    },
+    {
+      "type": "text",
+      "text": "K vytvoření seznamu úkolů použijte - [ ] pro nedokončené a - [x] pro dokončené úkoly:"
+    },
+    {
+      "type": "code",
+      "text": "- [ ] Nedokončený úkol\n- [x] Dokončený úkol",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "5.Tabulky"
+    },
+    {
+      "type": "text",
+      "text": "V Markdownu lze snadno vytvořit základní tabulky pomocí | a -:"
+    },
+    {
+      "type": "code",
+      "text": "| Sloupec 1 | Sloupec 2 | Sloupec 3 |\n|-----------|-----------|-----------|\n| Data 1    | Data 2    | Data 3    |\n| Data 4    | Data 5    | Data 6    |",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "text": "Pro podrobnější informace o funkcích HedgeDoc navštivte anglický návod",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://hedgedoc.arch-linux.cz/features#",
+          "start": 56,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Sdílení a spolupráce:"
+    },
+    {
+      "type": "text",
+      "text": "Po dokončení úprav můžete dokument sdílet pomocí odkazu, který najdete v horní části obrazovky. Uživatelé s přístupem mohou okamžitě začít editovat."
+    },
+    {
+      "type": "text",
+      "text": "HedgeDoc na OSCloud je skvělým řešením pro ty, kteří potřebují bezpečnou a jednoduchou platformu pro týmovou spolupráci na dokumentech. Díky podpoře Markdownu, sdílení v reálném čase a možnosti přihlášení přes OSCloud účet je ideální pro všechny, kteří chtějí mít všechny dokumenty na jednom místě a přístupné odkudkoliv.**"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/hedgedoc-na-oscloud.md"
+  }
+}

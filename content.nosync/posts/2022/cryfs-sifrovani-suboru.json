@@ -1,0 +1,262 @@
+{
+  "slug": "cryfs-sifrovani-suboru",
+  "title": "CryFs - šifrování suborů",
+  "date": "2022-07-31T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "cryfs",
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "CryFs"
+    },
+    {
+      "type": "text",
+      "text": "CryFS vytvořil Sebastian Messmer"
+    },
+    {
+      "type": "text",
+      "text": "CryFS je bezplatný a otevřený cloudový šifrovací nástroj pro bezpečné ukládání souborů. Snadno se nastavuje, běží na pozadí a funguje dobře s jakoukoli populární cloudovou službou nevyjímaje Dropbox , OneDrive, Nexctloud a iCloud.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.cryfs.org/",
+          "start": 0,
+          "end": 6
+        },
+        {
+          "type": "bold",
+          "start": 191,
+          "end": 199
+        },
+        {
+          "type": "bold",
+          "start": 201,
+          "end": 209
+        },
+        {
+          "type": "bold",
+          "start": 211,
+          "end": 229
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "CryFS zajišťuje, že žádná data, včetně adresářové struktury, metadat a obsahu souborů, neopustí váš počítač v nezašifrovaném formátu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 6
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "CryFS šifruje na úrovni souborů, data pak ukládá do malých bloků (kontejnerů), jedná se o ideální řešení když nechceme šifrovat celé diskové oddíly či používat dedikované bloky",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "CryFs je jeden z nejlepších šifrovacích nástrojů v Linuxu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vlastnosti CryFs"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Šifruje adresářovou strukturu vašich souborů tak, že zašifrovaná data nelze uhodnout spolu s obsahem souboru."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Když je zašifrováno více dat, CryFS znovu nenahrává změny. Místo toho posílá malé změny, aby vám ušetřil místo na disku."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Díky jednoduché a snadno pochopitelné struktuře příkazového řádku je přístupný běžnému uživateli."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Šifruje metadata souborů"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Šifruje velikost souborů"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nejsou zatím známy slabiny CryFS"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Opensource"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace CryFs"
+    },
+    {
+      "type": "text",
+      "text": "Cryfs nainstalujem příkazem."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S cryfs"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavte šifrovaný adresář"
+    },
+    {
+      "type": "text",
+      "text": "Po instalaci můžete vytvořit šifrovaný adresář voláním cryfs privat_data mount_data. Adresáře můžete nazývat, jak chcete.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 55,
+          "end": 84
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "cryfs privat_data mount_data"
+    },
+    {
+      "type": "text",
+      "text": "Musíte  odpovědět na několik otázek, o konfiguraci vašeho šifrovaného adresáře. Na vše odpovíme yes."
+    },
+    {
+      "type": "text",
+      "text": "CryFS vás také požádá o heslo, zadáme silné heslo a tím je vše nastaveno."
+    },
+    {
+      "type": "text",
+      "text": "Soubory se upravuji v adresáři mount_data.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 31,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zašifrovaný adresář odpojíme příkazem"
+    },
+    {
+      "type": "code",
+      "text": "fusermount -u mount_data"
+    },
+    {
+      "type": "text",
+      "text": "Pro opětovné spuštění CryFs použijeme příkaz"
+    },
+    {
+      "type": "code",
+      "text": "cryfs privat_data mount_data"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stránka projektu Cryfs",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.cryfs.org/",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Wiki Arch Linux ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://man.archlinux.org/man/cryfs.1.en",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/cryfs-sifrovani-suboru.md"
+  }
+}

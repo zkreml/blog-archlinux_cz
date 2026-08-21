@@ -1,0 +1,177 @@
+{
+  "slug": "virtualbox-arch-linux-nastaveni",
+  "title": "Virtualbox Arch Linux nastavení",
+  "date": "2022-01-16T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "virtualbox",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Další díl od raven2cz  pojednává o nastavení konzolového rozlišení a fontu. Dále pak nastavení Virtualbox Services pro dynamickou změnu rozlišení, sdílenou schránku a sdílení souborové složky. Doplňuje některé důležité body z minulého dílu. Po tomto díle budete mít Virtualbox Arch Image zcela připraven pro všechny ostatní další práce s Arch Linuxem.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 13,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Nastavení TTY rozlišení a fontu"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení rozlišení pro TTY framebuffer"
+    },
+    {
+      "type": "code",
+      "text": "sudo nvim /etc/default/grub (zkontrolujte a změňte následující řádky)\nGRUB_GFXMODE=1920x1080x32,auto\nGRUB_GFXPAYLOAD_LINUX=keep\n\npřegenerovat grub default do /boot/grub/grub.cfg příkazem z instalace:\nsudo grub-mkconfig -o /boot/grub/grub.cfg\npoweroff\n(znovu spusťte virtualbox arch image)"
+    },
+    {
+      "type": "text",
+      "text": "Nyní máme již v pořádku nastaven framebuffer na fullhd, ale font je příliš malý (pokud máte velké rozlišení obrazovky)."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení TTY fontu"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S terminus-font\nsetfont ter-132n  (změna je pouze dočasná, pro trvale zapsat do souboru)\nsudo nvim /etc/vconsole.conf (zapište následující řádky)\nFONT=ter-132n\nFONT_MAP=8859-2\npoweroff (reboot u vbox moc nefunguje)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Virtualbox Guest Utils"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S virtualbox-guest-utils\nsudo systemctl status vboxservice.service\nVBoxClient-all  (aktivovat všechny služby virtualboxu)\nsudo systemctl restart vboxservice.service\nsudo systemctl status vboxservice.service\npoweroff"
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=LAN3lbgDWP4&t=209s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/virtualbox-arch-linux-nastaveni.md"
+  }
+}

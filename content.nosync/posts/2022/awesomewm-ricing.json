@@ -1,0 +1,1168 @@
+{
+  "slug": "awesomewm-ricing",
+  "title": "AwesomeWM Ricing",
+  "date": "2022-04-23T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "awesomewm",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "AwesomeWM patří k nejlepším window managerům s podporou vyššího programovacího jazyka Lua. V našem seriálu Tondy Fischera  již máte dostatek zkušeností pro plný ricing pokročilého prostředí AwesomeWM.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 107,
+          "end": 121
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=FCxd5id77c4&t=31s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Awesome Ricing - Pokročilá Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Nyní již můžeme přikročit k plné a pokročilé konfiguraci AwesomeWM. Cest je nekonečné množství. Já jsem zvolil cestu pro jednoduchou údržbu, vysokou efektivitu práce a kvalitní grafický design, který nesníží performance systému. Podobně jako u xfce v minulých dílech. Zde je navíc možné vše integrovat dohromady, jakoukoliv věc si přizpůsobit svému workflow a propojit WM s vašimi pracovními skripty a nástroji.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 96,
+          "end": 227
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vše, co tady bude probíráno je moje aktuální řešení problematiky. Je nutné pochopit, že ve chvíli, kdy máte framework awesomewm k dispozici, můžete si vše vytvořit podle vlastní představy, variant je tedy nekončné množství, toto je největší rozdíl od fixních WMs nebo DEs, které lze pouze omezeně konfigurovat."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Základ dobrého designu a dlouhodobého úspěšného programování"
+    },
+    {
+      "type": "text",
+      "text": "Úspěchem dobrého programování a nejlepšího designu jsou 3 věci:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Jednoduchost a přehlednost"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vlastní knihovna / framework"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Omezení a minimalismus třetích stran"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vždy nejlepší řešení je to nejjednodušší. Je velmi obtížné se k němu dostat, protože lidé přemýšlí komplexně. Vždy dbejte na tom se k němu dostat a mít vše přehledné i pro další lidi, je to v podstatě zásada free open source."
+    },
+    {
+      "type": "text",
+      "text": "Obecné věci, které používáte a určtiě budete používat i dále si ukládejte do svého frameworku a knihoven. Toto je nutný základ. Vlastní přehledný framework je naprostým základem pro každého programátora, ať už děláte v jakémkoliv jazyce. Správná správa balíčků a knihoven je základ, pouze takto lze se neustále zdokonalovat, vyvíjet a minimalizovat chyby, stabilizací frameworku."
+    },
+    {
+      "type": "text",
+      "text": "Používání 3 stran je potřeba minimalizovat na rozumnou úroveň. Knihovny musí být otevřené, aktivní a opět jednoduché. Nikdy neberte nic komplikovaného. Vždy dejte přednost svému řešení, pokud je v časovém rámci. Pečlivě volte knihovny, které potom již velmi težce lze opouštět!"
+    },
+    {
+      "type": "text",
+      "text": "V našem případě je zde vytvořen základní lua balíček fishlive, který slouží k rozšíření frameworku awesome pro moje osobní potřeby a přístupy. Vytvořte si svůj vlastní.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 53,
+          "end": 61
+        },
+        {
+          "type": "bold",
+          "start": 143,
+          "end": 168
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pattern MVC - Model, View, Controller"
+    },
+    {
+      "type": "text",
+      "text": "Tento návrhový vzor umožňuje rozdělit funkcionalitu do 3 základních celků, které mezi sebou navzájem komunikují. Jeho nespornou výhodou je oddělení business logic od grafického zpracování a doménové vrstvy. Stav aplikace je držen v modelu, který je zpravováván controllerem, ve finále je předán model komponentě view, která jej zobrazí. Pro frontend je toto základ, kdy views může být celá řada, business logiky mají různou implementaci a je jednoduché udržovat a zprovávvat doménové objekty v rámci modelu i zcela jiným procovním teamem. Tento pattern je již starší, takže existuje řada modifikací a pokročilých nápadů, které jej doplňují, nicméně základní myšlenka zůstavá."
+    },
+    {
+      "type": "text",
+      "text": "My si tento pattern půjčíme a pomocí něj si myšlenkově upravíme defaultní rc.lua, který již používáte z předchozí nahrávky. Defaultní konfigurace je tvořena pouze jedním konfiguračním souborem rc.lua a doplňkovým souborem theme.lua, která umoňuje záměnu dle zvoleného theme. Myšlenka je správná, ale implementace je nevhodná. Brzy zjistíte, že jakákoliv větší grafická úprava zasahuje zejména do rc.lua, neboť je velmi nekvalitně odděleno řízení controller a view. Naše první kroky tedy musí nutně vést k základnímu oddělení controller a model-view části.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 74,
+          "end": 80
+        },
+        {
+          "type": "code",
+          "start": 193,
+          "end": 199
+        },
+        {
+          "type": "code",
+          "start": 222,
+          "end": 231
+        },
+        {
+          "type": "code",
+          "start": 396,
+          "end": 402
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Provedeme zjednodušení na controller část a model-view část. Stav systému/grafického prostředí necháme držet ve vhodných sdílených lua tabulkách, které jsou sdíleny mezi oběma částmi. View část musíme nutně oddělit od rc.lua, kde ponecháme striktně pouze controller.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 218,
+          "end": 224
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Model-View - themes/…/theme.lua",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "část je dobré rozdělit si na 3 základní podčásti:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "View Common Libs - použitelné části, které budeme používat i dalších našich themes a views, toto přesuneme do vlastní lua knihovny",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "View Color Schemes - barevná schémata, která lze aplikovat na naše views a která jsou rovněž obecná.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "View Theme - specifická část pro každé vaše jednotlivé theme. Definice a konfigurace všech grafických komponent a jejich chování, aplikace základních view coomon libs a color schemat do těchto komponent. Tato třetí část je jako jediná definována vždy od začátku pro každé vaše nové theme.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "View Common Libs"
+    },
+    {
+      "type": "text",
+      "text": "Tato knihovna byla založena a uložena v adresáři ~/.config/awesome/fishlive. Obsahuje colorschemes, nové layouts, wallpaper různorodá ovládání, widgety a utility.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 49,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "View Color Schemes"
+    },
+    {
+      "type": "text",
+      "text": "Jsou zavedena pomocí vytvořeného příkazu local theme = fishlive.colorscheme.default, který do modelu/tabulky theme nastaví všechny důležité barvy, základní proměnné pro grafické view pro zvolené poslední barevné schéma, které lze dynamicky měnit.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 41,
+          "end": 83
+        },
+        {
+          "type": "code",
+          "start": 109,
+          "end": 114
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "View Theme"
+    },
+    {
+      "type": "text",
+      "text": "Je uloženo v každém theme.lua souboru. Tento soubor mám principiálně tvořen touto strukturou:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 20,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "theme = fishlive.colorscheme.default Defaultní naplnění modelu daným barevných schématem a přípravou atributů modelu",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "model attribute settings Další specifické nastavení modelu dle zvoleného theme, okraje, fonty, notifikační události, taglist, layouts, menu",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wallpaper support Nastavení adresářů a základních atributů pro ovládání wallpapers v awesomewm",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "widget declaration Vytvoření instanací widgetů a jejich specifické nakonfigurování do wibox grafických prvků, které lze umístit do prostředí",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "menu a application launcher declaration Deklarace grafické části menu dle modelu a controlleru",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 39
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "screen.connect_signal(request:desktop_decoration) Hlavní funkce, která provádí zavádění a hlavní činnost každého theme při jeho inicializačním procesu. Další body jsou již součástí tohoto procesu, volání této funkce, listenera.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 49
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "tags and layout settings Nastavení tagů a layotů, taglistu pro dané theme",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "tasklist configuration Nastavení tasklistu pro zobrazování aktivně běžících aplikací systému",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "main panel configuration Sestavení hlavního top panelu ze všech wiboxes, taglistu, tasklistu, systray apod.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "naughty configuration Nastavení notifikačních událostí a notification center a error handling support",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wallpaper handling Nastavení wallpaper ovládání a propojení s controllerem. V mém případě mám rád wallpapers, takže mám i velmi silnou podporu vytvořenou v awesomewm.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Controller - rc.lua",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "je možné taky rovněž dělit na další celky. Nicméně já mám v tomto ohledu rád minimalismus a lepší údržbu, neměl jsem tedy důvod tento soubor rozdělovat, naopak jej strukturalizuji pomoci folding sekcí a používám jednotlivé listenery, které awesome API nabízí k oddělení jednotlivých funkcionálních bloků. Soubor je tedy pořád jeden rc.lua, obsahuje však pouze vše co není grafika nebo grafická komponenta. Obsahuje tedy veškerou business logiku a workflow. Konkrétně obsahuje:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 332,
+          "end": 338
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "naughty.connect_signal(request:display_error) Error handling (zpracování výjimek a chyb v awesome a spojených aplikacích)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 45
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "modkey, terminal, editor, menus Definice základních proměnných pro základní klávesy, terminaly, editory, menu modely",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 31
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "tag.connect_signal(request:default_layouts) Definice základních layouts, které budete používat",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 43
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "beautiful.init Výběr model-view (theme), které bude napojedno a zobrazováno",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "awful.mouse.append_global_mousebindings Nadefinování myších událostí a chování myši",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 39
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "awful.keyboard.append_global_keybindings Definice globálních keybindings pro váš systém, rozděleno dle kategorií a účelu (folding style a separátní listeners)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "client.connect_signal(request:default_keybindings) Clientská konfigurace keybindings pro jednotlivá zobrazovaná okna (client = běžící aplikace v okně)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "ruled.client.connect_signal(\"request:rules\" ...) Definice pravidel (rules) pro zobrazování aplikací, druhů aplikací a reakce oken na speciální events",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 48
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "special connect_signal events for specific handling Poslech dalších několik speciálních událostí pro specifické změny v awesomewm prostředí. Patří sem titlebars (horní lišta na okně), zpracování událostí, další chování myši apod.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 51
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "awful.spawn.with_shell(\"~/.config/awesome/autorun.sh\") Poslední částí rc.lua souboru je spuštění vašeho autorun.sh skriptu pro aplikace, služby a další přednastavení prostředí, ve kterém awesomewm běží.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 54
+            },
+            {
+              "type": "code",
+              "start": 70,
+              "end": 76
+            },
+            {
+              "type": "code",
+              "start": 104,
+              "end": 114
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "AwesomeWM Multicolor Theme Instalace"
+    },
+    {
+      "type": "text",
+      "text": "Demostraci principů si předvedeme na mém github projektu raven2cz/awesomewm-config.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/awesomewm-config",
+          "start": 57,
+          "end": 82
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zajištění resources a podpůrných skriptů pro spolupráci systémového prostředí (external resources)"
+    },
+    {
+      "type": "code",
+      "text": "# 1. backup your awesomewm configuration first\n# 2. git clone repository to ~/.config/awesome\ngit clone git@github.com:raven2cz/awesomewm-config.git ~/.config/awesome\n# 3. ensure prerequsities and dependencies\nparu -S rofi # rofi similar app like d-menu\n# my used wallpapers and event images\nmkdir ~/Pictures/wallpapers && git clone git@github.com:raven2cz/public-wallpapers.git\n# my global colorscheme switcher script\n# make steps which are described in the raven2cz/global-colorscheme.git project, you need themes for your terminal mainly\nmkdir ~/git/github && git clone git@github.com:raven2cz/global-colorscheme.git && cd ~/git/github/global-colorscheme && ./install.sh\n# rofi project themes\nmkdir ~/.config/rofi && git clone https://github.com/raven2cz/rofi-themes ~/.config/rofi"
+    },
+    {
+      "type": "text",
+      "text": "Těmito několika kroky jsme si připravili celé prostředí a zajistili potřebné grafické resources, které jsou v projektu používány. Nejedná se tedy pouze o jeden projekt, ale řadu několika projektů, které spolu spolupracují. Pamatujte, že vždy v GNU/Linux platí, každá věc musí dělat jednu dílčí činnost a dělat ji správně. Nedělejte multi věci, pak se to nabaluje na sebe a nefunguje. Dělejte malé komponenty, které se navzájem používají a dají se použít i pro další linuxová prostředí a uživatele…"
+    },
+    {
+      "type": "text",
+      "text": "Já ještě používám externí aplikaci xmenu, pro rychlé restartování, vypnutí počítače, oblíbené aplikace, kernel nástroje a skupiny aplikací. Nicméně to není podmínkou. Mám jej na klávesové zkratce super+w. Viz například nahrávka DistroTube XMenu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/phillbush/xmenu",
+          "start": 35,
+          "end": 40
+        },
+        {
+          "type": "code",
+          "start": 196,
+          "end": 203
+        },
+        {
+          "type": "link",
+          "url": "https://youtu.be/wMrdCbrQjnQ",
+          "start": 228,
+          "end": 244
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní již máte připraveno celé prostředí pro spuštění. Jediné co chybí je zkontrolovat váš ~/.xinitrc, který by měl být nastaven již z minulé nahrávky a autorun.sh, který pouze jako ukázku zde prezentuji.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 90,
+          "end": 100
+        },
+        {
+          "type": "code",
+          "start": 152,
+          "end": 162
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#!/usr/bin/env bash\nfunction run {\n  if ! pgrep -f $1 ;\n  then\n    $@&\n  fi\n}\n\nrun /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1\nrun /usr/lib/kactivitymanagerd\n#run /use/lib/polkit-kde-authentication-agent-1\nrun /usr/lib/pam_kwallet_init\nrun nm-applet\nrun pamac-tray\nif ! pgrep -f cloud-drive-ui; then synology-drive start; fi\nrun parcellite\nrun clipmenud\nrun volctl\nrun /usr/bin/emacs --daemon\nrun ~/.config/conky/start_conky ~/.config/conky/MX-CoreBlue/conkyrc2core\nrun remmina -i\nrun picom --experimental-backends --config $HOME/.config/picom/picom.conf"
+    },
+    {
+      "type": "text",
+      "text": "Autorun běžících aplikací a služeb je nespočet. Tento berte jako můj základ, pokud budou nejasnosti, napište to do youtube vlákna k nahrávce, nebo na naše diskuzní fórum.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://forum.arch-linux.cz/",
+          "start": 155,
+          "end": 169
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní ovládání"
+    },
+    {
+      "type": "text",
+      "text": "Complete Guide here.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/tux/blob/main/211207-awesome-ricing/awesome-keybindings-en.org",
+          "start": 15,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "super+ctrl+s",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 12
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Základní ovládání se točí kolem klávesy Super (modkey), která je výhdardně určena pro AW prostředí. Samostatné alt, ctrl a shift nikdy nejsou použity, pouze ve vazbě. Toto je nezbytné pro další všechna programová prostředí a aplikace. Výhradně se snažte nastavovat ve svých prostředích X11 bindingkeys. Například DWM svůj default používá velmi nevhodně.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 40,
+          "end": 45
+        },
+        {
+          "type": "code",
+          "start": 111,
+          "end": 128
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "S učením klávesových zkratek nespěchejte, doporučuji se je osvojit, jsou totiž sebrány z nejlepších WM současnosti a nastaveny pro nejlepší ergonomii a efektivní práci. Několik rad bude uvedeno ve videu."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Změna barevných schémat a aplikací"
+    },
+    {
+      "type": "text",
+      "text": "super+c -> change color scheme, super+alt+c -> next colorschme wallpaper, super+ctrl+c -> previous colorscheme wallpaper",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 120
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Změna barevného schématu probíhá na třech úrovních:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nejprve se zavolá globální skript global_colorscheme.sh, který změní podporované externí aplikace. V aktuální verzi mezi ně patří kitty, alacritty, doom emacs, atom. Dojde k okamžité dynamické změně.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 34,
+              "end": 55
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pak dojde ke změně základních barev pro conky aplikaci. Ta vytváří změnu v konfiguračním souboru, který je načítán conky knihovnou. Dojde k okamžité dynamické změně."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Naposled dojde k přepsání souboru last.lua v multicolor scheme AW, kam se nastaví aktuální zvolené schéma a dojde k restartu AW. Celkově se tak završí celkové přenastavení všech schémat celého systému",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 34,
+              "end": 42
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Změna wallpapers pro jednotlivé tagy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "random wallpaper for 1st tag"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "different wallpaper per actual shown tag"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "user wallpaper tags"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "super+alt+w next user wallpaper, super+ctrl+w previous user wallpaper",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 69
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "dev tag uses as default colorscheme wallpaper"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "super+c -> change color scheme, super+alt+c -> next colorschme wallpaper, super+ctrl+c -> previous colorscheme wallpaper",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 120
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Prohlídka prostředí a programového Lua řešení"
+    },
+    {
+      "type": "text",
+      "text": "Po spuštění multicolor theme awesomewm projektu si můžeme prohlédnout detailněji strukturu projektu."
+    },
+    {
+      "type": "code",
+      "text": "nvim ~/.config/awesome/rc.lua\nnvim ~/.config/awesmoe/themes/multicolor/theme.lua"
+    },
+    {
+      "type": "text",
+      "text": "Zde se opět vraťe k první kapitole a postupně projděte seznam rc.lua a theme.lua přímo v kódu si mozkově propojit, které části kódu patří k daným strukturám.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 62,
+          "end": 68
+        },
+        {
+          "type": "code",
+          "start": 71,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Tato část je popsána primárně ve druhé video nahrávce věnované awesomewm ricing…",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 30,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Propojení aplikací do awesomewm prostředí"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "ukázka s tmux a nvim propojení s awesomewm"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Spustit tmux, nvim a zobrazit super+ctrl+s, napojení na awesomewm a jeho klávesové propojení a možnosti controlleru",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "propjení barevných schémat a unifikace GNU/Linux aplikací s prostředím awesomewm a jeho model-view schématem"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "napojení událostí aplikací s naughty"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "dokončená kompilace nebo testy vašich projektů v maven, komprimací, událostí z browseru, napojení cron tasků, stavů běhu aplikací na pozadí bash terminálu, dokončení kdenlive vytvoření videií a mnoho dalšího."
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=KDJbas2FVXM"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/awesomewm-config",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/awesomewm-config",
+              "start": 0,
+              "end": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 6
+            },
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 6,
+              "end": 7
+            },
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 7,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/public-wallpapers",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/global-colorschemes",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/global-colorscheme",
+              "start": 0,
+              "end": 28
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/awesomewm-ricing.md"
+  }
+}

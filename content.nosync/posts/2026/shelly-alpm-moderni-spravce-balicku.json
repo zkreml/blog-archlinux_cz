@@ -1,0 +1,799 @@
+{
+  "slug": "shelly-alpm-moderni-spravce-balicku",
+  "title": "Shelly-ALPM – Moderní správce balíčků pro Arch Linux",
+  "date": "2026-06-26T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Arch Linux",
+    "pacman",
+    "Shelly",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "1. Co je Shelly?"
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 1280,
+          "height": 640
+        }
+      ],
+      "alt_text": "Shelly-ALPM"
+    },
+    {
+      "type": "text",
+      "text": "Shelly je grafický i příkazový správce balíčků pro Arch Linux. Na rozdíl od většiny alternativ (octopi, pamac) není wrapper nad pacmanem – komunikuje přímo s knihovnou libalpm, tedy se stejným jádrem, které používá samotný pacman.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 111,
+          "end": 136
+        },
+        {
+          "type": "code",
+          "start": 168,
+          "end": 175
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Projekt vyvíjí Zoey Bauer pod hlavičkou Seafoam Labs. Je psaný v C# (.NET 10), GUI běží na GTK 4 s nativní podporou Waylandu. Licence je GPL-3.0."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "2. Proč by tě to mělo zajímat?"
+    },
+    {
+      "type": "text",
+      "text": "Pacman je skvělý nástroj, ale jeho syntaxe není zrovna intuitivní. Porovnej:"
+    },
+    {
+      "type": "code",
+      "text": "# pacman\nsudo pacman -Syu firefox\nsudo pacman -Rns firefox\npacman -Ss firefox\n\n# shelly\nshelly install firefox\nshelly remove firefox\nshelly search firefox",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Shelly nabízí jednotnou, čitelnou syntaxi a k tomu moderní GUI, kde na jednom místě zvládneš oficiální repozitáře, AUR i Flatpak."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "3. Hlavní vlastnosti"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "CLI + GUI – shelly pro terminál, shelly-ui pro grafické rozhraní",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "code",
+              "start": 12,
+              "end": 18
+            },
+            {
+              "type": "code",
+              "start": 33,
+              "end": 42
+            }
+          ]
+        },
+        {
+          "text": "Přímá integrace s libalpm – žádný wrapper, žádná mezivrstva",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 25
+            }
+          ]
+        },
+        {
+          "text": "AUR podpora – vyhledávání, instalace i aktualizace AUR balíčků",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "Flatpak podpora – správa Flatpak aplikací včetně instalace z FlatpakRef souborů",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        },
+        {
+          "text": "Notifikace – shelly-notifications běží v tray a upozorní na dostupné aktualizace",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "code",
+              "start": 13,
+              "end": 33
+            }
+          ]
+        },
+        {
+          "text": "Nativní Wayland – GUI postavené na GTK 4",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        },
+        {
+          "text": "Themování – Shelly používá čisté GTK bez libadwaita, takže respektuje tvoje systémové téma",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "4. Instalace"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "CachyOS (v oficiálních repozitářích)"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu shelly",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "AUR (pro čistý Arch a další deriváty)"
+    },
+    {
+      "type": "code",
+      "text": "yay -S shelly",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "nebo"
+    },
+    {
+      "type": "code",
+      "text": "paru -S shelly",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Ruční build z GitHubu"
+    },
+    {
+      "type": "code",
+      "text": "git clone https://github.com/Seafoam-Labs/Shelly-ALPM.git\ncd Shelly-ALPM\nmakepkg -si",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Po instalaci máš k dispozici tři binárky:"
+    },
+    {
+      "type": "code",
+      "text": "shelly          # CLI\nshelly-ui       # GUI\nshelly-notifications  # tray notifikace",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "5. Základní použití – CLI"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Synchronizace databáze"
+    },
+    {
+      "type": "code",
+      "text": "shelly sync\nshelly sync --force    # vynutí refresh i když je DB aktuální",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aktualizace systému"
+    },
+    {
+      "type": "code",
+      "text": "shelly upgrade\nshelly upgrade --no-confirm   # bez potvrzení",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace a odebírání balíčků"
+    },
+    {
+      "type": "code",
+      "text": "shelly install firefox vim\nshelly remove firefox",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Hledání balíčků"
+    },
+    {
+      "type": "code",
+      "text": "shelly list-installed     # nainstalované balíčky\nshelly list-available     # dostupné balíčky\nshelly list-updates       # balíčky s dostupnou aktualizací",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace lokálního balíčku"
+    },
+    {
+      "type": "code",
+      "text": "shelly install-local /cesta/k/balicku.pkg.tar.zst",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "6. AUR příkazy"
+    },
+    {
+      "type": "code",
+      "text": "shelly aur search neovim       # hledání v AUR\nshelly aur install neovim-git  # instalace z AUR\nshelly aur list                # nainstalované AUR balíčky\nshelly aur list-updates        # AUR balíčky s aktualizací\nshelly aur upgrade             # aktualizace všech AUR balíčků\nshelly aur remove neovim-git   # odebrání AUR balíčku",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "7. Flatpak příkazy"
+    },
+    {
+      "type": "code",
+      "text": "shelly flatpak search signal         # hledání na Flathubu\nshelly flatpak install org.signal.Signal  # instalace\nshelly flatpak list                   # nainstalované Flatpak aplikace\nshelly flatpak upgrade               # aktualizace všech\nshelly flatpak uninstall org.signal.Signal  # odebrání\nshelly flatpak run org.signal.Signal  # spuštění",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "8. Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Při prvním spuštění se vytvoří konfigurační soubor:"
+    },
+    {
+      "type": "code",
+      "text": "~/.config/shelly/config.json"
+    },
+    {
+      "type": "text",
+      "text": "Příklad obsahu:"
+    },
+    {
+      "type": "code",
+      "text": "{\n  \"FileSizeDisplay\": \"Megabytes\",\n  \"DefaultExecution\": \"UpgradeAll\"\n}",
+      "lang": "json"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "FileSizeDisplay – formát velikosti souborů: Bytes, Megabytes, Gigabytes",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            },
+            {
+              "type": "code",
+              "start": 44,
+              "end": 49
+            },
+            {
+              "type": "code",
+              "start": 51,
+              "end": 60
+            },
+            {
+              "type": "code",
+              "start": 62,
+              "end": 71
+            }
+          ]
+        },
+        {
+          "text": "DefaultExecution – co se stane při spuštění shelly bez parametrů: UpgradeAll, UpgradeStandard, UpgradeFlatpak, UpgradeAur, Sync, SyncForce, ListInstalled",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            },
+            {
+              "type": "code",
+              "start": 44,
+              "end": 50
+            },
+            {
+              "type": "code",
+              "start": 66,
+              "end": 76
+            },
+            {
+              "type": "code",
+              "start": 78,
+              "end": 93
+            },
+            {
+              "type": "code",
+              "start": 95,
+              "end": 109
+            },
+            {
+              "type": "code",
+              "start": 111,
+              "end": 121
+            },
+            {
+              "type": "code",
+              "start": 123,
+              "end": 127
+            },
+            {
+              "type": "code",
+              "start": 129,
+              "end": 138
+            },
+            {
+              "type": "code",
+              "start": 140,
+              "end": 153
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "9. Srovnání s pacmanem"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": "Akce"
+        },
+        {
+          "text": "pacman"
+        },
+        {
+          "text": "shelly"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "Aktualizace systému"
+          },
+          {
+            "text": "sudo pacman -Syu",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 16
+              }
+            ]
+          },
+          {
+            "text": "shelly upgrade",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 14
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Instalace balíčku"
+          },
+          {
+            "text": "sudo pacman -Syu balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 24
+              }
+            ]
+          },
+          {
+            "text": "shelly install balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 22
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Odebrání balíčku"
+          },
+          {
+            "text": "sudo pacman -Rns balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 24
+              }
+            ]
+          },
+          {
+            "text": "shelly remove balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 21
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Hledání balíčku"
+          },
+          {
+            "text": "pacman -Ss balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 18
+              }
+            ]
+          },
+          {
+            "text": "shelly list-available",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 21
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Nainstalované balíčky"
+          },
+          {
+            "text": "pacman -Q",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 9
+              }
+            ]
+          },
+          {
+            "text": "shelly list-installed",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 21
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Dostupné aktualizace"
+          },
+          {
+            "text": "checkupdates",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 12
+              }
+            ]
+          },
+          {
+            "text": "shelly list-updates",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 19
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "Synchronizace DB"
+          },
+          {
+            "text": "sudo pacman -Sy",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 15
+              }
+            ]
+          },
+          {
+            "text": "shelly sync",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 11
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "AUR instalace"
+          },
+          {
+            "text": "yay -S balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 14
+              }
+            ]
+          },
+          {
+            "text": "shelly aur install balíček",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 26
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "10. Co je v plánu?"
+    },
+    {
+      "type": "text",
+      "text": "Podle roadmapy projektu se chystá:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Správa repozitářů přímo z GUI"
+        },
+        {
+          "text": "Podpora AppImage (ve stylu GearLever)"
+        },
+        {
+          "text": "Vylepšená Flatpak integrace"
+        },
+        {
+          "text": "Import seznamu balíčků – obnovení systému do uloženého stavu"
+        },
+        {
+          "text": "Ikony pro standardní balíčky při vyhledávání"
+        },
+        {
+          "text": "Spouštění aktualizací přímo z notifikací"
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "11. Pro koho je Shelly?"
+    },
+    {
+      "type": "text",
+      "text": "Shelly se hodí hlavně pro:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Začátečníky na Archu – GUI + čitelné příkazy snižují bariéru vstupu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 20
+            }
+          ]
+        },
+        {
+          "text": "Uživatele CachyOS – Shelly je součástí oficiálních repozitářů",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        },
+        {
+          "text": "Kohokoliv, kdo chce AUR + Flatpak + pacman na jednom místě",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 58
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro zkušené uživatele, kteří mají pacman v krvi a nepotřebují GUI, je Shelly spíš doplněk než náhrada. Ale ta CLI syntaxe je fakt příjemnější."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Cheat sheet"
+    },
+    {
+      "type": "code",
+      "text": "╔══════════════════╦════════════════════════════════════════════════╗\n║ KATEGORIE        ║ PŘÍKAZ                                        ║\n╠══════════════════╬════════════════════════════════════════════════╣\n║ SYSTÉM           ║                                                ║\n║                  ║ shelly sync           → synchronizace DB       ║\n║                  ║ shelly upgrade        → aktualizace systému    ║\n║                  ║ shelly list-updates   → dostupné aktualizace   ║\n╠══════════════════╬════════════════════════════════════════════════╣\n║ BALÍČKY          ║                                                ║\n║                  ║ shelly install pkg    → instalace              ║\n║                  ║ shelly remove pkg     → odebrání               ║\n║                  ║ shelly list-installed → nainstalované           ║\n║                  ║ shelly install-local  → lokální balíček        ║\n╠══════════════════╬════════════════════════════════════════════════╣\n║ AUR              ║                                                ║\n║                  ║ shelly aur search     → hledání v AUR          ║\n║                  ║ shelly aur install    → instalace z AUR        ║\n║                  ║ shelly aur upgrade    → aktualizace AUR        ║\n║                  ║ shelly aur list       → nainstalované AUR      ║\n╠══════════════════╬════════════════════════════════════════════════╣\n║ FLATPAK          ║                                                ║\n║                  ║ shelly flatpak search → hledání na Flathubu    ║\n║                  ║ shelly flatpak install→ instalace              ║\n║                  ║ shelly flatpak upgrade→ aktualizace všech      ║\n║                  ║ shelly flatpak list   → nainstalované          ║\n╠══════════════════╬════════════════════════════════════════════════╣\n║ GUI              ║                                                ║\n║                  ║ shelly-ui             → grafické rozhraní      ║\n║                  ║ shelly-notifications  → tray notifikace        ║\n╚══════════════════╩════════════════════════════════════════════════╝"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "text": "Odkazy:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 7
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "GitHub: github.com/Seafoam-Labs/Shelly-ALPM",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/Seafoam-Labs/Shelly-ALPM",
+              "start": 8,
+              "end": 43
+            }
+          ]
+        },
+        {
+          "text": "Web: shellyalpm.com",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://shellyalpm.com",
+              "start": 5,
+              "end": 19
+            }
+          ]
+        },
+        {
+          "text": "Licence: GPL-3.0"
+        },
+        {
+          "text": "Aktuální verze: v2.0.5"
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/shelly-alpm-moderni-spravce-balicku/index.md"
+  }
+}

@@ -1,0 +1,918 @@
+{
+  "slug": "hugo-na-oscloud",
+  "title": "Hugo na OSCloud: Statický web bez kompromisů",
+  "date": "2026-07-04T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Hugo",
+    "OSCloud",
+    "Cloudron",
+    "Surfer",
+    "LAMP",
+    "statický web",
+    "self-hosting",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "featured.png"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "02.png",
+          "width": 865,
+          "height": 329
+        }
+      ],
+      "alt_text": "Hugo na OSCloud"
+    },
+    {
+      "type": "text",
+      "text": "WordPress nám sloužil roky a pro spoustu projektů je skvělá volba. Pro náš technický blog o Arch Linuxu jsme ale hledali něco bližšího naší filozofii — psát články v Markdownu, verzovat v Gitu a mít web pod plnou kontrolou bez zbytečné komplexity."
+    },
+    {
+      "type": "text",
+      "text": "Přešli jsme na Hugo — statický generátor napsaný v Go, který z Markdownu vytvoří kompletní web za zlomek sekundy. Žádné PHP, žádná databáze, žádné bezpečnostní díry. A celé to běží na OSCloud.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://gohugo.io/",
+          "start": 15,
+          "end": 19
+        },
+        {
+          "type": "link",
+          "url": "https://oscloud.cz",
+          "start": 184,
+          "end": 191
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je Hugo?"
+    },
+    {
+      "type": "text",
+      "text": "Hugo je open-source generátor statických webů. Místo toho, aby server při každém požadavku tahal data z databáze a skládal stránku za běhu (jako WordPress), Hugo vygeneruje všechny HTML soubory předem. Výsledek je jednoduchá složka souborů, kterou hodíte na jakýkoliv webserver."
+    },
+    {
+      "type": "text",
+      "text": "Co to znamená v praxi:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Rychlost — stránky se načítají okamžitě, protože server jen servíruje hotové soubory",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Bezpečnost — žádný PHP interpret, žádná databáze = žádný útočný vektor",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "Jednoduchost — články píšete v Markdownu, verzujete v Gitu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        },
+        {
+          "text": "Nulová údržba — žádné aktualizace pluginů, žádné padající databáze",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Hugo má přes 88 000 hvězd na GitHubu a aktivní komunitu. Podporuje témata, vícejazyčnost, taxonomie, RSS, vyhledávání a spoustu dalšího."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je OSCloud?"
+    },
+    {
+      "type": "text",
+      "text": "OSCloud je česká cloudová platforma zaměřená na soukromí a open source. OSCloud nabízí hosting open-source aplikací jako alternativu ke komerčním cloudům. Najdete tu Nextcloud, Matrix, PeerTube, Gitea, GoToSocial,Mastodon, Pixelfed, VHSky a desítky dalších služeb. A taky hosting webů — WordPress, LAMP, Grav nebo Surfer pro statické weby.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://oscloud.cz",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "type": "bold",
+          "start": 314,
+          "end": 320
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro hosting Hugo webu máte na OSCloud dvě varianty: Surfer a LAMP. Každá se hodí na něco jiného.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 52,
+          "end": 58
+        },
+        {
+          "type": "bold",
+          "start": 61,
+          "end": 65
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Varianta 1: Surfer — jednoduchý statický hosting"
+    },
+    {
+      "type": "text",
+      "text": "Surfer je minimalistická Cloudron aplikace pro servírování statických souborů. Nic víc, nic míň. Nahrajete soubory a web běží — žádný Apache, žádný nginx config."
+    },
+    {
+      "type": "text",
+      "text": "Surfer nabízí:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Webové rozhraní pro správu souborů na https://vasedomena.cz/_admin/",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            },
+            {
+              "type": "code",
+              "start": 38,
+              "end": 67
+            }
+          ]
+        },
+        {
+          "text": "CLI nástroj pro nahrávání z terminálu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        },
+        {
+          "text": "SFTP přístup pro nahrávání přes FileZilla nebo příkazovou řádku",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        },
+        {
+          "text": "WebDAV endpoint",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        },
+        {
+          "text": "Vlastní 404 stránka — stačí nahrát 404.html do kořene",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 19
+            },
+            {
+              "type": "code",
+              "start": 35,
+              "end": 43
+            }
+          ]
+        },
+        {
+          "text": "Řízení přístupu — veřejný, heslem chráněný, nebo jen pro přihlášené uživatele",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Surfer je ideální když: chcete prostě hodit Hugo web na server a nic víc neřešit.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Surfer nestačí když: potřebujete server-side redirecty (.htaccess), servírovat soubory z tečkových složek (.well-known) nebo třeba Fediverse webfinger identitu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 20
+        },
+        {
+          "type": "code",
+          "start": 56,
+          "end": 65
+        },
+        {
+          "type": "code",
+          "start": 107,
+          "end": 118
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Varianta 2: LAMP — když potřebujete víc"
+    },
+    {
+      "type": "text",
+      "text": "LAMP aplikace na Cloudronu dává plný Apache s podporou .htaccess. Hugo web na něm běží úplně stejně — Apache servíruje statické soubory bez problémů — ale navíc můžete:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 55,
+          "end": 64
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nastavit redirecty a rewrite pravidla přes .htaccess",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 9,
+              "end": 37
+            },
+            {
+              "type": "code",
+              "start": 43,
+              "end": 52
+            }
+          ]
+        },
+        {
+          "text": "Servírovat obsah z .well-known složky (webfinger, Let's Encrypt verifikace)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 19,
+              "end": 30
+            },
+            {
+              "type": "code",
+              "start": 19,
+              "end": 30
+            }
+          ]
+        },
+        {
+          "text": "Propojit web s Fediverse — například redirect @arch@arch-linux.cz na GoToSocial instanci",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 15,
+              "end": 24
+            },
+            {
+              "type": "code",
+              "start": 46,
+              "end": 65
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Právě proto tento web (arch-linux.cz) běží na LAMP — potřebujeme webfinger redirect pro naši Fediverse identitu @arch@arch-linux.cz.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 112,
+          "end": 131
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "LAMP zvolte když: potřebujete cokoliv nad rámec prostého servírování souborů.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Krok za krokem: Hugo web na OSCloud"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "1. Instalace Hugo"
+    },
+    {
+      "type": "text",
+      "text": "Na Arch Linuxu:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S hugo\nhugo version",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Na Ubuntu/Debianu:"
+    },
+    {
+      "type": "code",
+      "text": "sudo apt install hugo",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Nebo stáhněte nejnovější verzi z GitHubu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/gohugoio/hugo/releases",
+          "start": 33,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "2. Vytvoření projektu"
+    },
+    {
+      "type": "code",
+      "text": "hugo new site muj-web\ncd muj-web\ngit init",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "3. Přidání tématu"
+    },
+    {
+      "type": "text",
+      "text": "Můžete použít libovolné téma z themes.gohugo.io. My používáme Blowfish, ale pro začátek je dobré třeba Ananke:",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://themes.gohugo.io/",
+          "start": 31,
+          "end": 47
+        },
+        {
+          "type": "link",
+          "url": "https://blowfish.page/",
+          "start": 62,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "git submodule add https://github.com/gohugo-ananke/ananke themes/ananke\necho 'theme = \"ananke\"' >> hugo.toml",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "4. Základní konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Upravte hugo.toml:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "baseURL = \"https://vasedomena.cz/\"\nlanguageCode = \"cs\"\ntitle = \"Můj web\"\ntheme = \"ananke\"",
+      "lang": "toml"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "5. První článek"
+    },
+    {
+      "type": "code",
+      "text": "hugo new posts/prvni-clanek/index.md",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Otevřete content/posts/prvni-clanek/index.md a napište obsah v Markdownu:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "---\ntitle: \"Můj první článek\"\ndate: 2026-07-04\ndraft: false\ndescription: \"Zkušební článek na Hugo webu\"\ntags: [\"hugo\", \"test\"]\n---\n\nTady je obsah článku v **Markdownu**.\n\n## Podnadpis\n\n- položka jedna\n- položka dvě",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "text": "Obrázky k článku umístěte do stejné složky (content/posts/prvni-clanek/) a v textu je vložte:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 44,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "![Popis obrázku](obrazek.jpg)",
+      "lang": "markdown"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "6. Lokální náhled"
+    },
+    {
+      "type": "code",
+      "text": "hugo server -D",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Otevřete http://localhost:1313 v prohlížeči. Hugo sleduje změny a automaticky stránku obnovuje.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 9,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "7. Build"
+    },
+    {
+      "type": "code",
+      "text": "hugo --minify",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Výsledné soubory najdete ve složce public/. To je váš kompletní web — čisté HTML, CSS a JavaScript.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 35,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "8. Nasazení na OSCloud"
+    },
+    {
+      "type": "text",
+      "text": "Deploy záleží na tom, kterou aplikaci jste si zvolili."
+    },
+    {
+      "type": "text",
+      "text": "Pro Surfer — CLI:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# instalace CLI\nnpm -g install cloudron-surfer\n\n# konfigurace\nsurfer config --server https://vasedomena.cz --token VAS_API_TOKEN\n\n# nahrání souborů\nsurfer put public/* /",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "API token vytvoříte v Surfer admin rozhraní (https://vasedomena.cz/_admin/) v sekci Settings.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 45,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro Surfer — SFTP:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "lftp -p 222 -u \"vas_uzivatel\" sftp://vas-server.oscloud.cz\n> mirror -R public/ /\n> quit",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Pro Surfer — webové rozhraní:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přetáhněte soubory do správce na https://vasedomena.cz/_admin/.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 33,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro LAMP — SFTP:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "lftp -p 222 -u \"vas_uzivatel\" sftp://vas-server.oscloud.cz\n> mirror -R public/ /public/\n> quit",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "U LAMP aplikace je SFTP root /app/data/, takže cílová složka je /public/.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 29,
+          "end": 39
+        },
+        {
+          "type": "code",
+          "start": 64,
+          "end": 72
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud potřebujete .htaccess, nahrajte ho do složky static/ v Hugo projektu — Hugo ho zkopíruje do public/ při buildu a SFTP ho nahraje na server.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 18,
+          "end": 27
+        },
+        {
+          "type": "code",
+          "start": 51,
+          "end": 58
+        },
+        {
+          "type": "code",
+          "start": 98,
+          "end": 105
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "9. Automatizace (volitelné)"
+    },
+    {
+      "type": "text",
+      "text": "Celý deploy se dá zabalit do jednoho skriptu:"
+    },
+    {
+      "type": "code",
+      "text": "#!/bin/bash\n# deploy.sh\nhugo --minify\nsurfer put public/* /\necho \"Nasazeno!\"",
+      "lang": "bash"
+    },
+    {
+      "type": "code",
+      "text": "sudo bash ./deploy.sh",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Pro LAMP variantu nahraďte surfer put za odpovídající lftp příkaz.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 27,
+          "end": 37
+        },
+        {
+          "type": "code",
+          "start": 54,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "WordPress vs Hugo"
+    },
+    {
+      "type": "text",
+      "text": "WordPress i Hugo mají své místo. Tady je srovnání, proč jsme se pro náš konkrétní případ rozhodli jinak:"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": ""
+        },
+        {
+          "text": "WordPress"
+        },
+        {
+          "text": "Hugo"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "Načítání"
+          },
+          {
+            "text": "závisí na cachingu"
+          },
+          {
+            "text": "okamžité"
+          }
+        ],
+        [
+          {
+            "text": "Bezpečnost"
+          },
+          {
+            "text": "pravidelné záplaty"
+          },
+          {
+            "text": "žádný vektor"
+          }
+        ],
+        [
+          {
+            "text": "Údržba"
+          },
+          {
+            "text": "pluginy, jádro"
+          },
+          {
+            "text": "žádná"
+          }
+        ],
+        [
+          {
+            "text": "Zálohy"
+          },
+          {
+            "text": "DB + soubory"
+          },
+          {
+            "text": "Git repo"
+          }
+        ],
+        [
+          {
+            "text": "Obsah"
+          },
+          {
+            "text": "WYSIWYG editor"
+          },
+          {
+            "text": "Markdown"
+          }
+        ],
+        [
+          {
+            "text": "Verzování"
+          },
+          {
+            "text": "nepraktické"
+          },
+          {
+            "text": "Git nativně"
+          }
+        ],
+        [
+          {
+            "text": "Server"
+          },
+          {
+            "text": "PHP + MySQL"
+          },
+          {
+            "text": "statický"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "WordPress je výborný pro weby s e-shopem, členskou sekcí nebo tam, kde obsah spravují netechničtí uživatelé přes přehledné admin rozhraní. Pro blog, kde články píšeme v terminálu a verzujeme v Gitu, nám Hugo prostě sedl líp."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Závěr"
+    },
+    {
+      "type": "text",
+      "text": "Hugo na OSCloud je kombinace, která dává smysl. Rychlý, bezpečný a jednoduchý web bez zbytečné komplexity. Články píšete v Markdownu, verzujete v Gitu a nasadíte jedním příkazem."
+    },
+    {
+      "type": "text",
+      "text": "Pro jednoduchý statický web sáhněte po Surferu. Pokud potřebujete redirecty, .well-known nebo Fediverse integraci, zvolte LAMP — obojí na OSCloud funguje skvěle.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 39,
+          "end": 46
+        },
+        {
+          "type": "code",
+          "start": 77,
+          "end": 88
+        },
+        {
+          "type": "bold",
+          "start": 122,
+          "end": 126
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud vás zajímá self-hosting a chcete mít svá data pod kontrolou, mrkněte na OSCloud — českou platformu postavenou na open-source technologiích. Kromě hostingu webů nabízí Nextcloud, Matrix chat, PeerTube, Gitea a další služby.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://oscloud.cz",
+          "start": 78,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zdrojový kód tohoto webu je veřejně dostupný na naší Gitea — pull requesty vítány.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://git.arch-linux.cz/ArchlinuxCz/web-archlinux_cz",
+          "start": 53,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "text": "Máte otázky? Napište nám na Fediverse, Matrix nebo na fórum.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 0,
+          "end": 60
+        },
+        {
+          "type": "link",
+          "url": "https://gts.arch-linux.cz/@arch",
+          "start": 28,
+          "end": 37
+        },
+        {
+          "type": "link",
+          "url": "https://matrix.to/#/#archlinuxcz:matrix.org",
+          "start": 39,
+          "end": 45
+        },
+        {
+          "type": "link",
+          "url": "https://forum.arch-linux.cz/",
+          "start": 54,
+          "end": 59
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/hugo-na-oscloud/index.md"
+  }
+}

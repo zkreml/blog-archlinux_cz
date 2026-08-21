@@ -1,0 +1,1253 @@
+{
+  "slug": "endeavouros-podrobny-pruvodce",
+  "title": "EndeavourOS – podrobný průvodce distribucí postavenou na Arch Linuxu",
+  "date": "2026-05-22T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "arch-linux",
+    "endeavouros",
+    "linux",
+    "distribuce",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.jpg",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "alt_text": "EndeavourOS"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS patří mezi nejoblíbenější distribuce založené na Arch Linuxu. Nabízí přístupný způsob, jak se dostat k čistému Arch zážitku bez nutnosti ruční instalace přes příkazový řádek. V tomto článku se podíváme na vše podstatné – od historie přes instalaci až po každodenní používání a porovnání s čistým Archem."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co je EndeavourOS?"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS je komunitní rolling-release distribuce založená přímo na Arch Linuxu. Na rozdíl od Manjara nebo jiných Arch derivátů se snaží zůstat co nejblíže vanilkovému Archu – neudržuje vlastní repozitáře s odloženými balíčky, nepřepisuje systémové nástroje a nepřidává zbytečné vrstvy abstrakce."
+    },
+    {
+      "type": "text",
+      "text": "Hlavní myšlenka je jednoduchá: vzít Arch Linux, přidat grafický instalátor Calamares a nabídnout uživateli téměř čistý systém připravený k vlastní konfiguraci. Zbytek je na vás."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Historie a vznik"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS vznikl v červenci 2019 jako duchovní nástupce zaniklé distribuce Antergos. Když vývojáři Antergosu v květnu 2019 oznámili ukončení vývoje, moderátor komunitního fóra Bryan Poerwoatmodjo přišel s nápadem zachovat alespoň komunitu na novém fóru. Během několika dní se k němu přidali další moderátoři – Johannes Kamprad, Fernando Omiechuk Frozi a Manuel – a plán se rozrostl z pouhého fóra na vznik úplně nové distribuce."
+    },
+    {
+      "type": "text",
+      "text": "Důležité je, že EndeavourOS nikdy nebyl klon Antergosu. Vývojáři vědomě zvolili vlastní cestu – jiný vizuální styl, jiný přístup k instalaci a především důraz na komunitu jako hlavní devízu projektu. Antergos používal vlastní instalátor Cnchi, který se ukázal jako problematický mimo jeho ekosystém. EndeavourOS proto přešel na Calamares, univerzální grafický instalátor používaný řadou dalších distribucí."
+    },
+    {
+      "type": "text",
+      "text": "První verze vyšla 15. července 2019 s offline instalátorem a upraveným prostředím Xfce. Online instalátor přibyl v prosinci téhož roku."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aktuální stav (2026)"
+    },
+    {
+      "type": "text",
+      "text": "V březnu 2026 vyšla verze Titan (2026.03.06) s jádrem Linux 6.19, KDE Plasma 6.6, Mesa 26.0.1 a instalátorem Calamares 26.03. V květnu 2026 ji následovala aktualizace Titan Neo s jádrem 6.19.14 a KDE Plasma 6.6.4.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 26,
+          "end": 31
+        },
+        {
+          "type": "bold",
+          "start": 167,
+          "end": 176
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Důležité změny v aktuální verzi:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "NVIDIA Open kernel moduly – od řady R590 se EndeavourOS přesunul na otevřené NVIDIA moduly, podpora pouze pro GPU řady GTX 1600 / RTX 20 (Turing) a novější",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 25
+            }
+          ]
+        },
+        {
+          "text": "eos-hwtool – nový nástroj pro správu hardwaru",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "Vylepšený mirror ranking – optimalizovaný seznam zrcadel i při offline instalaci",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        },
+        {
+          "text": "Automatická instalace Vulkan ovladačů a balíčků pro hardwarovou akceleraci videa",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 37
+            }
+          ]
+        },
+        {
+          "text": "dracut místo mkinitcpio – EndeavourOS používá dracut pro generování initramfs, což je jeden z klíčových rozdílů oproti čistému Archu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 23
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Systémové požadavky"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": "Parametr"
+        },
+        {
+          "text": "Minimum"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "Procesor"
+          },
+          {
+            "text": "64-bit dvoujádrový Intel/AMD"
+          }
+        ],
+        [
+          {
+            "text": "RAM"
+          },
+          {
+            "text": "4 GB"
+          }
+        ],
+        [
+          {
+            "text": "Disk"
+          },
+          {
+            "text": "15 GB volného místa"
+          }
+        ],
+        [
+          {
+            "text": "Firmware"
+          },
+          {
+            "text": "UEFI (doporučeno)"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Stažení a ověření ISO"
+    },
+    {
+      "type": "text",
+      "text": "ISO stáhnete z endeavouros.com. Velikost ISO je přibližně 3,4 GB.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://endeavouros.com",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# ověření integrity\nsha512sum -c EndeavourOS_Titan-Neo-2026.04.27.iso.sha512\n\n# ověření GPG podpisu\ngpg --recv-keys CDF595A1\ngpg --verify EndeavourOS_Titan-Neo-2026.04.27.iso.sig",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytvoření bootovacího USB"
+    },
+    {
+      "type": "code",
+      "text": "# pomocí dd\nsudo dd if=EndeavourOS_Titan-Neo-2026.04.27.iso of=/dev/sdX bs=4M status=progress oflag=sync\n\n# nebo pomocí ventoy\n# https://www.ventoy.net",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Dva režimy instalace"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS nabízí dva způsoby instalace:"
+    },
+    {
+      "type": "text",
+      "text": "Offline instalace – nevyžaduje internet. Nainstaluje KDE Plasma v konfiguraci totožné s live prostředím. Ideální pro rychlý start nebo prostředí bez připojení.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Online instalace (netinstall) – vyžaduje internet. Stahuje balíčky přímo z repozitářů, takže máte zaručeně nejnovější verze. Hlavní výhodou je výběr desktopového prostředí přímo během instalace.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Dostupná desktopová prostředí (online instalace)"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "KDE Plasma – výchozí, moderní a vysoce konfigurovatelné",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "GNOME – minimalistické, dotykové ovládání",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Xfce – lehké, stabilní, nízká spotřeba zdrojů",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "Cinnamon – tradiční rozložení, vhodné pro přechod z Windows",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "MATE – klasický desktop, nenáročný",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "Budgie – elegantní a jednoduchý",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        },
+        {
+          "text": "LXQt – extrémně lehké prostředí",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "LXDE – starší, ale velmi nenáročné",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "i3 – tiling window manager pro pokročilé",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud se rozhodujete: pro úplné začátečníky je vhodné KDE Plasma nebo Cinnamon. Pro slabší hardware LXQt nebo Xfce. Pro pokročilé uživatele i3."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Průběh instalace"
+    },
+    {
+      "type": "text",
+      "text": "Instalátor Calamares vás provede těmito kroky:"
+    },
+    {
+      "type": "list",
+      "style": "ol",
+      "items": [
+        {
+          "text": "Jazyk a lokalizace – výběr jazyka, časové zóny a rozložení klávesnice",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        },
+        {
+          "text": "Oddíly disku – automatické rozdělení, ruční úprava nebo využití celého disku (podpora LUKS2 šifrování)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        },
+        {
+          "text": "Uživatel – nastavení jména, hesla a hostname",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Bootloader – systemd-boot nebo GRUB (výchozí je systemd-boot na UEFI systémech)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "Desktop – výběr prostředí (pouze online režim)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 7
+            }
+          ]
+        },
+        {
+          "text": "Instalace – Calamares zobrazuje průběh instalace včetně terminálového výstupu",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Po restartu vás přivítá EndeavourOS Welcome App – aplikace s odkazy na dokumentaci, aktualizaci systému a základní konfiguraci.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 24,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Po instalaci – první kroky"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aktualizace systému"
+    },
+    {
+      "type": "code",
+      "text": "# vždy jako první krok po instalaci\nsudo pacman -Syu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace AUR helperu"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS ve výchozím stavu dodává yay jako AUR helper:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 37,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# pokud by chyběl\nsudo pacman -Syu git base-devel\ngit clone https://aur.archlinux.org/yay-bin.git\ncd yay-bin\nmakepkg -si",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Základní balíčky"
+    },
+    {
+      "type": "code",
+      "text": "# editory\nsudo pacman -Syu vim neovim nano\n\n# síťové nástroje\nsudo pacman -Syu wget curl rsync openssh\n\n# systémové info\nsudo pacman -Syu htop btop fastfetch\n\n# multimédia\nsudo pacman -Syu vlc firefox thunderbird\n\n# fonty\nsudo pacman -Syu noto-fonts noto-fonts-cjk ttf-liberation",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavení firewallu"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu firewalld\nsudo systemctl enable --now firewalld",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Povolení TRIM pro SSD"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl enable --now fstrim.timer",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Správa balíčků"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS používá pacman jako hlavní správce balíčků – stejně jako čistý Arch. Žádný grafický správce balíčků není předinstalován záměrně, aby se uživatelé učili pracovat s terminálem.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 20,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Základní příkazy pacmanu"
+    },
+    {
+      "type": "code",
+      "text": "# aktualizace systému\nsudo pacman -Syu\n\n# instalace balíčku (vždy s -Syu!)\nsudo pacman -Syu nazev-balicku\n\n# vyhledání balíčku\npacman -Ss klicove-slovo\n\n# informace o balíčku\npacman -Si nazev-balicku\n\n# seznam nainstalovaných balíčků\npacman -Q\n\n# odstranění balíčku včetně závislostí\nsudo pacman -Rns nazev-balicku\n\n# vyčištění cache\nsudo pacman -Sc",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "AUR (Arch User Repository)"
+    },
+    {
+      "type": "text",
+      "text": "AUR je komunitní repozitář se zdrojovými PKGBUILD soubory. EndeavourOS ho podporuje standardně přes yay:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 100,
+          "end": 103
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# vyhledání v AUR\nyay -Ss nazev\n\n# instalace z AUR\nyay -Syu nazev-balicku",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "EndeavourOS vs. čistý Arch Linux"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": "Vlastnost"
+        },
+        {
+          "text": "EndeavourOS"
+        },
+        {
+          "text": "Arch Linux"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "Instalace"
+          },
+          {
+            "text": "Grafický Calamares"
+          },
+          {
+            "text": "Ruční (archinstall skript)"
+          }
+        ],
+        [
+          {
+            "text": "Initramfs"
+          },
+          {
+            "text": "dracut"
+          },
+          {
+            "text": "mkinitcpio"
+          }
+        ],
+        [
+          {
+            "text": "AUR helper"
+          },
+          {
+            "text": "yay předinstalován"
+          },
+          {
+            "text": "Nutno doinstalovat"
+          }
+        ],
+        [
+          {
+            "text": "Repozitáře"
+          },
+          {
+            "text": "Arch + malý EOS repo"
+          },
+          {
+            "text": "Pouze Arch"
+          }
+        ],
+        [
+          {
+            "text": "Výchozí desktop"
+          },
+          {
+            "text": "KDE Plasma"
+          },
+          {
+            "text": "Žádný"
+          }
+        ],
+        [
+          {
+            "text": "Welcome App"
+          },
+          {
+            "text": "Ano"
+          },
+          {
+            "text": "Ne"
+          }
+        ],
+        [
+          {
+            "text": "Kernel"
+          },
+          {
+            "text": "Stejný jako Arch"
+          },
+          {
+            "text": "Stejný"
+          }
+        ],
+        [
+          {
+            "text": "Balíčky"
+          },
+          {
+            "text": "Stejné jako Arch"
+          },
+          {
+            "text": "Stejné"
+          }
+        ],
+        [
+          {
+            "text": "Rolling release"
+          },
+          {
+            "text": "Ano"
+          },
+          {
+            "text": "Ano"
+          }
+        ],
+        [
+          {
+            "text": "Komunita"
+          },
+          {
+            "text": "Vlastní fórum + Telegram"
+          },
+          {
+            "text": "Arch Wiki + fórum"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS přidává oproti čistému Archu jen minimum:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "endeavouros-keyring a endeavouros-mirrorlist – klíče a zrcadla pro EOS repozitář",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 19
+            },
+            {
+              "type": "bold",
+              "start": 22,
+              "end": 44
+            }
+          ]
+        },
+        {
+          "text": "eos-hooks – hooky pro pacman",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "eos-hwtool – detekce a konfigurace hardwaru",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "eos-apps-info – Welcome App",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        },
+        {
+          "text": "Několik dalších menších utilit specifických pro EOS"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Důležité: po aktualizaci systému přes pacman -Syu dostáváte úplně stejné balíčky jako uživatelé čistého Archu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 38,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "EndeavourOS vs. Manjaro"
+    },
+    {
+      "type": "text",
+      "text": "Časté srovnání, ale přístupy jsou zásadně odlišné:"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": "Vlastnost"
+        },
+        {
+          "text": "EndeavourOS"
+        },
+        {
+          "text": "Manjaro"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "Repozitáře"
+          },
+          {
+            "text": "Přímo Arch"
+          },
+          {
+            "text": "Vlastní (zpožděné)"
+          }
+        ],
+        [
+          {
+            "text": "Balíčky"
+          },
+          {
+            "text": "Aktuální jako Arch"
+          },
+          {
+            "text": "Zpožděné o týdny"
+          }
+        ],
+        [
+          {
+            "text": "AUR kompatibilita"
+          },
+          {
+            "text": "Plná"
+          },
+          {
+            "text": "Může nastat nesoulad verzí"
+          }
+        ],
+        [
+          {
+            "text": "Předinstalovaný software"
+          },
+          {
+            "text": "Minimum"
+          },
+          {
+            "text": "Hodně"
+          }
+        ],
+        [
+          {
+            "text": "Přístup"
+          },
+          {
+            "text": "Terminálově orientovaný"
+          },
+          {
+            "text": "GUI orientovaný"
+          }
+        ],
+        [
+          {
+            "text": "Cílová skupina"
+          },
+          {
+            "text": "Mírně pokročilí"
+          },
+          {
+            "text": "Začátečníci"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS je blíže čistému Archu. Manjaro je samostatnější distribuce, která se od Archu více vzdaluje."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Vlastní nástroje EndeavourOS"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Welcome App"
+    },
+    {
+      "type": "text",
+      "text": "Grafická aplikace, která se spustí po prvním přihlášení. Obsahuje:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Odkazy na dokumentaci a fórum"
+        },
+        {
+          "text": "Aktualizaci systému"
+        },
+        {
+          "text": "Přidání/odebrání desktopových prostředí"
+        },
+        {
+          "text": "Instalaci dalších nástrojů a ovladačů"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "eos-hwtool"
+    },
+    {
+      "type": "text",
+      "text": "Nový nástroj zavedený ve verzi Titan pro detekci hardwaru a automatickou instalaci odpovídajících ovladačů."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "reflector-simple"
+    },
+    {
+      "type": "text",
+      "text": "GUI nadstavba nad reflector pro výběr nejrychlejších pacman zrcadel.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 18,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Tipy pro každodenní používání"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Automatické zálohy seznamu balíčků"
+    },
+    {
+      "type": "code",
+      "text": "# uložení seznamu explicitně instalovaných balíčků\npacman -Qqe > ~/balicky-seznam.txt\n\n# obnovení ze seznamu\nsudo pacman -Syu - < ~/balicky-seznam.txt",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Správa služeb"
+    },
+    {
+      "type": "code",
+      "text": "# seznam aktivních služeb\nsystemctl list-units --type=service --state=running\n\n# povolení služby\nsudo systemctl enable --now nazev.service\n\n# zobrazení logů\njournalctl -u nazev.service -f",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Timeshift nebo Snapper pro snapshoty"
+    },
+    {
+      "type": "code",
+      "text": "# Timeshift pro ext4/btrfs\nyay -Syu timeshift\n\n# nebo Snapper pro btrfs\nsudo pacman -Syu snapper",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Údržba systému"
+    },
+    {
+      "type": "code",
+      "text": "# kontrola neúspěšných služeb\nsystemctl --failed\n\n# kontrola logů za chyby\njournalctl -p 3 -b\n\n# vyčištění pacman cache (ponechá poslední 3 verze)\nsudo paccache -r\n\n# odebrání osiřelých balíčků\nsudo pacman -Rns $(pacman -Qdtq)",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Komunita a podpora"
+    },
+    {
+      "type": "text",
+      "text": "Komunita je považována za jednu z nejvstřícnějších v linuxovém světě. Vývojáři od začátku kladli důraz na přátelské prostředí, kde se začátečníci nebojí ptát."
+    },
+    {
+      "type": "text",
+      "text": "Hlavní zdroje:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Fórum: forum.endeavouros.com – primární místo pro dotazy a diskuze",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            },
+            {
+              "type": "link",
+              "url": "https://forum.endeavouros.com",
+              "start": 7,
+              "end": 28
+            }
+          ]
+        },
+        {
+          "text": "Telegram: oficiální skupina pro rychlou komunikaci",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "Arch Wiki: wiki.archlinux.org – protože EndeavourOS je de facto Arch, veškerá dokumentace z Arch Wiki platí i zde",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org",
+              "start": 11,
+              "end": 29
+            }
+          ]
+        },
+        {
+          "text": "Web: endeavouros.com – novinky, návody a stahování",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            },
+            {
+              "type": "link",
+              "url": "https://endeavouros.com",
+              "start": 5,
+              "end": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pro koho je EndeavourOS vhodný?"
+    },
+    {
+      "type": "text",
+      "text": "Ano, pokud:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Chcete Arch Linux bez bolestivé ruční instalace"
+        },
+        {
+          "text": "Chcete mít aktuální systém s rolling release"
+        },
+        {
+          "text": "Chcete se učit Linux a terminál, ale s bezpečnostní sítí grafického instalátoru"
+        },
+        {
+          "text": "Máte alespoň základní znalosti Linuxu (nebo ochotu se učit)"
+        },
+        {
+          "text": "Chcete minimální systém, který si sami nakonfigurujete"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Spíše ne, pokud:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Hledáte „nainstaluj a zapomeň\" distribuci – zvažte Linux Mint nebo Fedora"
+        },
+        {
+          "text": "Potřebujete dlouhodobou podporu (LTS) – zvažte Ubuntu LTS nebo Debian Stable"
+        },
+        {
+          "text": "Nechcete se vůbec dotýkat terminálu – EndeavourOS je záměrně terminálově orientovaný"
+        }
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Závěr"
+    },
+    {
+      "type": "text",
+      "text": "EndeavourOS je skvělá brána do světa Arch Linuxu. Neodstraňuje složitost Archu – jen vám usnadní ten nejtěžší krok: instalaci. Od momentu, kdy se přihlásíte do systému, pracujete s prakticky čistým Archem a máte plnou kontrolu nad tím, jak si systém přizpůsobíte."
+    },
+    {
+      "type": "text",
+      "text": "Silná a vstřícná komunita, pravidelné aktualizace ISO a minimalistický přístup bez zbytečného bloatware dělají z EndeavourOS jednu z nejlepších voleb pro uživatele, kteří chtějí Arch bez kompromisů, ale s komfortnějším startem."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "text": "Užitečné odkazy:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "EndeavourOS – oficiální web",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://endeavouros.com",
+              "start": 0,
+              "end": 27
+            }
+          ]
+        },
+        {
+          "text": "EndeavourOS fórum",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.endeavouros.com",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        },
+        {
+          "text": "EndeavourOS na Telegramu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://t.me/Endeavouros",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        },
+        {
+          "text": "Arch Wiki",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "EndeavourOS na GitHubu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/endeavouros-team",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/endeavouros-podrobny-pruvodce/index.md"
+  }
+}

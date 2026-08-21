@@ -1,0 +1,88 @@
+{
+  "slug": "jak-povolit-dvoufaktorovou-autentizaci-na-mastodon",
+  "title": "Jak povolit dvoufaktorovou autentizaci na Mastodon",
+  "date": "2022-11-25T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "mastodon",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Dvoufaktorové ověření nabízí přidaný stupeň ochrany přístupu k vašemu Mastodon účtu. Kromě samotného hesla  k účtu je při přístupu vyžadován také ověřovací klíč, který je zasílán na Vaše mobilní zařízení. Dvoufaktorové ověření zabraňuje neoprávněným uživatelům a zařízením v přístupu k vašemu účtu."
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li povolit 2FA na Mastodon, oficiální metoda je:"
+    },
+    {
+      "type": "text",
+      "text": "Nastavení > Nastavení účtu > Dvoufaktorové ověření > Nastavit",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní vám bude nabídnut QR kód, který můžete naskenovat pomocí aplikace Google Authenticator nebo třeba pomocí u nás spravovaného správce hesel Bitwarden",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://googleauthenticator.net/",
+          "start": 71,
+          "end": 91
+        },
+        {
+          "type": "link",
+          "url": "https://bitwarden.archoslinux.cz/#/login",
+          "start": 143,
+          "end": 152
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní stačí v aplikaci Bitwarden stisknout tlačítko Autentizační klíč (TOTP) a naskenovat QR kód, uložte. Teď opište ověřovací kód do kolonky *Kód pro dvoufázové ověření  a  již jen zapnout**",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "http://bitwarden.archoslinux.cz/#/login",
+          "start": 22,
+          "end": 31
+        },
+        {
+          "type": "italic",
+          "start": 142,
+          "end": 169
+        },
+        {
+          "type": "bold",
+          "start": 169,
+          "end": 181
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní máte dvoufázové ověřování zapnuté.  Ztratíte-li někdy přístup ke svému telefonu, můžete k získání přístupu k účtu použít jeden ze záložních kódů. Uchovejte tyto kódy v bezpečí..",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 151,
+          "end": 180
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/jak-povolit-dvoufaktorovou-autentizaci-na-mastodon.md"
+  }
+}

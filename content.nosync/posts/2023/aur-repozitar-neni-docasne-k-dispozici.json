@@ -1,0 +1,63 @@
+{
+  "slug": "aur-repozitar-neni-docasne-k-dispozici",
+  "title": "AUR repozitář není dočasně k dispozici",
+  "date": "2023-05-05T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "AUR je v současné době nedostupný z důvodu některých nefunkčních odkazů v podkladu  Git uložiště, které je potřeba opravit. Uvedl to vývojář Morten Linderud v mailing listu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://lists.archlinux.org/archives/users/c62376e598e8403881c98f36535e4b3d/",
+          "start": 141,
+          "end": 156
+        },
+        {
+          "type": "link",
+          "url": "https://lists.archlinux.org/archives/list/aur-general@lists.archlinux.org/thread/Z4A6LKBQW4JYQL6P7ZMWT27SE4QQ4WKO/",
+          "start": 159,
+          "end": 173
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Na opravě se pracuje, ale potrvá několik hodin."
+    },
+    {
+      "type": "text",
+      "text": "Arch User Repository (AUR) je komunitou řízené úložiště pro uživatele Archu. Obsahuje popisy balíčků ( PKGBUILDs ), které vám umožňují zkompilovat balíček ze zdrojového kódu pomocí makepkg a poté jej nainstalovat pomocí pacman.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/PKGBUILD",
+          "start": 103,
+          "end": 112
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Makepkg",
+          "start": 181,
+          "end": 188
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Pacman#Additional_commands",
+          "start": 220,
+          "end": 226
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/aur-repozitar-neni-docasne-k-dispozici.md"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "wiki-arch-linux-cz",
+  "title": "Wiki Arch Linux CZ",
+  "date": "2023-01-01T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "wiki",
+    "Naše komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Protože články s návody se zde časem mohou ztrácet a musí se hledat, rozhodl jsem se vyzkoušet nainstalovat na náš server Wiki Arch LInux CZ.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.arch-linux.cz",
+          "start": 122,
+          "end": 140
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Není to  úplně klasická Wiki, kterou používají ostatní distribuce, ale je tvořena formou knihovny, ve které jsou uloženy knihy s návody."
+    },
+    {
+      "type": "text",
+      "text": "Zatím to jsou začátky, ale budu se snažit postupně  návody nahrávat i na Wiki ",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.arch-linux.cz",
+          "start": 73,
+          "end": 78
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Kdyby někdo chtěl pomoc sepsat návod, nebo i jen krátký článek sem na naše stránky budu rád za jakoukoliv pomoc."
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/wiki-arch-linux-cz.md"
+  }
+}

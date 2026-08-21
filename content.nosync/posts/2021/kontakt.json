@@ -1,0 +1,99 @@
+{
+  "slug": "kontakt",
+  "title": "Kontakt",
+  "date": "2021-12-11T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "  archos@arch-linux.cz   (  PGP   |   Keyoxide) ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "mailto:archos@arch-linux.cz",
+              "start": 0,
+              "end": 23
+            },
+            {
+              "type": "link",
+              "url": "https://keyoxide.org/8B4BFBDECF67A57B56CAAEEF73F17C5E85E9DE2C",
+              "start": 37,
+              "end": 48
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Tato adresa funguje i pro XMPP."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": " @archos ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://telegram.me/Zdendys",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "[[  m  ]  @archos:mxchat.cz ](https://matrix.to/#/@archos:mxchat.cz)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 3,
+              "end": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "  @archos@mastodon.arch-linux.cz ",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://mastodon.arch-linux.cz/@archos",
+              "start": 0,
+              "end": 33
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "kontakt.md"
+  },
+  "page": true
+}

@@ -1,0 +1,185 @@
+{
+  "slug": "searxng-cz-vyhledavac-ktery-chrani-vase-soukromi",
+  "title": "SearxNG: Vyhledávač, který chrání vaše soukromí",
+  "date": "2023-11-20T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "searxng",
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Úvod"
+    },
+    {
+      "type": "text",
+      "text": "V době, kdy je soukromí na internetu stále více ohroženo, přichází SearxNG CZ jako bezpečná alternativa pro prohlížení webu. Postavený na základech projektu SearxNG, tento vyhledávač je zaměřený na ochranu osobních údajů svých uživatelů.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://searxng.cz/",
+          "start": 67,
+          "end": 77
+        },
+        {
+          "type": "link",
+          "url": "https://searxng.cz/info/en/about",
+          "start": 157,
+          "end": 164
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Výhody Aplikace"
+    },
+    {
+      "type": "text",
+      "text": "Respekt k soukromí: SearxNG CZ, vycházející z projektu SearxNG, neuchovává vaše osobní údaje, jako jsou IP adresy nebo vyhledávací dotazy, čímž zajišťuje, že vaše prohlížení zůstane opravdu soukromé.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        },
+        {
+          "type": "link",
+          "url": "https://searxng.cz/",
+          "start": 20,
+          "end": 30
+        },
+        {
+          "type": "link",
+          "url": "https://docs.searxng.org/",
+          "start": 55,
+          "end": 63
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Open Source: Jako část open-source komunity SearxNG,  nabízí transparentní a bezpečný kód, který je průběžně vylepšován komunitou vývojářů.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "link",
+          "url": "https://github.com/searxng/searxng",
+          "start": 86,
+          "end": 89
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Personalizace: Uživatelé mají možnost přizpůsobit si vyhledávač SearxNG CZ podle svých potřeb, a to vše s ujištěním, že jejich soukromí zůstane chráněno.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 13
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Bezpečnostní aspekty"
+    },
+    {
+      "type": "text",
+      "text": "Zabezpečení proti sledování: Stejně jako originální SearxNG, i SearxNG CZ chrání uživatele před sledováním třetími stranami.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Šifrování: Šifrování zajišťuje, že jakékoli sdílení dat mezi uživatelem a SearxNG CZ je bezpečné a chráněné.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Porovnání s jinými vyhledávači"
+    },
+    {
+      "type": "text",
+      "text": "SearxNG CZ, stavějící na silném základu SearxNG, nabízí více funkcí soukromí a bezpečnosti než tradiční vyhledávače jako Google nebo Bing."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Jak začít SearxNG CZ používat"
+    },
+    {
+      "type": "text",
+      "text": "Nastavení SearxNG CZ jako vašeho výchozího vyhledávače je snadný a rychlý proces, který vám umožní začít prohlížet internet s důrazem na soukromí."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Závěr"
+    },
+    {
+      "type": "text",
+      "text": "SearxNG CZ nabízí výkonnou a soukromou alternativu k běžným vyhledávačům. Postavený na ověřených principech projektu SearxNG, je ideální pro ty, kteří chtějí chránit své osobní údaje na internetu."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zdrojový kód",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/searxng/searxng",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Webová stránka projektu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://docs.searxng.org/",
+              "start": 0,
+              "end": 23
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/searxng-cz-vyhledavac-ktery-chrani-vase-soukromi.md"
+  }
+}

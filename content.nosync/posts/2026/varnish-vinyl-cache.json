@@ -1,0 +1,310 @@
+{
+  "slug": "varnish-vinyl-cache",
+  "title": "Arch News: Varnish se přejmenoval na Vinyl Cache",
+  "date": "2026-05-25T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "news",
+    "varnish",
+    "migrace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.jpg",
+          "width": 670,
+          "height": 377
+        }
+      ],
+      "alt_text": "Varnish Cache"
+    },
+    {
+      "type": "text",
+      "text": "Pokud na svém systému provozuješ reverzní proxy nebo HTTP cache postavenou na Varnishi, pozor — upstream projekt se přejmenoval na Vinyl Cache a Arch ho následoval. Balíček varnish byl odstraněn z repozitáře [extra] a nahrazen novým balíčkem vinyl-cache.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 131,
+          "end": 142
+        },
+        {
+          "type": "code",
+          "start": 173,
+          "end": 180
+        },
+        {
+          "type": "code",
+          "start": 208,
+          "end": 215
+        },
+        {
+          "type": "code",
+          "start": 242,
+          "end": 253
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Změna není jen kosmetická. Přejmenovaly se binárky, adresáře, systemd jednotky i systémoví uživatelé. Po upgradu je nutná ruční migrace."
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co se změnilo"
+    },
+    {
+      "type": "table",
+      "align": [
+        "left",
+        "left"
+      ],
+      "header": [
+        {
+          "text": "Staré"
+        },
+        {
+          "text": "Nové"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "text": "/etc/varnish",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 12
+              }
+            ]
+          },
+          {
+            "text": "/etc/vinyl-cache",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 16
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "/var/lib/varnish",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 16
+              }
+            ]
+          },
+          {
+            "text": "/var/lib/vinyl-cache",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 20
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "varnish.service",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 15
+              }
+            ]
+          },
+          {
+            "text": "vinyl-cache.service",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 19
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "varnishncsa.service",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 19
+              }
+            ]
+          },
+          {
+            "text": "vinylncsa.service",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 0,
+                "end": 17
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "uživatel varnish",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 9,
+                "end": 16
+              }
+            ]
+          },
+          {
+            "text": "uživatel vinyl",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 9,
+                "end": 14
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "skupina varnish",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 8,
+                "end": 15
+              }
+            ]
+          },
+          {
+            "text": "skupina vinyl",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 8,
+                "end": 13
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "uživatel varnishlog",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 9,
+                "end": 19
+              }
+            ]
+          },
+          {
+            "text": "uživatel vinyllog",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 9,
+                "end": 17
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "text": "uživatel vcache",
+            "formatting": [
+              {
+                "type": "code",
+                "start": 9,
+                "end": 15
+              }
+            ]
+          },
+          {
+            "text": "beze změny"
+          }
+        ]
+      ]
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Postup migrace"
+    },
+    {
+      "type": "code",
+      "text": "# 1. nainstaluj nový balíček\nsudo pacman -Syu vinyl-cache\n\n# 2. přejmenuj adresáře\nsudo mv /etc/varnish /etc/vinyl-cache\nsudo mv /var/lib/varnish /var/lib/vinyl-cache\n\n# 3. oprav vlastnictví souborů\nsudo chown -R vinyl:vinyl /var/lib/vinyl-cache\n\n# 4. vypni staré systemd jednotky, zapni nové\nsudo systemctl disable --now varnish.service varnishncsa.service\nsudo systemctl enable --now vinyl-cache.service vinylncsa.service\n\n# 5. zkontroluj stav\nsystemctl status vinyl-cache.service\njournalctl -u vinyl-cache.service -n 30",
+      "lang": "bash"
+    },
+    {
+      "type": "hr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Poznámky"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch momentálně neplánuje udržovat balíček varnish jako samostatný fork — jedinou podporovanou cestou je přechod na vinyl-cache.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 43,
+              "end": 50
+            },
+            {
+              "type": "code",
+              "start": 116,
+              "end": 127
+            }
+          ]
+        },
+        {
+          "text": "Pokud máš v konfiguraci reference na staré cesty nebo názvy uživatelů, je potřeba je ručně opravit."
+        },
+        {
+          "text": "Detailní přehled breaking changes najdeš v arch-announce mailing listu..",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://lists.archlinux.org/archives/list/arch-announce@lists.archlinux.org/thread/4BSRLLGJ5552NASTYKCDZ3Q6DIMW2J4J/",
+              "start": 43,
+              "end": 71
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/varnish-vinyl-cache/index.md"
+  }
+}

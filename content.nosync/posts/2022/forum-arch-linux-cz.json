@@ -1,0 +1,56 @@
+{
+  "slug": "forum-arch-linux-cz",
+  "title": "Fórum Arch Linux Cz",
+  "date": "2022-03-03T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "zprávy",
+    "komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Dnes bylo spuštěno oficiální fórum české komunity Arch Linuxu  v plné a již funkční podobě. Samozřejmě je prozatím prázdné a nějakou dobu potrvá, než se zaplní obsahem, k čemuž doufáme, že přispějete i vy, návštěvníci stránek.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://forum.arch-linux.cz/",
+          "start": 19,
+          "end": 62
+        },
+        {
+          "type": "bold",
+          "start": 19,
+          "end": 61
+        },
+        {
+          "type": "bold",
+          "start": 189,
+          "end": 204
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Fórum je zcela přístupné veřejnosti a pro prohlížení není třeba se registrovat. Pokud se zaregistrujete, můžete na fórum přispívat a pomáhat tak vylepšit jeho obsah. Registrace je zcela bezplatná a velmi rychlá.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 9,
+          "end": 35
+        },
+        {
+          "type": "bold",
+          "start": 186,
+          "end": 196
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/forum-arch-linux-cz.md"
+  }
+}

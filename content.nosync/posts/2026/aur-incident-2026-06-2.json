@@ -1,0 +1,135 @@
+{
+  "slug": "aur-incident-2026-06-2",
+  "title": "Bezpečnostní incident: škodlivé balíčky v AUR",
+  "date": "2026-06-12T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "aur",
+    "bezpečnost",
+    "arch linux",
+    "Zprávy",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux tým dnes oznámil aktivní bezpečnostní incident v AUR (Arch User Repository)."
+    },
+    {
+      "type": "text",
+      "text": "V repozitáři bylo detekováno velké množství škodlivých adoptací a aktualizací balíčků. Tým aktivně pracuje na jejich identifikaci a zamezení dalších škodlivých commitů."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co to znamená pro tebe"
+    },
+    {
+      "type": "text",
+      "text": "Dočasně mohou být omezeny tyto funkce AUR:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "registrace nových účtů"
+        },
+        {
+          "text": "push aktualizací balíčků"
+        },
+        {
+          "text": "adopce a vytváření nových balíčků"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Před každou aktualizací AUR balíčku pečlivě zkontroluj PKGBUILD a install skripty – platí to vždy, ale teď obzvlášť.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 81
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud narazíš na podezřelý commit, nahlásit ho můžeš na mailing listu aur-general.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 70,
+          "end": 81
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zdroj: archlinux.org",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/news/active-aur-malicious-packages-incident/",
+          "start": 7,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aktualizace 13. 6. 2026"
+    },
+    {
+      "type": "text",
+      "text": "Arch tým zveřejnil seznam podezřelých balíčků – obsahuje tisíce položek (mnoho z nich jsou opuštěné nebo dlouhodobě neudržované balíčky, ne nutně škodlivé).",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://md.archlinux.org/s/SxbqukK6IA",
+          "start": 19,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Jak zkontrolovat svůj systém"
+    },
+    {
+      "type": "text",
+      "text": "Stáhni si seznam a porovnej s nainstalovanými AUR balíčky:"
+    },
+    {
+      "type": "code",
+      "text": "curl -s https://md.archlinux.org/SxbqukK6IA/download > /tmp/aur-bad.txt\npacman -Qm | awk '{print $1}' | grep -Fxf /tmp/aur-bad.txt",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Pokud nic nevypíše, jsi v bezpečí. Pokud něco vypíše, doporučuji balíček odebrat:"
+    },
+    {
+      "type": "code",
+      "text": "yay -Rns nazev-balicku",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Pro důkladnou kontrolu systému můžeš použít:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S chkrootkit\nsudo chkrootkit",
+      "lang": "bash"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/aur-incident-2026-06/index.md"
+  }
+}

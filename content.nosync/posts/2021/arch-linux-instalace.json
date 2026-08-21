@@ -1,0 +1,853 @@
+{
+  "slug": "arch-linux-instalace",
+  "title": "Arch Linux Instalace",
+  "date": "2021-12-30T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "instalace",
+    "Návody",
+    "Arch Linux",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Velké poděkování patří uživateli raven2cz, který připravil tento skvělý návod včetně videa. Video je již nahráno na našem PeerTube kanále.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 33,
+          "end": 41
+        },
+        {
+          "type": "link",
+          "url": "https://peertube.arch-linux.cz/c/videa_archlinuxcz/videos?s=1",
+          "start": 122,
+          "end": 137
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava zařízení pro instalaci"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Stažení ISO a vytvoření BOOT USB disku"
+    },
+    {
+      "type": "text",
+      "text": "Stažení ArchLinux ISO, ve Win použít Rufus software (portable) na flash disk. V Linuxu použít dd command.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 21
+        },
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/jak-stahnout/",
+          "start": 0,
+          "end": 21
+        },
+        {
+          "type": "code",
+          "start": 94,
+          "end": 96
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava partitions na cílovém disku"
+    },
+    {
+      "type": "text",
+      "text": "Zjistit disky a souborové systémy fdisk -l, pak cfdisk /dev/, zkontroluj kterou partition přesně použít pro umístění root adresáře, popř. domácího adresáře; např. pro nvmeXn1 bude nvmeXn1p2 nebo p3 apod. Pro EFI partition použít alespoň +256M parameter; nastav pro ni partition type to EFI System (type 1), pro root partition / nastavit Linux system.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 34,
+          "end": 42
+        },
+        {
+          "type": "code",
+          "start": 48,
+          "end": 60
+        },
+        {
+          "type": "code",
+          "start": 237,
+          "end": 242
+        },
+        {
+          "type": "code",
+          "start": 286,
+          "end": 305
+        },
+        {
+          "type": "code",
+          "start": 326,
+          "end": 327
+        },
+        {
+          "type": "code",
+          "start": 337,
+          "end": 349
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "DŮLEŽITÉ: Návod používá dnes již standardní UEFI. Pokud testuje Arch dle tohoto seriálu v VirtualBox. Je nutné na záložce Systém VM označit checkbox EFI. Aby bylo možné používat EFI pro boot systému, jinak nepůjde instalovat bootloader.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "bold",
+          "start": 132,
+          "end": 152
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Vytvoření souborových systémů"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Formát diskových oddílů"
+    },
+    {
+      "type": "text",
+      "text": "Zvolení formátu pro diskové oddíly: MBR nebo GPT. Pro GPT nutno UEFI a 64bit OS. Již pro nové stanice s novým HW doporučuji GPT a to s dual boot pro Win10/11 + Linux.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 36,
+          "end": 39
+        },
+        {
+          "type": "code",
+          "start": 45,
+          "end": 48
+        },
+        {
+          "type": "code",
+          "start": 54,
+          "end": 57
+        },
+        {
+          "type": "code",
+          "start": 124,
+          "end": 127
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Formátování diskových oddílů"
+    },
+    {
+      "type": "text",
+      "text": "Formátování EFI partition fat, root partition formátuji ext4.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 29
+        },
+        {
+          "type": "code",
+          "start": 56,
+          "end": 60
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "mkfs.fat -F32 /dev/sda1\nmkfs.ext4 /dev/sda2\n\nmkswap /dev/sdxY\nswapon /dev/sdxY"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Internetové připojení"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Wifi"
+    },
+    {
+      "type": "text",
+      "text": "Podívejte se na IWD-iwctl.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Iwd",
+          "start": 16,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "iwctl\n[iwd]# device list -> opsat si označení svého wifi zařízení\n[iwd]# station  get-networks -> opsat si síť, kterou potřebujete pro připojení\n[iwd]# station  connect  -> připojit se ke zvolené síti a zadat heslo\n\ndruha moznost, pokud již informace máte předem zjištěné:\niwctl --passphrase  station  connect \n\nping archlinux.org -> otestovaní připojení"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Ethernet"
+    },
+    {
+      "type": "text",
+      "text": "Pouze otestovat připojení, zda internet je k dosažení."
+    },
+    {
+      "type": "code",
+      "text": "ping archlinux.org"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Výběr Arch Mirrors"
+    },
+    {
+      "type": "text",
+      "text": "Výběr nejbližších a rychlých zrcadel balíčků archu."
+    },
+    {
+      "type": "text",
+      "text": "Nejprve update, stažení skriptu reflector a záloha originální konfigurace.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 32,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "pacman -Syy\npacman -S reflector\ncp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak"
+    },
+    {
+      "type": "text",
+      "text": "Výběr země k nalezení nejbližších bodů připojení: US, CZ, DE atd."
+    },
+    {
+      "type": "code",
+      "text": "reflector -c \"CZ\" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Virtualbox tty rozlišení při instalaci"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S fbset\nfbset -g 2048 1080 2048 1080 32"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace základního systému (Base)"
+    },
+    {
+      "type": "text",
+      "text": "Připojení (mountování) naformátované partition připravené pro root systému"
+    },
+    {
+      "type": "code",
+      "text": "mount /dev/sda2 /mnt"
+    },
+    {
+      "type": "text",
+      "text": "Preferuji instalaci aktuálního kernelu (bez speciálních úprav a zen úprav). Bez nutnosti instalace LTS kernelu (Long Term Support). Balík jádra a dalších důležitých souvisejících nástrojů je označen linux",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 199,
+          "end": 204
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Dále doporučuji nainstalovat vhodný textový editor pro úpravu konfiguračních souborů. V mém případě, co bude prezentováno je textový editor neovim, který spouštíte příkazem nvim.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 140,
+          "end": 146
+        },
+        {
+          "type": "code",
+          "start": 173,
+          "end": 177
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "pacstrap /mnt base base-devel linux linux-headers linux-firmware neovim nano"
+    },
+    {
+      "type": "text",
+      "text": "Pro úplnost ještě uvedu instalaci s možností druhého LTS kernelu. Pro základní desktop toto není nutné. V případě problémů je možné kdykoliv doinstalovat, nebo zvolit zen-kernel."
+    },
+    {
+      "type": "code",
+      "text": "pacstrap /mnt base base-devel linux linux-headers linux-firmware linux-lts linux-lts-headers neovim nano"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Konfigurace nainstalovaného Arch systému"
+    },
+    {
+      "type": "text",
+      "text": "Generovat fstab soubor pro připojení diskových oddílů a služeb při spuštění systému. Přepínač -U je vhodný pro ukládání UUID disků, aby bylo možné jednoduše disky přehazovat a přidávat!",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 10,
+          "end": 15
+        },
+        {
+          "type": "code",
+          "start": 94,
+          "end": 96
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "genfstab -U /mnt >> /mnt/etc/fstab"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "CHROOT"
+    },
+    {
+      "type": "text",
+      "text": "Vstupte do svého nového systému pomocí chroot.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 39,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "DÚLEŽITÉ: Tento příkaz, kterému předchází příkaz mount pro root partition, je velmi užitečný pro opravu systému, reinstalace systému, opravy chyb, popřípadě volání příkazů, které vyžadují odpojený disk. USB klíčenka tak může kdykoliv sloužit pro jednoduché pořešení všech problemů. Systém se tak jednoduše stává nezničitelný.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "code",
+          "start": 49,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "arch-chroot /mnt"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení času a timezone"
+    },
+    {
+      "type": "text",
+      "text": "Pozor na tento bod. Je potřeba jej udělat pečlivě, dle mého postupu."
+    },
+    {
+      "type": "code",
+      "text": "timedatectl list-timezones\ntimedatectl set-timezone Europe/Prague\nln -sf /usr/share/zoneinfo/Europe/Prague /etc/localtime\nhwclock --systohc    (vygeneruje důležitý /etc/adjtime)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení Lokalizace"
+    },
+    {
+      "type": "text",
+      "text": "Doporučuji si ponechat US lokalizaci. V češtině potom používat určité množiny programů a nástrojů, které jsou pro češtinu vhodné. Podobně postupují i programátoři, kteří do kódu určitě nepíší české komentáře. Myšlenkově tedy mějte oddělený jazyk pro konfigurace a jazyk pro GUI.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 23,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Editujte soubor /etc/locale.gen obsahující všechny dostupné lokalizace. odkomentujte potřebné lokalizace. V našem případě odkomentujte en_US.UTF-8 UTF-8",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 16,
+          "end": 31
+        },
+        {
+          "type": "code",
+          "start": 135,
+          "end": 152
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní již můžete generovat lokalizační soubory a nakonfigurovat locale.conf Pokud tento krok uděláte špatně, budete mít velké problémy v mnoha programech a terminálových aplikacích, proto si pečlivě zkontrolujte následující příkazy.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 63,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "locale-gen\necho LANG=en_US.UTF-8 > /etc/locale.conf\nexport LANG=en_US.UTF-8"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Network konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Zadejte svůj definovaný název počítače do /etc/hostname. V mém případě r7arch. Pozor nesmí obsahovat pomlčky. Dále pak udělejte základní mapování do /etc/hosts.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 42,
+          "end": 55
+        },
+        {
+          "type": "code",
+          "start": 71,
+          "end": 77
+        },
+        {
+          "type": "code",
+          "start": 149,
+          "end": 159
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "echo r7arch > /etc/hostname\nnvim /etc/hosts (uložte následující řádky)\n127.0.0.1 localhost\n::1 localhost\n127.0.1.1 r7arch"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení root hesla"
+    },
+    {
+      "type": "text",
+      "text": "Nastavte své root heslo pomocí příkazu passwd.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 39,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace mého Fundamental Software"
+    },
+    {
+      "type": "text",
+      "text": "Nyní doporučuji nainstalovat naprosto fundamentální software pro přístup a základní obsluhu systému."
+    },
+    {
+      "type": "code",
+      "text": "pacman -S openssh networkmanager wpa_supplicant netctl\nsystemctl enable NetworkManager\nsystemctl enable sshd\n\npacman -S amd-ucode (pro AMD) pacman -S intel-ucode (pro INTEL)\nmkinitcpio -p linux"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace ovladačů a Xorg"
+    },
+    {
+      "type": "text",
+      "text": "Pro desktop je nutné nainstalovat správné grafické ovladače a základní basement pro Xorg grafické rozhraní. Toto doporučiji i v případě, že budete chtít používat Wayland s plasma nebo gnome."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "AMD grafická karta"
+    },
+    {
+      "type": "code",
+      "text": "pacman -S xorg\npacman -S mesa  (již obsažen v xorg, pouze pro informaci)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "NVIDIA grafická karta"
+    },
+    {
+      "type": "text",
+      "text": "Pokud používáte LTS, nezpomeňte zvolit suffix LTS v názvu balíčků."
+    },
+    {
+      "type": "code",
+      "text": "pacman -S xorg\npacman -S nvidia nvidia-utils\npacman -S nvidia-lts nvidia-utils-lts (varianta pro LTS kernel)"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Virtualbox Support"
+    },
+    {
+      "type": "text",
+      "text": "Pokud systém testujete v virtualboxu, doporučuji nainstalovat další balíčky."
+    },
+    {
+      "type": "code",
+      "text": "pacman -S virtualbox-guest-utils xf86-video-vmware"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "NVIDIA TTY (nespuštění tty terminálu, černá obrazovka)"
+    },
+    {
+      "type": "text",
+      "text": "Nvidia kartami občas bývá problém, dlouhé diskuze zde vést nebudu. Doporučuji přidat nvidia do KMS. Tento krok můžete udělat/neudělat kdykoliv bude potřeba, pokud ale máte černou obrazovku po restartu systému, budete toto muset udělat hned."
+    },
+    {
+      "type": "code",
+      "text": "sudo vim /etc/mkinitcpio.conf\n(editovat následující dvě řádky v souboru)\nMODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)\nFILES=\"/etc/modprobe.d/nvidia.conf\n\nsudo mkinitcpio -P\nnvim /etc/modprobe.d/nvidia.conf\n(přidat tuto řádku do souboru a uložit)\noptions nvidia_drm modeset=1"
+    },
+    {
+      "type": "text",
+      "text": "Ještě pro jistotu doporučuji přidat *nvidia-drm.modeset=1 do příkazů při spuštění kernelu v grub.cfg (pokud používáte grub). Viz dokument https://wiki.archlinux.org/index.php/kernel_parameters",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 36,
+          "end": 57
+        },
+        {
+          "type": "code",
+          "start": 92,
+          "end": 100
+        },
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/index.php/kernel_parameters](https://wiki.archlinux.org/index.php/kernel/_parameters](https://wiki.archlinux.org/index.php/kernel_parameters",
+          "start": 138,
+          "end": 192
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Později po restartu systému (teď ještě nerestartovat!) ověřit si správné instalovanou nvidia kartu pomocí příkazu"
+    },
+    {
+      "type": "code",
+      "text": "lspci -vnn | grep VGA"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Přidání uživatele Linuxu"
+    },
+    {
+      "type": "text",
+      "text": "Nyní již můžeme přidat naše uživatele linuxu. Nutno v příkazech zaměnit ` za vaše jméno. Já v ukázkách používám jméno uživatele box`.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 73,
+          "end": 128
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Velmi užitečnou výhodou v archu je použití již připravených skupin: storage a power. Umožňují jednoduše používat mountování disků a vypínání/restart systému přímo uživatelem, bez nutnosti dalších berliček.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 68,
+          "end": 75
+        },
+        {
+          "type": "code",
+          "start": 78,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "useradd -m -g users -G wheel,storage,power -s /bin/bash \npasswd \npacman -S sudo\nEDITOR=nvim visudo,  (odkomentovat řádku) %wheel ALL=(ALL) ALL"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace Bootloader Grub2"
+    },
+    {
+      "type": "text",
+      "text": "Instalace bootloaderu pro možnost dual boot s windows, popř. přepínání s dalšími operačními systémy. Rovněž konfigurace dostupných kernelů pro zavedení a spuštění. Zde je celá řada možností. Uvádím zde jedno z nejstarších řešení."
+    },
+    {
+      "type": "code",
+      "text": "pacman -S grub efibootmgr dosfstools os-prober mtools"
+    },
+    {
+      "type": "text",
+      "text": "Vytvoření adresáře kde bude mountována EFI partition:"
+    },
+    {
+      "type": "code",
+      "text": "mkdir /boot/efi"
+    },
+    {
+      "type": "text",
+      "text": "Nyní připojíme EFI partition, kterou jsme dříve vytvořili v prvním kroku instalace."
+    },
+    {
+      "type": "code",
+      "text": "mount /dev/sda1 /boot/efi"
+    },
+    {
+      "type": "text",
+      "text": "Instalace grub2 například takto pro UEFI:"
+    },
+    {
+      "type": "code",
+      "text": "grub-install --target=x86_64-efi --bootloader-id=ARCH --efi-directory=/boot/efi --recheck"
+    },
+    {
+      "type": "text",
+      "text": "V tomto případě potom budeme mít v biosu v nabídce jméno EFI části ARCH (bootloader-id).",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 67,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nakonec se musí zavolat natažení konfigurace do grub.cfg",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 48,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "grub-mkconfig -o /boot/grub/grub.cfg"
+    },
+    {
+      "type": "text",
+      "text": "Základní systém je hotov."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Restart základního systému a jeho test"
+    },
+    {
+      "type": "text",
+      "text": "Nejprve regulerně opustě chroot prostředí pomocí exit příkazu nebo klávesovou zkratkou ctrl+d. Volitelně můžete odpojit mountované disky umount -R /mnt.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 49,
+          "end": 53
+        },
+        {
+          "type": "code",
+          "start": 87,
+          "end": 93
+        },
+        {
+          "type": "code",
+          "start": 137,
+          "end": 151
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nakonec zavolejte:"
+    },
+    {
+      "type": "code",
+      "text": "reboot"
+    },
+    {
+      "type": "text",
+      "text": "Po restartu systému se spustí grub2 a po správném zavedení systému se objeví tty terminál se zadáním uživatelského jména a zvoleného hesla."
+    },
+    {
+      "type": "text",
+      "text": "Po úspěšném přihlášení jste ve svém novém Arch systému! Vítejte doma "
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 64,
+          "height": 64,
+          "src": "https://github.githubassets.com/images/icons/emoji/unicode/1f427.png"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=gpIFaCIB9Cg&t=1170s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/arch-linux-instalace.md"
+  }
+}

@@ -1,0 +1,432 @@
+{
+  "slug": "vzdalene-zalohovani-pomoci-borg-backup",
+  "title": "Vzdálené zálohování pomocí Borg Backup",
+  "date": "2023-04-08T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Aplikace návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V tomto návodu se budeme zaměřovat na vzdálené zálohování pomocí Borg Backup na Arch Linuxu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://www.borgbackup.org/",
+          "start": 64,
+          "end": 76
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace Borg Backup"
+    },
+    {
+      "type": "text",
+      "text": "Instalaci Borga jsme si ukázali v minulém díle. Stačí jen příkaz",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/jak-zalohovat-pomoci-borgbackup/",
+          "start": 42,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S borgbackup"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příprava cílového server"
+    },
+    {
+      "type": "text",
+      "text": "Na cílovém serveru je potřeba nainstalovat Borg Backup a vytvořit uživatele, který bude mít práva pro ukládání záloh. Pokud máte server s Ubuntu/Debianem, můžete nainstalovat Borg Backup pomocí příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "sudo apt install borgbackup"
+    },
+    {
+      "type": "text",
+      "text": "Dále vytvořte uživatele s názvem \"borg\", který bude mít práva pro ukládání záloh. To lze provést pomocí následujícího příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "sudo adduser borg"
+    },
+    {
+      "type": "text",
+      "text": "Poté je třeba nastavit heslo pro uživatele borg a vytvořit adresář pro ukládání záloh. Vytvořte například adresář \"/home/borg/backup\"."
+    },
+    {
+      "type": "code",
+      "text": "mkdir /home/borg/backup"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vytvoření klíče pro přihlášení"
+    },
+    {
+      "type": "text",
+      "text": "Pro přístup k cílovému serveru potřebujeme klíč pro přihlášení. Můžeme použít buď heslo nebo SSH klíč. V tomto tutoriálu se budeme zaměřovat na SSH klíč."
+    },
+    {
+      "type": "text",
+      "text": "Na stroji, který bude provádět zálohy, vygenerujeme SSH klíč pro uživatele, který bude zálohu provádět. To můžete provést pomocí následujícího příkazu:"
+    },
+    {
+      "type": "text",
+      "text": "####"
+    },
+    {
+      "type": "code",
+      "text": "ssh-keygen -t rsa"
+    },
+    {
+      "type": "text",
+      "text": "Tento příkaz vygeneruje ve vašem domovském adresáři klíče pro SSH připojení - soubor id_rsa a soubor id_rsa.pub.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 85,
+          "end": 91
+        },
+        {
+          "type": "code",
+          "start": 101,
+          "end": 111
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nyní nahrajem SSH klíče na server."
+    },
+    {
+      "type": "code",
+      "text": "cat ~/.ssh/id_rsa.pub | ssh borg@ip-adresa \"mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys\""
+    },
+    {
+      "type": "text",
+      "text": "Může se zobrazit následující zpráva:"
+    },
+    {
+      "type": "code",
+      "text": "Output\nThe authenticity of host 'ip_dadresa' can't be established.\nECDSA key fingerprint is fd:fd:d4:f9:77:fe:73:84:e1:55:00:ad:d6:6d:22:fe.\nAre you sure you want to continue connecting (yes/no)? yes"
+    },
+    {
+      "type": "text",
+      "text": "To znamená, že váš místní počítač nerozpozná vzdáleného hostitele. K tomu dojde při prvním připojení k novému hostiteli. Typ yesa stiskněte ENTERpokračovat.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 125,
+          "end": 128
+        },
+        {
+          "type": "code",
+          "start": 140,
+          "end": 145
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Poté byste měli být vyzváni k zadání hesla vzdáleného uživatelského účtu:"
+    },
+    {
+      "type": "code",
+      "text": "Output \nborg@ip_adresa's password:"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Otestujte přihlášení"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Odhlaste se ze serveru příkazem exit",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 32,
+              "end": 36
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Zkuste se přihlásit na server pomocí SSH opět příkazem ssh borg@ip_adresa",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 55,
+              "end": 73
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pokud se úspěšně přihlásíte bez zadávání hesla, pak jste správně nahráli klíče SSH na server."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pokud jste se mohli přihlásit ke svému účtu pomocí SSH bez hesla, úspěšně jste nakonfigurovali ověřování na základě klíče SSH pro váš účet. Váš mechanismus ověřování na základě hesla je však stále aktivní, což znamená, že váš server je stále vystaven útokům hrubou silou."
+    },
+    {
+      "type": "text",
+      "text": "Na tomto serveru nakonfigurováno ověřování na základě klíče SSH. Před dokončením kroků v této části se ujistěte, že máte pro účet root , nebo pokud možno, že máte na tomto serveru nakonfigurované ověřování na základě klíče SSH pro účet bez oprávnění root. server s sudo privilegia. Tento krok uzamkne přihlášení založená na heslech, takže je zásadní zajistit, že stále budete moci získat přístup pro správce.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 65,
+          "end": 134
+        },
+        {
+          "type": "code",
+          "start": 265,
+          "end": 269
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Jakmile potvrdíte, že váš vzdálený účet má oprávnění správce, přihlaste se ke vzdálenému serveru pomocí klíčů SSH, buď jako root nebo pomocí účtu s sudoprivilegia. Poté otevřete konfigurační soubor démona SSH:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 124,
+          "end": 128
+        },
+        {
+          "type": "code",
+          "start": 148,
+          "end": 152
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo nano /etc/ssh/sshd_config"
+    },
+    {
+      "type": "text",
+      "text": "Odkomentujte řádek odstraněním #a nastavte hodnotu na no. Tím zakážete možnost přihlášení přes SSH pomocí hesel účtů:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 31,
+          "end": 32
+        },
+        {
+          "type": "code",
+          "start": 54,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": ". . .\nPasswordAuthentication no\n. . ."
+    },
+    {
+      "type": "text",
+      "text": "Po dokončení uložte a zavřete soubor stisknutím tlačítka CTRL+X, pak Ypro potvrzení uložení souboru a nakonec ENTERpro ukončení nano. Abychom skutečně aktivovali tyto změny, musíme restartovat sshdservis:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 57,
+          "end": 63
+        },
+        {
+          "type": "code",
+          "start": 69,
+          "end": 70
+        },
+        {
+          "type": "code",
+          "start": 110,
+          "end": 115
+        },
+        {
+          "type": "code",
+          "start": 193,
+          "end": 197
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl restart ssh"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytvořte repozitář"
+    },
+    {
+      "type": "text",
+      "text": "Předtím, než můžete vytvářet zálohy, musíte vytvořit repozitář, což je úložiště pro vaše zálohy. To můžete udělat pomocí následujícího příkazu:"
+    },
+    {
+      "type": "code",
+      "text": "borg init -e repokey-blake2 ssh borg@ip_adresa:/home/borg/backup"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytváření záloh"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Poté, co jste vytvořili repozitář, můžete začít vytvářet zálohy. Borg Backup umožňuje vytvářet inkrementální zálohy, což znamená, že při každém zálohování se zálohuje pouze změna oproti poslední záloze. To výrazně snižuje velikost záloh a rychlost zálohování."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro vytvoření zálohy použijte následující příkaz:"
+    },
+    {
+      "type": "code",
+      "text": "borg create username@remote-server:/path/to/repo::backup-name /path/to/directory"
+    },
+    {
+      "type": "text",
+      "text": "Kde username je vaše uživatelské jméno na vzdáleném serveru, remote-server je adresa vzdáleného serveru, /path/to/repo je cesta k repozitáři na vzdáleném serveru, backup-name je jméno zálohy a /path/to/directory je cesta ke složce, kterou chcete zálohovat.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 4,
+          "end": 12
+        },
+        {
+          "type": "code",
+          "start": 61,
+          "end": 74
+        },
+        {
+          "type": "code",
+          "start": 105,
+          "end": 118
+        },
+        {
+          "type": "code",
+          "start": 163,
+          "end": 174
+        },
+        {
+          "type": "code",
+          "start": 193,
+          "end": 211
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Obnova zálohy"
+    },
+    {
+      "type": "code",
+      "text": "borg extract user@remote:/path/to/repo::backup-name /path/to/restore/folder"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Výpis záloh"
+    },
+    {
+      "type": "code",
+      "text": "borg list username@remote-server:/path/to/repo"
+    },
+    {
+      "type": "text",
+      "text": "Tento příkaz vypíše seznam všech záloh uložených v repozitáři."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytvoření skriptu pro zálohování"
+    },
+    {
+      "type": "text",
+      "text": "Nyní musíme vytvořit skript pro zálohování, který bude spouštět BorgBackup a ukládat zálohy do záložního repozitáře."
+    },
+    {
+      "type": "text",
+      "text": "Vytvořte soubor s názvem \"backup.sh\" a vložte do něj následující kód:"
+    },
+    {
+      "type": "code",
+      "text": "#!/bin/bash\n\n# Nastavení proměnných\nSOURCE=\"/cesta/k/souborum/k/zalohovani\"\nREPO=\"/cesta/k/repozitari\"\nDATE=`date +%Y-%m-%d`\n\n# Spuštění zálohování\nborg create $REPO::$DATE $SOURCE"
+    },
+    {
+      "type": "text",
+      "text": "Tento skript spustí BorgBackup a uloží zálohu do repozitáře s aktuálním datem jako název zálohy."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Skript na automatické zálohy i sprořezáváním"
+    },
+    {
+      "type": "code",
+      "text": "#!/bin/sh\n\n# Setting this, so the repo does not need to be given on the commandline:\nexport BORG_REPO=ssh://username@example.com:2022/~/backup/main\n\n# See the section \"Passphrase notes\" for more infos.\nexport BORG_PASSPHRASE='XYZl0ngandsecurepa_55_phrasea&&123'\n\n# some helpers and error handling:\ninfo() { printf \"\\n%s %s\\n\\n\" \"$( date )\" \"$*\" >&2; }\ntrap 'echo $( date ) Backup interrupted >&2; exit 2' INT TERM\n\ninfo \"Starting backup\"\n\n# Backup the most important directories into an archive named after\n# the machine this script is currently running on:\n\nborg create                         \\\n    --verbose                       \\\n    --filter AME                    \\\n    --list                          \\\n    --stats                         \\\n    --show-rc                       \\\n    --compression lz4               \\\n    --exclude-caches                \\\n    --exclude 'home/*/.cache/*'     \\\n    --exclude 'var/tmp/*'           \\\n                                    \\\n    ::'{hostname}-{now}'            \\\n    /etc                            \\\n    /home                           \\\n    /root                           \\\n    /var\n\nbackup_exit=$?\n\ninfo \"Pruning repository\"\n\n# Use the `prune` subcommand to maintain 7 daily, 4 weekly and 6 monthly\n# archives of THIS machine. The '{hostname}-*' matching is very important to\n# limit prune's operation to this machine's archives and not apply to\n# other machines' archives also:\n\nborg prune                          \\\n    --list                          \\\n    --glob-archives '{hostname}-*'  \\\n    --show-rc                       \\\n    --keep-daily    7               \\\n    --keep-weekly   4               \\\n    --keep-monthly  6\n\nprune_exit=$?\n\n# actually free repo disk space by compacting segments\n\ninfo \"Compacting repository\"\n\nborg compact\n\ncompact_exit=$?\n\n# use highest exit code as global exit code\nglobal_exit=$(( backup_exit > prune_exit ? backup_exit : prune_exit ))\nglobal_exit=$(( compact_exit > global_exit ? compact_exit : global_exit ))\n\nif [ ${global_exit} -eq 0 ]; then\n    info \"Backup, Prune, and Compact finished successfully\"\nelif [ ${global_exit} -eq 1 ]; then\n    info \"Backup, Prune, and/or Compact finished with warnings\"\nelse\n    info \"Backup, Prune, and/or Compact finished with errors\"\nfi\n\nexit ${global_exit}"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Odkazy:"
+    },
+    {
+      "type": "text",
+      "text": "Borg Backup",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "link",
+          "url": "https://www.borgbackup.org/",
+          "start": 0,
+          "end": 11
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/vzdalene-zalohovani-pomoci-borg-backup.md"
+  }
+}

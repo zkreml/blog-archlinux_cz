@@ -1,0 +1,381 @@
+{
+  "slug": "desktopovy-klient-pro-borg-backup-vorta",
+  "title": "Desktopový klient pro Borg Backup Vorta",
+  "date": "2023-04-09T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "Aplikace návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je Vorta"
+    },
+    {
+      "type": "text",
+      "text": "Vorta je open-source aplikace pro zálohování dat v Linuxu. Jedním z hlavních důvodů, proč se Vorta stala oblíbenou mezi uživateli Linuxu, je její snadná instalace a použití. Vorta je k dispozici v mnoha distribucích Linuxu, jako je například Ubuntu, Fedora, Debian, Arch Linux a další. Po instalaci aplikace se uživatelé mohou snadno připojit k existujícímu účtu Borg Backup nebo si vytvořit nový účet a začít vytvářet zálohy."
+    },
+    {
+      "type": "text",
+      "text": "Vorta má také mnoho užitečných funkcí, jako je například možnost plánovat pravidelné zálohování, možnost vytvářet zálohy z různých zdrojů dat, jako jsou například složky, soubory, nebo celé disky, a možnost šifrování záloh pro zajištění bezpečnosti dat."
+    },
+    {
+      "type": "text",
+      "text": "Dále je také možné vytvářet zálohy na vzdálených serverech."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Výhody"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Šifrované, deduplikované a komprimované zálohy využívající Borg jako backend.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 46
+            },
+            {
+              "type": "link",
+              "url": "https://borgbackup.readthedocs.io",
+              "start": 59,
+              "end": 63
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Žádné uzamčení dodavatelé – zálohujte na místní disky, svůj vlastní server nebo BorgBase , hostingovou službu pro Borgské zálohy.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 24
+            },
+            {
+              "type": "link",
+              "url": "https://www.borgbase.com",
+              "start": 80,
+              "end": 88
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Open source – zdarma k použití, úpravě, vylepšení a auditu.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Flexibilní profily pro seskupování zdrojových složek, cílů zálohování a plánů.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Jedno místo pro zobrazení všech archivů k určitému okamžiku a obnovení jednotlivých souborů.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace"
+    },
+    {
+      "type": "text",
+      "text": "K instalaci použijte balíček AUR",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://aur.archlinux.org/packages/vorta/",
+          "start": 21,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "yay -S vorta"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavení Vorty pro místní zálohy"
+    },
+    {
+      "type": "text",
+      "text": "Po spuštění Vorty byste měli vidět nové okno nastavení."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Nastavení místního úložiště"
+    },
+    {
+      "type": "text",
+      "text": "Klikněte na Úložiště rozevírací nabídku a vyberte možnost Inicializovat nové úložiště . Po kliknutí by se mělo objevit nové okno.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 12,
+          "end": 20
+        },
+        {
+          "type": "bold",
+          "start": 40,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Klikněte na"
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "04.png",
+          "src": "https://vorta.borgbase.com/assets/images/vorta/local3.png"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "ikonu a vyberte adresář, ve kterém chcete inicializovat své nové úložiště Borg. Zadejte vámi vybranou přístupovou frázi pro úložiště. Ujistěte se a uložte své přístupové heslo na bezpečném místě! Když jste si jisti, že jsou všechny informace, které jste zadali, správné, stiskněte Přidat .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 134,
+          "end": 195
+        },
+        {
+          "type": "bold",
+          "start": 281,
+          "end": 287
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přidejte složky k zálohování"
+    },
+    {
+      "type": "text",
+      "text": "S nastavením úložiště můžete nyní přidat nějaké záložní složky a vytvořit svou první zálohu. Přejděte na kartu Zdroje a přidejte nějaké složky nebo výjimky."
+    },
+    {
+      "type": "text",
+      "text": "Poté stiskněte Spustit zálohování a proveďte první zálohu. Po každé úspěšné záloze (nebo snímku) bude na Snímek záložku přidán nový řádek. Tam můžete také připojit snímek a obnovit soubory.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 15,
+          "end": 33
+        },
+        {
+          "type": "bold",
+          "start": 105,
+          "end": 111
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Obnovte soubory ze zálohy"
+    },
+    {
+      "type": "text",
+      "text": "Chcete-li začít s obnovou snímku souborů, spusťte Vorta a klikněte na kartu Archivy .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 70,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Existují dva způsoby, jak obnovit soubory pomocí Vorta, Extrahování a Připojení . Oba dosahují stejného cíle, ale jeden může být výhodnější než druhý v závislosti na situaci.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 56,
+          "end": 67
+        },
+        {
+          "type": "italic",
+          "start": 70,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Extrahování z archivu"
+    },
+    {
+      "type": "text",
+      "text": "Po otevření karty Archivy ve Vortě a výběru snímku, ze kterého chcete obnovit, klikněte na tlačítko Rozbalit v boční části a  zobrazí se následující okno.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 12,
+          "end": 25
+        },
+        {
+          "type": "bold",
+          "start": 91,
+          "end": 108
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "V dalším okně, které se zobrazí, se zobrazí dotaz na Bod extrahování nebo umístění, do kterého chcete zálohu extrahovat. Vyberte umístění a pokračujte.",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 53,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Připojení zálohy"
+    },
+    {
+      "type": "text",
+      "text": "Po otevření karty Archivy ve Vortě a výběru snímku, ze kterého chcete obnovit, klikněte na tlačítko Připojit ve spodní části. Vyberte adresář pro připojení, bude to adresář, který Vorta použije, aby vám umožnil přístup k této záloze, jako by byla stále ve vašem souborovém systému. Ujistěte se, že se jedná o prázdný adresář.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 12,
+          "end": 25
+        },
+        {
+          "type": "bold",
+          "start": 91,
+          "end": 108
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Po dokončení obnovy souborů zavřete všechna aktivní okna a stiskněte tlačítko Odpojit .",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 69,
+          "end": 85
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Důležité odkazy:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Dokumentace Borg",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            },
+            {
+              "type": "link",
+              "url": "https://borgbackup.readthedocs.io/en/stable/",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Hosting pro Borg",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            },
+            {
+              "type": "link",
+              "url": "https://www.borgbase.com/",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/desktopovy-klient-pro-borg-backup-vorta.md"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "slug": "jak-na-virtualbox",
+  "title": "Jak na VirtualBox",
+  "date": "2022-01-08T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "virtualbox",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Pro všechny co chtějí zatím jen vyzkoušet instalaci Arch Linuxu připravil raven2cz  video návod jak použit virtualizaci a připravit vše pro instalaci Arch Linuxu.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/arch-linux-instalace/",
+          "start": 52,
+          "end": 63
+        },
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 74,
+          "end": 82
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Video je již na našem PeerTube kanále a nebo video můžete zhlédnout   na Youtube autora",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://peertube.arch-linux.cz/w/hGJe97QHBVZHhBXveRaz3a",
+          "start": 22,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://youtu.be/LOMXEppGMXU"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/jak-na-virtualbox.md"
+  }
+}

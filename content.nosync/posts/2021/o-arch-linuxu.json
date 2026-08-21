@@ -1,0 +1,153 @@
+{
+  "slug": "o-arch-linuxu",
+  "title": "Co je Arch Linux",
+  "date": "2021-12-11T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux je nezávislá rolling-release linuxová distribuce, kterou v roce 2002 vytvořil Judd Vinet inspirovaný distribucí CRUX Linux. Od roku 2007 je hlavním vývojářem Aaron Griffin. Arch je od začátku komunitní projekt vyvíjený nezávisle na komerčních firmách."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Filozofie"
+    },
+    {
+      "type": "text",
+      "text": "Arch se řídí principem KISS (Keep It Simple, Stupid) — systém je navržen tak, aby byl co nejjednodušší a nejpřehlednější. Žádné grafické instalátory, žádné předinstalované haraburdí. Dostaneš čistý základ a postavíš si systém přesně podle sebe.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 23,
+          "end": 27
+        },
+        {
+          "type": "italic",
+          "start": 29,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Arch Wiki je považována za jeden z nejlepších zdrojů dokumentace v celém světě Linuxu — hodí se i uživatelům jiných distribucí."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Hlavní vlastnosti"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Rolling release — žádné velké přechody mezi verzemi, systém se průběžně aktualizuje",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        },
+        {
+          "text": "Minimální základ — instaluješ jen to, co skutečně chceš",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        },
+        {
+          "text": "AUR (Arch User Repository) — obrovský repozitář balíčků spravovaný komunitou",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        },
+        {
+          "text": "Pacman — rychlý a jednoduchý správce balíčků",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 6
+            }
+          ]
+        },
+        {
+          "text": "Aktuální software — vždy nejnovější verze balíčků",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pro koho je Arch?"
+    },
+    {
+      "type": "text",
+      "text": "Arch Linux není distribuce pro každého — a to je jeho přednost. Je určený pro uživatele, kteří chtějí rozumět svému systému, mít nad ním plnou kontrolu a nebojí se terminálu. Na druhou stranu — právě tím tě Arch naučí víc o Linuxu než jakákoliv jiná distribuce."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kde začít?"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Jak stáhnout Arch Linux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "/jak-stahnout",
+              "start": 0,
+              "end": 23
+            }
+          ]
+        },
+        {
+          "text": "Instalace Arch Linuxu",
+          "formatting": []
+        },
+        {
+          "text": "Arch Wiki",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "o-arch-linuxu.md"
+  },
+  "page": true
+}

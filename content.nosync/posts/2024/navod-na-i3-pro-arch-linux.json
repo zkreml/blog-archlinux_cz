@@ -1,0 +1,755 @@
+{
+  "slug": "navod-na-i3-pro-arch-linux",
+  "title": "Návod na i3 pro Arch Linux",
+  "date": "2024-12-06T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "I3",
+    "Arch Linux",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Úvod do i3"
+    },
+    {
+      "type": "text",
+      "text": "i3 je dynamický správce oken, který je určen pro pokročilé uživatele, kteří chtějí mít plnou kontrolu nad rozvržením svého desktopového prostředí. i3 je velmi flexibilní a umožňuje přizpůsobení pomocí klávesových zkratek, skriptů a konfigurací."
+    },
+    {
+      "type": "text",
+      "text": "Výhody i3:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Minimalistické a rychlé prostředí."
+        },
+        {
+          "text": "Plně přizpůsobitelné."
+        },
+        {
+          "text": "Podpora pro více monitorů a workspace."
+        },
+        {
+          "text": "Výborné pro efektivní multitasking a produktivitu."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Proč zvolit i3:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pokud chcete mít plnou kontrolu nad svým pracovním prostředím."
+        },
+        {
+          "text": "Pokud vám nevyhovují tradiční desktopová prostředí jako GNOME nebo KDE."
+        },
+        {
+          "text": "Pokud preferujete práci s klávesovými zkratkami a dlaždicovým rozvržením."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace i3 na Arch Linux"
+    },
+    {
+      "type": "text",
+      "text": "Pro instalaci i3 na Arch Linux použijte následující příkazy:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S i3-wm i3-gaps dmenu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "To nainstaluje i3, i3-gaps (pro přizpůsobení mezer mezi okny) a dmenu (program pro spuštění aplikací). Po instalaci můžete spustit i3 příkazem:"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Po instalaci i3 je potřeba nakonfigurovat konfigurák, který se nachází v adresáři ~/.config/i3/config. Tento soubor obsahuje výchozí nastavení, které můžete upravit podle svých potřeb.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 82,
+          "end": 101
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Výchozí konfigurace obsahuje:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Nastavení klávesových zkratek pro navigaci mezi okny a workspace."
+        },
+        {
+          "text": "Výběr vzhledu (okna, panely, motivy)."
+        },
+        {
+          "text": "Možnost přizpůsobit spouštění aplikací."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Příklad základní konfigurace:"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Nastavení mod klávesy"
+    },
+    {
+      "type": "code",
+      "text": "set $mod Mod4",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Klávesové zkratky pro přepínání mezi workspace"
+    },
+    {
+      "type": "code",
+      "text": "bindsym $mod+1 workspace 1\nbindsym $mod+2 workspace 2\n# atd.",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Klávesové zkratky a navigace"
+    },
+    {
+      "type": "text",
+      "text": "i3 používá klávesové zkratky pro efektivní ovládání systému. Zde jsou některé základní zkratky:"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Klávesové zkratky pro i3"
+    },
+    {
+      "type": "text",
+      "text": "Akce Klávesová zkratka"
+    },
+    {
+      "type": "text",
+      "text": "Otevřít terminál $mod+Enter",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 17,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zavřít aktuální okno $mod+q",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 21,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Otevřít dmenu $mod+d",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 14,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 1 $mod+1",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 2 $mod+2",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 3 $mod+3",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 4 $mod+4",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 5 $mod+5",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 6 $mod+6",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 7 $mod+7",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 8 $mod+8",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 9 $mod+9",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na workspace 10 $mod+0",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 23,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 1 $mod+Shift+1",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 2 $mod+Shift+2",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 3 $mod+Shift+3",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 4 $mod+Shift+4",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 5 $mod+Shift+5",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 6 $mod+Shift+6",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 7 $mod+Shift+7",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 8 $mod+Shift+8",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 9 $mod+Shift+9",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přesunout okno na workspace 10 $mod+Shift+0",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 31,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnutí do plovoucího režimu $mod+Shift+space",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 30,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zpět na dlaždicové okno $mod+space",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 24,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Maximální okno (fullscreen) $mod+f",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 28,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vertikální rozdělení oken $mod+v",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Horizontální rozdělení oken $mod+h",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 28,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnutí mezi okny vlevo $mod+j nebo $mod+Left",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 25,
+          "end": 31
+        },
+        {
+          "type": "code",
+          "start": 37,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnutí mezi okny vpravo $mod+k nebo $mod+Right",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 32
+        },
+        {
+          "type": "code",
+          "start": 38,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnutí mezi okny nahoru $mod+b nebo $mod+Up",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 32
+        },
+        {
+          "type": "code",
+          "start": 38,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnutí mezi okny dolů $mod+o nebo $mod+Down",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 24,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 36,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na předchozí okno $mod+Tab",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 25,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přejít na další okno $mod+Shift+Tab",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 21,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnout na předchozí workspace $mod+Shift+Tab",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 32,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Otevřít menu pro aplikace $mod+d",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 26,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zavřít okno $mod+q",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 12,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Získat aktuální stav systému $mod+Shift+c",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 29,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Restartovat i3 bez ztráty konfigurace $mod+Shift+r",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 38,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Práce s plovoucími okny"
+    },
+    {
+      "type": "text",
+      "text": "Plovoucí okna vám umožní mít okna, která nejsou v dlaždicovém rozvržení. Pro přepnutí mezi dlaždicovým a plovoucím režimem použijte následující klávesovou zkratku:"
+    },
+    {
+      "type": "code",
+      "text": "bindsym mod+Shift+space floating toggle"
+    },
+    {
+      "type": "text",
+      "text": "To umožní oknu přepnout mezi plovoucím a dlaždicovým režimem."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Jak přepínat mezi okny:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "mod+j, mod+k, mod+Left, mod+Right: Přepnutí mezi okny v rámci jednoho workspace.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 33
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pokročilé techniky"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přiřazování aplikací na workspace:"
+    },
+    {
+      "type": "text",
+      "text": "Můžete přiřadit aplikace na specifické workspace podle jejich třídy nebo instance:"
+    },
+    {
+      "type": "code",
+      "text": "assign [class=\"Firefox\"] $ws2\nassign [class=\"Xfce4-terminal\"] $ws1",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Tímto způsobem bude Firefox vždy otevřený na workspace 2 a terminál na workspace 1."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Automatické spouštění aplikací:"
+    },
+    {
+      "type": "text",
+      "text": "Pro automatické spuštění aplikací při startu i3 přidejte příkazy do konfiguračního souboru:"
+    },
+    {
+      "type": "code",
+      "text": "exec --no-startup-id picom -b  # Spuštění compositoru pro průhlednost\nexec --no-startup-id nm-applet  # Spuštění appletu pro správu sítě",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Užitečné tipy a triky"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Používejte i3bar pro zobrazení systémových informací, např. CPU, paměť, čas."
+        },
+        {
+          "text": "Používejte dmenu nebo rofi pro rychlé vyhledávání aplikací."
+        },
+        {
+          "text": "Udržujte svůj konfigurák čistý a dobře organizovaný pro snadné přizpůsobení."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Závěr"
+    },
+    {
+      "type": "text",
+      "text": "i3 je skvělý správce oken pro pokročilé uživatele, kteří chtějí maximálně přizpůsobit své pracovní prostředí. Doufám, že tento návod vám pomůže začít s i3 na Arch Linuxu a využít jeho plný potenciál."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Zdroj a další informace"
+    },
+    {
+      "type": "text",
+      "text": "Pro více informací o správci oken i3 a jeho vývojářích můžete navštívit oficiální stránky:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Oficiální web i3",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://i3wm.org/",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        },
+        {
+          "text": "GitHub repozitář i3",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/i3/i3",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/navod-na-i3-pro-arch-linux.md"
+  }
+}

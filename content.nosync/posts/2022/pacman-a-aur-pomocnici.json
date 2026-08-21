@@ -1,0 +1,835 @@
+{
+  "slug": "pacman-a-aur-pomocnici",
+  "title": "Pacman a AUR pomocníci",
+  "date": "2022-02-19T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "AUR",
+    "pacmam",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "V dalším díle seriálu  Tondy Fischera  o Arch LInuxu, se seznámíme se správci balíčku pro Arch Linux  a ukážeme si tripy a triky pro pacmana. Podíváme se na  AUR repozitář a  o používání  AUR pomocníků. Na video se můžete podívat na Youtube autora , nebo našem PeerTube kanále.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/tux",
+          "start": 23,
+          "end": 38
+        },
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/series/arch-linux-instalace/",
+          "start": 41,
+          "end": 52
+        },
+        {
+          "type": "link",
+          "url": "https://www.youtube.com/watch?v=g60xHvIEyJ0",
+          "start": 233,
+          "end": 248
+        },
+        {
+          "type": "link",
+          "url": "https://peertube.arch-linux.cz/w/cBaNDGc6eYcksKXjqHck7p",
+          "start": 261,
+          "end": 276
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Pacman"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "První krůčky"
+    },
+    {
+      "type": "text",
+      "text": "Pacman-Arch-Wiki Správce balíků pacman je jednou z hlavních charakteristických vlastností Arch Linuxu. Kombinuje jednoduchý binární formát balíčku se snadno použitelným sestavovacím systémem (build system). Cílem pacmanu je umožnit snadnou správu balíčků, ať už jsou z oficiálních úložišť, nebo z vlastních sestavení uživatele.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/pacman",
+          "start": 0,
+          "end": 16
+        },
+        {
+          "type": "code",
+          "start": 32,
+          "end": 38
+        },
+        {
+          "type": "bold",
+          "start": 90,
+          "end": 101
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pacman udržuje systém aktuální synchronizací seznamů balíků s hlavním serverem. Tento model server/klient také umožňuje uživateli stahovat/instalovat balíčky jednoduchým příkazem, doplněný o všechny požadované závislosti."
+    },
+    {
+      "type": "text",
+      "text": "Pacman je napsán v programovacím jazyce C a používá BSD tar formát pro balení."
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S awesome ## install package/meta-package\nsudo pacman -Syu ## System update\nsudo pacman -Syy ## sync database\npacman -Ss awesome ## search package with text 'gnome'\npacman -Qs awesome ## search installed packages\npacman -Si plasma-meta ## display extensive information\npacman -Qii awesome ## info + list of backup files\npacman -Qdt ## list packages no longer reqs (orphans)\nsudo pacman -Sc ## clear packages in cached packages\nsudo pacman -Scc ## all files in cache, strong aggresive, nothing leave in cache\nsudo pacman -U /path/to/package/package_name-version.pkg.tar.zst #@ install local pckage, from AUR\nsudo pacman -S --asdeps unzip ## install as dependency, can be removed as orphans\nsudo pacman -Qe mc ## list version if it is explicitly installed\nsudo pacman -D --asdeps unzip ## change the status to deps\nsudo pacman -D --asexplicit unzip\nsudo pacman -F pacman ## search files which are containing by package\nsudo pacman --needed base-devel ## install if necessary\npactree awesome ## tree of depended packages"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pacman Configuration /etc/pacman.conf"
+    },
+    {
+      "type": "text",
+      "text": "Moje nastavení s barvami, přehlednou tabulkou stažení balíčků, opravodovým pacmanem a paralelním stahováním."
+    },
+    {
+      "type": "code",
+      "text": "Color\nCheckSpace\nVerbosePkgLists\nILoveCandy\nParallelDownloads = 5"
+    },
+    {
+      "type": "text",
+      "text": "Bezpečnost a gpg podepisování: SigLevel = Required DatabaseOptional Pacman podporuje podpisy balíčků, které do balíků přidávají další vrstvu zabezpečení. Výchozí konfigurace, SigLevel = Required DatabaseOptional, umožňuje ověření podpisu pro všechny balíčky na globální úrovni.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 31,
+          "end": 67
+        },
+        {
+          "type": "code",
+          "start": 175,
+          "end": 211
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nikdy nepoužívejte SigLevel = Never (jen zcela v případě velké nouze, nebo člověka, kterého skutečně znáte a jeho závislost nelze obnovit kvůli nemoci například.)",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 19,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pacman Repositories multilib, extra, community a úrověň testing"
+    },
+    {
+      "type": "text",
+      "text": "Může se také stát, že úložiště obsahující balíček není ve vašem systému povoleno, např. Balíček může být v multilib úložišti, ale multilib není povolen ve vašem pacman.conf. Nutno povolit."
+    },
+    {
+      "type": "text",
+      "text": "Můžete se stát i testerem pro Arch. Zapnout balíčky s -testing. Nutno pak ale updatovat celý systém, není jednoduchá změna! Pozor.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 54,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "AUR (Arch User Repository)"
+    },
+    {
+      "type": "text",
+      "text": "Arch User Repository (AUR) je komunitní úložiště pro uživatele Arch. Obsahuje popisy balíků ( PKGBUILDs ), které vám umožňují sestavit balíček ze zdroje pomocí makepkg a poté jej nainstalovat pomocí pacman. AUR byla vytvořena za účelem organizace a sdílení nových balíčků z komunity a za účelem urychlení začlenění oblíbených balíčků do úložiště komunity.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 26
+        },
+        {
+          "type": "code",
+          "start": 160,
+          "end": 167
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Mnoho nových balíčků, které vstupují do oficiálních úložišť, začíná v AUR. V AUR mohou uživatelé přispívat svými vlastními sestavami balíků (PKGBUILDa související soubory). Komunita AUR má možnost hlasovat pro balíčky v AUR. Pokud se balíček stane dostatečně populárním - za předpokladu, že má kompatibilní licenci a dobrou techniku ​​balení - může být vložen do komunitního úložiště (přímo přístupného pacmanem nebo abs)."
+    },
+    {
+      "type": "text",
+      "text": "Varování: Balíčky AUR jsou uživatelsky vytvářený obsah. Tyto PKGBUILDjsou zcela neoficiální a nebyli důkladně prověřeni. Jakékoli použití poskytnutých souborů je na vaše vlastní riziko.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Yay, Paru, Aura pomocníci AUR"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "JGuer/yay - Yet Another Yogurt - An AUR Helper napsán v Go",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/Jguer/yay",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Morganamilo/paru - Paru AUR pomocník s mnoho features a minimální interakcí. Napsán Rust.",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/Morganamilo/paru",
+              "start": 0,
+              "end": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fosskers/aura - Nadstandardní služby, zajímavé funkce, downgrades a zabezpečení upgrades a snapshots ovládání. Napsáno v Haskell.",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/fosskers/aura",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Paru instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S --needed base-devel\ngit clone https://aur.archlinux.org/paru-bin.git\ncd paru-bin\nmakepkg -si"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Paru příklady užití"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru ** - Interaktivně vyhledávejte a instalujte .",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru** - Alias ​​pro paru -Syu.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru -S ** - Nainstalujte si konkrétní balíček.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "paru -Sua - Upgradujte balíčky AUR.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru -Qua** - Vytiskněte dostupné aktualizace AUR.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru -G ** - Stáhněte si PKGBUILD a související soubory z .",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "paru -Gp  - Vytiskněte PKGBUILD z .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "paru -Gc  - Vytiskněte si komentáře AUR pro .",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "paru --gendb - Vytvořte databázi devel pro sledování *-gitbalíčky. To je potřeba pouze tehdy, když zpočátku používáte paru.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 13
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**paru -Ui** - Vytvořte a nainstalujte PKGBUILD do aktuálního adresáře.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aura instalace"
+    },
+    {
+      "type": "code",
+      "text": "git clone https://aur.archlinux.org/aura-bin.git\ncd aura-bin\nmakepkg\nsudo pacman -U "
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aura zajímavé příkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Pa** - Analyzujte všechny místně nainstalované balíčky AUR.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -O** - Zobrazit osiřelé balíčky.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -L** - Zobrazit protokol Pacman.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Li ** - Zobrazit historii instalace / upgradu balíčku.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "aura -Cc  - Odstranit všechny kromě nejnovější nverze každého balíčku uloženého v mezipaměti.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "aura -C  - Downgrade balíčku.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Cv** - Odstranit všechny /var/cache/aura/vcsmezipaměti",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -B** - Uložte záznam JSON všech nainstalovaných balíčků.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Br** - Obnovte uložený záznam. Podle potřeby se vrací zpět a odinstaluje.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Bc ** - Odstranit všechny kromě nejnovější nuložené státy.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Bl** - Zobrazit všechny uložené názvy souborů stavu balíčku.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Au** - Upgradujte všechny nainstalované balíčky AUR.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "aura -Akuax - Oblíbený autor (upgrady, odstranění makedeps, ukazuje rozdíly PKGBUILD, ukazuje postup)",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            },
+            {
+              "type": "code",
+              "start": 0,
+              "end": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -As ** - Hledejte AUR pomocí regexu.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Ap ** - Zobrazit balíček PKGBUILD.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "**aura -Ad ** - Seznam závislostí balíčku.",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=g60xHvIEyJ0"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/pacman-a-aur-pomocnici.md"
+  }
+}

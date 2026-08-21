@@ -1,0 +1,104 @@
+{
+  "slug": "prvni-vydani-iso-arch-linuxu-v-roce-2023-je-venku",
+  "title": "První vydání ISO Arch Linuxu v roce 2023 je venku",
+  "date": "2023-01-02T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "iso",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Arch Linux je první distribucí GNU/Linux, která zahájila rok 2023 novým vydáním ISO zaměřeným na ty, kteří chtějí nasadit Arch Linux na nové počítače, opravit stávající, nebo jen přeinstalovat své systémy."
+    },
+    {
+      "type": "text",
+      "text": "Arch Linux 2023.01.01 není jen první vydání ISO Arch Linuxu v roce 2023, ale je to také první vydání ISO Arch Linuxu založené na nejnovější a nejlepší linuxového jádra 6.1 sérii . To znamená, že při zavádění nového Arch Linux ISO na některých počítačích získáváte lepší hardwarovou podporu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 151,
+          "end": 171
+        },
+        {
+          "type": "link",
+          "url": "https://9to5linux.com/linux-kernel-6-1-lts-released-with-initial-support-for-the-rust-programming-language",
+          "start": 151,
+          "end": 171
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Linuxové jádro 6.1.1 je standardně používáno v novém vydání Arch Linux ISO, protože nejnovější vydání jádra Linux 6.1.2, které dorazilo na Silvestra, je stále v testovacích repozitářích (obdržíte jej jako aktualizaci po instalaci ). Linuxové jádro 6.1 dorazilo do repozitářů Arch Linuxu 22. prosince 2022 pro stávající uživatele."
+    },
+    {
+      "type": "text",
+      "text": "Instalační program Arch Linuxu, archinstall, je stále ve verzi 2.5.2 (nejnovější v okamžiku psaní) v novém vydání ISO a přináší opravy pro rychlá bloková zařízení, jako jsou jednotky NVMe, a /etc/locale.genchyba s en_US.UTF-8 UTF-8locale, chyba, kdy se Archiso zobrazovalo jako volitelná jednotka, a některé pravopisné chyby.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://arch-linux.cz/archinstall-skript-pro-luks-a-btrfs-arch-linux-instalaci/",
+          "start": 32,
+          "end": 42
+        },
+        {
+          "type": "code",
+          "start": 191,
+          "end": 206
+        },
+        {
+          "type": "code",
+          "start": 214,
+          "end": 231
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Bez dalších okolků si můžete stáhnout Arch Linux 2023.01.01 právě teď z oficiálního webu nebo kliknutím na odkaz pro přímé stažení níže, pokud plánujete nasazení Arch Linuxu na nové počítače nebo přeinstalaci stávající instalace.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://archlinux.org/download/",
+          "start": 72,
+          "end": 88
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Stávající uživatelé Arch Linuxu nemusejí stahovat nové vydání ISO, ale pouze spustit sudo pacman -Syu ve své oblíbené aplikaci emulátoru terminálu, aby byly jejich instalace vždy aktuální. Připomínáme novým uživatelům, že Arch Linux se řídí modelem postupného vydávání, kde se jednou nainstaluje a budete dostávat aktualizace navždy.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 85,
+          "end": 101
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Převzato z webu 9to5linux",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 16,
+          "end": 25
+        },
+        {
+          "type": "link",
+          "url": "https://9to5linux.com/",
+          "start": 16,
+          "end": 25
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/prvni-vydani-iso-arch-linuxu-v-roce-2023-je-venku.md"
+  }
+}

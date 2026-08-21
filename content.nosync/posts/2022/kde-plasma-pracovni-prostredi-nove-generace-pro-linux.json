@@ -1,0 +1,578 @@
+{
+  "slug": "kde-plasma-pracovni-prostredi-nove-generace-pro-linux",
+  "title": "KDE Plasma - Pracovní prostředí nové generace pro Linux",
+  "date": "2022-04-30T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "KDE",
+    "Návody",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "English document variant here.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz/tux/blob/main/220327-kde/kde-en.org",
+          "start": 25,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "KDE - Pracovní prostředí nové generace pro Linux"
+    },
+    {
+      "type": "text",
+      "text": "V dalším díle seriálu Tondy Fischera si ukážeme instalaci grafického prostředí KDE.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/raven2cz",
+          "start": 22,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Mocné, multiplatformní a pro všechny. Používejte software KDE pro brouzdání na webu, komunikaci s kolegy, přáteli a rodinou, spravování svých souborů, poslech hudby a sledování videí nebo pro kreativní a produktivní práci. Komunita KDE vyvíjí a udržuje více než 200 aplikací, které běží na kterémkoliv počítači s Linuxem a často i na jiných platformách."
+    },
+    {
+      "type": "text",
+      "text": "Takto je představováno KDE na svých hlavních stránkách kde.org. Určitě lze souhlasit, že KDE patří mezi velmi dobrá plná desktopová prostředí. Společně s Gnome tvoří pár základních DE, které používají hlavní masy uživatelů GNU/Linux. Plně konfigurovatelné pomocí GUI s mnoha grafickými efekty pomocí kwin. Konfigurovatelnost tohoto DE je daleko značnější než zmiňovaný Gnome, který naopak má uživateli přinést lehkost a jednoducho použití bez nutných zdlouhavých nastavování.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://kde.org/cs/",
+          "start": 55,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "O efektivitě práce, ergonomičnosti a snížení přehmatů na myš a zpět jsme již v tomto seriálu povídali mnohokrát. Každý kdo prošel tímto kurzem již ví, že efektivita se skrývá někde jinde a je potřeba se k ní postupně dopracovat. Samozřejmě je možné toto do určitého stavu dosáhnout i pomocí KDE a jeho schopností konfigurace. Pojďme se tedy podívat na triky a tipy, jak si KDE upravit z hlediska ergonomie a efektivity práce, rovněž umožnit použití KDE aplikací v ostatních DE a WM prostředích se správným nastavením a theme."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace KDE"
+    },
+    {
+      "type": "text",
+      "text": "Nejprve je potřeba KDE nainstalovat. KDE obsahuje tisíc balíčků, z toho důvodů je možné použít skupinu (group) nebo meta skupinu (meta). Rozdíl mezi tímto způsobem viz meta package and package group. Já zde použiji starší způsob s group, ale klidně použijte novější meta balík.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/Meta_package_and_package_group",
+          "start": 168,
+          "end": 198
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Za druhé je nutné instalovat skupinu KDE aplikací, které budete chtít používat, nebo nemusíte, záleží na Vás. Opět zde je již možnost group a meta balíku, nebo si vybrat pouze část z meta-balíku, kterou nainstalujete samostatně. V případě instalace waylandu je potřeba ještě instalovat podporu pro wayland. Zde již musím ale odkázat do důkladné přečtění arch wiki a závislé stránky wayland Arch Wiki KDE",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://wiki.archlinux.org/title/KDE",
+          "start": 390,
+          "end": 403
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# egl-wayland just for Nvidia cards, not necessary for AMD\nsudo pacman -S plasma kde-applications plasma-wayland-session eql-wayland\n# next variants:\nsudo pacman -S plasma-meta kde-applications-meta\nsudo pacman -S plasma-meta kde-utilities-meta kde-network-meta kde-multimedia-meta"
+    },
+    {
+      "type": "text",
+      "text": ".Spouštěč pro X11 a wayland je již připraven v mém .xinitrc, který používáme v celém našem seriálu. Viz dolní odkaz .dotfiles na Githubu. Stačí tedy pouze s příkazové řádky spustit startx ~/.xinitrc kde, nebo pomocí display manageru vybrat xinitrc-kde z mých sessions souborů v adresáři .root.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 51,
+          "end": 59
+        },
+        {
+          "type": "code",
+          "start": 181,
+          "end": 202
+        },
+        {
+          "type": "code",
+          "start": 240,
+          "end": 251
+        },
+        {
+          "type": "code",
+          "start": 287,
+          "end": 292
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Qt5ct a Kvantum Manager"
+    },
+    {
+      "type": "text",
+      "text": "Pro plnou podoporu témat je nutné doinstalovat Kvantum Manager. Pro podporu KDE aplikací pro ostatní WM a DE je vhodné Kvantum Manager napojit na qt5ct a konfiguraci donastavit v Qt5 Config aplikaci."
+    },
+    {
+      "type": "code",
+      "text": "paru -S qt5ct kvantum\n\n# Environment variables settings (e.g.in .xinitrc)\nexport QT_QPA_PLATFORMTHEME=qt5ct\nexport DESKTOP_SESSION=plasma\nexport XDG_CURRENT_DESKTOP=kde"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Použití grafických témat"
+    },
+    {
+      "type": "text",
+      "text": "System Settings > Global Theme > Get New Global Themes > Install Layan. Další možnosti Arc Dark, Sweet-Mars, Nordic. Je však ale nezbytné na google dohled příslušné theme (často github repository) a klonovat si jej, protože bude nutné naimportovat potřebnou část pro Kvantum Manager, bez toho se bohužel neobjedneme a toto není součástí standardní instalace v System Settings!",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 65,
+          "end": 70
+        },
+        {
+          "type": "code",
+          "start": 87,
+          "end": 115
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přepnout globální schéma na Layan. Nyní již budeme moci přenastavit barvené schéma, fonty, ikony, windows dekorace atd., viz video pro detaily.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 28,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Přizpůsobení základních komponent pro práci"
+    },
+    {
+      "type": "text",
+      "text": "Nyní již můžeme plně nakonfigurovat veškeré komponenty KDE, aby vyhovovaly našim potřebám. Nebude nic přehánět, KDE lze konfigurovat velmi mocně, budeme se držet opět zlaté střední cesty, která navíc nebude ani tolik náchylná na možné chyby při dalších updates KDE, což bohužel bývá častá příčina najednou vzniklých problémů."
+    },
+    {
+      "type": "text",
+      "text": "Přizpůsobíme:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Hlavní panel a jeho komponenty"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "HiDpi a fonty"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pozadí"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Desktopy pro práci"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Bismut - Tiling Support pro KDE"
+    },
+    {
+      "type": "text",
+      "text": "Bismit Github Link",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://github.com/Bismuth-Forge/bismuth",
+          "start": 0,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Přidání podpory pro tiling (dlaždicové) uspořádání oken. Velmi pokročilý a flexiblní rozšíření KDE."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "System Settings > Window Behaviour > Focus > Focus follows mouse (fokus okna následuje myš)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 45,
+              "end": 64
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Window Management > Window Tiling > Enable window tiling (zaškrtnout), záložka Appearance (nahoře) > Inner Gaps nastav na 10px",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 122,
+              "end": 126
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Shortcuts > Window Tiling > Push Active to Master Area nastav: Meta + Shift + Return",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 63,
+              "end": 84
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Ergonomické nastavení klávesových zkratek"
+    },
+    {
+      "type": "text",
+      "text": "Nejvíce změn. KDE není přípraveno na vhodné ovládání klávesnicí. Viz zejména video nahrávka."
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Shortcuts > Kwin > nastavit Close Window, Quick Tile Window (všechny směry), Maximize, Minimize, Fullscreen window (nastavit vše dle AwesomeWM viz minulé nahrávky)"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Shortcuts > KRunner > přidat Alt+Space nebo Meta+Space (doporučeno Meta)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 29,
+              "end": 38
+            },
+            {
+              "type": "code",
+              "start": 44,
+              "end": 54
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Shortcuts > stiskni tlačítko Add Application > přidat Konsole > Konsole řádka nastavit Alt+Return nebo Meta+Return (doporučeno Meta)",
+          "formatting": [
+            {
+              "type": "code",
+              "start": 87,
+              "end": 97
+            },
+            {
+              "type": "code",
+              "start": 103,
+              "end": 114
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Úvahy nad možnými vylepšeními"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "KDE lze vylepšovat mnoha způsoby. Často velmi žádané nastavení je MacOS, kde je horní panel zároveň použit jako menu pro aplikace a aplikace tak nemají žádné menu, které je přehozeno do tohoto panelu. I toto KDE umožňuje."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Jakékoliv větší rozšíření nebo změna přináší potenciální problémy po upgrade KDE. Toto není AwesomeWM API a framework, který si můžete konfigurovat, již mnohokrát jsem se v minulosti setkal s tím, že KDE spadlo nebo celá funkcionalita přestala fungovat. Stabilita KDE je daleko horší pokud provádíte příliš mnoho customizací. Buďte tedy s tím opatrní a pokud chcete velké změny je lepší zvolit WM s programovými dovednostmi."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Při zvolení některých uživatelských komponent nebo dokonce témat může vzniknout silný performance problém, naposledy Dracula schéma snížilo rapidně animace a maximalizace oken, proto si vždy funkcionalitu nejprve ověřte na Breeze tématu a teprve potom použijte customized řešení pro porovnání."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Pozor na některé widgets. Celkově mnoho widgets je velmi zastaralých a tedy mohou mít silné performance dopady. Opět ověřte zátež na procesor, snižte taky časové cykly pro čtení hodnot."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Wayland vs X11. KDE je již plně připraveno na wayland. Mnoho uživatelů zejména hráčů přešlo na wayland. Původně jsem tuto nahrávku chtěl dělat čistě na waylandu, ale HiDpi 4K rozhodně není připraveno, mnoho drobných věcí nefunguje správně a problémy se základními aplikacemi. Hodně času jsem nad tím strávil, ale rozhodně toto nemohu zatím doporučit nováčkům. Toto se může rychle změnit za další “roky”."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "https://www.youtube.com/watch?v=vclZ7RSdzoQ&t=1718s"
+    },
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Důležité odkazy"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Youtube Channel TUX: Svět Linuxu",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://www.youtube.com/user/tondafischer/featured",
+              "start": 0,
+              "end": 32
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Forum Arch Linux CZ - naše české forum pro Arch!",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://forum.arch-linux.cz/",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Arch Linux CZ - spuštění web server pro Arch",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://arch-linux.cz/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "archlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://archlinux.org/",
+              "start": 0,
+              "end": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "wiki.achlinux.org",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://wiki.archlinux.org/",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "fishlive.org/blog",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://fishlive.org/en/blog-tech-art/arch",
+              "start": 0,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/tux",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/tux",
+              "start": 0,
+              "end": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "github/raven2cz/dotfiles",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/dotfiles",
+              "start": 0,
+              "end": 24
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/public-wallpapers",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/public-wallpapers",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "raven2cz/global-colorscheme",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://github.com/raven2cz/global-colorscheme",
+              "start": 0,
+              "end": 27
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/kde-plasma-pracovni-prostredi-nove-generace-pro-linux.md"
+  }
+}

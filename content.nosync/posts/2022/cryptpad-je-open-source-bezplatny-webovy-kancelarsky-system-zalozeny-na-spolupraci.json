@@ -1,0 +1,410 @@
+{
+  "slug": "cryptpad-je-open-source-bezplatny-webovy-kancelarsky-system-zalozeny-na-spolupraci",
+  "title": "CryptPad je open-source, bezplatný webový kancelářský systém založený na spolupráci",
+  "date": "2022-05-28T00:00:00+02:00",
+  "state": "published",
+  "tags": [
+    "cryptpad",
+    "Aplikace",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Určitě každý zná online kancelářskou sadu od Googlu, která obsahuje dokumenty, tabulky, prezentace, ale ne každý Googlu důvěřuje, zvláště ne lidé, kteří se starají o soukromí svých dat. Pro všechny, kteří mají rádi své soukromý jsem na náš server instaloval  open-source online kancelářský balík s názvem CryptPad.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://cryptpad.arch-linux.cz/",
+          "start": 305,
+          "end": 314
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "CryptPad vytváří společnost XWiki se sídlem v Paříži ve Francii, která již více než 15 let vytváří open-source software. ",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://xwiki.com",
+          "start": 28,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Co je CryptPad"
+    },
+    {
+      "type": "text",
+      "text": "CryptPad je bezplatné, open-source, samostatně hostované řešení pro spolupráci, alternativa k Disku Google, ale šifrování typu end-to-end.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://cryptpad.arch-linux.cz/",
+          "start": 0,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nabízí podporu pro více uživatelů, možnosti spolupráce v reálném čase, vestavěné synchronizace, úplný webový editor dokumentů a další."
+    },
+    {
+      "type": "text",
+      "text": "CryptPad je navržen tak, aby umožňoval spolupráci a zároveň zachoval vaše data soukromá. Veškerý obsah je zašifrován a dešifrován vaším prohlížečem. To znamená, že dokumenty, konverzace a soubory jsou nečitelné pokud nejste přihlášeni. K vašim informacím nemají přístup ani administrátoři služby."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Kompletní sada aplikací"
+    },
+    {
+      "type": "text",
+      "text": "CryptPad poskytuje plnohodnotnou kancelářskou sadu se všemi nástroji nezbytnými pro produktivní spolupráci. Mezi aplikace patří: Textový editor, Tabulky, Editor kódu, Kanban, Prezentace, Whiteboard a Formuláře."
+    },
+    {
+      "type": "text",
+      "text": "Aplikace jsou doplněny sadou funkcí pro spolupráci, jako je chat, kontakty, barvy autorů a komentáře se zmínkami (ve formátu RTF)."
+    },
+    {
+      "type": "text",
+      "text": "CryptPad nabízí bohatou webovou kancelářskou sadu alternativu k Disku Google a jemu podobnému serveru a další služby, zde jsou základní služby, které zahrnuje:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Procesor formátovaného textu, alternativa k Dokumentům Google"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "List: Alternativa k tabulce Google"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Kanban deska pro řízení úkolů a projektů"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Editor kódu"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Editor formulářů: alternativa k formulářům Google"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Whiteboard: reaktivní a kolaborativní tabule pro týmy"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Snímky založené na Markdown jako alternativa k Prezentacím Google"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "CryptDrive, alternativní služba k Disku Google s vestavěným šifrováním."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "CryptPad používá webový systém OnlyOffice pro vytváření, úpravy a správu kancelářských dokumentů, jako jsou tabulky a dokumenty Word."
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Vlastnosti CryptPadu"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Členové týmu mohou spolu chatovat, pokud pracují na stejném dokumentu"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Editor RTF dokumentů s bohatým WYSIWYG"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Podporuje nahrávání souborů s mnoha formáty souborů."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vložte bohaté přizpůsobitelné tabulky"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Přidejte komentáře ke svým dokumentům"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vestavěné upozornění systému"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Společná tabule s celým vaším týmem"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vytvářejte tabulkové dokumenty s makry a plnou kompatibilitou s Google Spreadsheet, Microsoft Excel a LibreOffice."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vytvořené dokumenty můžete snadno sdílet interně s registrovanými členy nebo externě s externími uživateli"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vkládejte dokumenty snadno na jakoukoli webovou stránku"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Systém správy úkolů a poznámek založený na Kanbanu"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vytvářejte a spravujte ankety snadno pomocí několika kliknutí"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vytvářejte bohaté snímky založené na Markdown"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Import/export do desítek podporovaných formátů souborů"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Sledujte historii všech dokumentů"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Spravujte členy týmu prostřednictvím řídicího panelu XWiki"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Spravujte své kontakty"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Administrativní panel vytvořený pomocí XWiki"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Podpora více jazyků"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Vložte bohaté grafy a diagramy"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Mějte přehled o online uživatelích, sdílených dokumentech a o tom, kolik lidí dokumenty prohlíží a upravuje"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Registrace"
+    },
+    {
+      "type": "text",
+      "text": "Používání CryptPadu je zdarma a  je možné se zaregistrovat na stránce cryptpad.arch-linux.cz . Pro registrované zájemce, je možné navýšit  limit úložiště.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://cryptpad.arch-linux.cz/register/",
+          "start": 70,
+          "end": 92
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading4",
+      "text": "Zdroje"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Oficiální stránka Cryptpad",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://cryptpad.fr/",
+              "start": 0,
+              "end": 26
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Stránka pro registrace",
+          "formatting": [
+            {
+              "type": "link",
+              "url": "https://cryptpad.arch-linux.cz/register/",
+              "start": 0,
+              "end": 22
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/cryptpad-je-open-source-bezplatny-webovy-kancelarsky-system-zalozeny-na-spolupraci.md"
+  }
+}

@@ -1,0 +1,679 @@
+{
+  "slug": "arch-linux-zakladni-prikazy",
+  "title": "Arch Linux – Základní příkazy",
+  "date": "2026-03-26T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "Návody",
+    "Arch Linux",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "subtype": "heading1",
+      "text": "Arch Linux – Základní příkazy"
+    },
+    {
+      "type": "text",
+      "text": "Praktický průvodce pro začátečníky a mírně pokročilé uživatele",
+      "formatting": [
+        {
+          "type": "italic",
+          "start": 0,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "1. Úvod"
+    },
+    {
+      "type": "text",
+      "text": "Arch Linux je minimalistická rolling-release distribuce – dostaneš čistý systém bez zbytečností a sám si ho postavíš podle sebe. Žádný GUI instalátor, žádné předinstalované haraburdí."
+    },
+    {
+      "type": "text",
+      "text": "Proč znát příkazy? Protože na Archu neexistuje klikací záchranný kruh. Když se něco rozbije (a rozbije), terminal je jediná cesta ven. A taky je to prostě rychlejší než jakékoliv GUI."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "2. Práce se systémem"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "uname -a — informace o jádře",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 8
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "uname -a\n# Linux mujpc 6.8.1-arch1-1 #1 SMP PREEMPT_DYNAMIC ...",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Zobrazí jméno počítače, verzi kernelu a architekturu. Hodí se při hlášení bugů nebo kontrole kernelu po aktualizaci."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "uptime — jak dlouho běží systém",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 6
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "uptime\n# 14:32:01 up 3 days, 2:14, 2 users, load average: 0.45, 0.60, 0.55",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Ukazuje dobu běhu + průměrnou zátěž za 1, 5 a 15 minut."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "htop / top — sledování procesů",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "type": "code",
+          "start": 7,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "htop        # přehledná TUI verze (doporučeno)\ntop         # základní, vždy dostupný",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "htop umí kill procesu přímo z rozhraní – stiskni F9. Nainstaluj přes sudo pacman -Syu htop, pokud chybí.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "type": "code",
+          "start": 49,
+          "end": 51
+        },
+        {
+          "type": "code",
+          "start": 69,
+          "end": 90
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "3. Správa balíčků – pacman"
+    },
+    {
+      "type": "text",
+      "text": "Pacman je správce balíčků Arch Linuxu. Rychlý, jednoduchý, žádná magie."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aktualizace celého systému"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "-S = synchronizace, -y = refresh databáze, -u = upgrade. Dělej pravidelně – Arch je rolling release.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 20,
+          "end": 22
+        },
+        {
+          "type": "code",
+          "start": 43,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Instalace balíčku"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu firefox\nsudo pacman -Syu git neovim htop   # více balíčků najednou",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Odstranění balíčku (včetně závislostí a config souborů)"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Rns firefox",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "-R = remove, -n = smaž config soubory, -s = smaž osiřelé závislosti. Vždy používej -Rns, ne jen -R.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 13,
+          "end": 15
+        },
+        {
+          "type": "code",
+          "start": 39,
+          "end": 41
+        },
+        {
+          "type": "code",
+          "start": 83,
+          "end": 87
+        },
+        {
+          "type": "code",
+          "start": 96,
+          "end": 98
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Hledání balíčku v repozitáři"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Ss neovim\n# extra/neovim 0.9.5-1\n#     Vim-fork focused on extensibility and usability",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Hledání v nainstalovaných balíčcích"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Qs neovim\n# local/neovim 0.9.5-1",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "4. Práce se soubory a adresáři"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Orientace v systému"
+    },
+    {
+      "type": "code",
+      "text": "pwd             # kde jsem\nls -lah         # výpis adresáře (long, all, human-readable)\ncd /etc/nginx   # přejít do adresáře\ncd ..           # o úroveň výš\ncd ~            # domovský adresář",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Kopírování, přesun, mazání"
+    },
+    {
+      "type": "code",
+      "text": "cp soubor.txt /tmp/soubor_backup.txt     # kopírování\ncp -r slozka/ /tmp/slozka_backup/        # kopírování adresáře\n\nmv soubor.txt novy_nazev.txt             # přejmenování\nmv soubor.txt /home/user/dokumenty/      # přesun\n\nrm soubor.txt                            # smazání souboru\nrm -rf slozka/                           # smazání adresáře (POZOR, nevratné)",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": ">  ⚠️ rm -rf se neptá. Dvakrát zkontroluj cestu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 6,
+          "end": 12
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Vytváření adresářů"
+    },
+    {
+      "type": "code",
+      "text": "mkdir novy_adresar\nmkdir -p projekty/web/css    # vytvoří celou cestu najednou\nrmdir prazdny_adresar        # smaže jen prázdný adresář",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "tree — stromové zobrazení",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "tree /etc/nginx\n# Nainstaluj: sudo pacman -Syu tree",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "5. Práce s obsahem souborů"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Zobrazení obsahu"
+    },
+    {
+      "type": "code",
+      "text": "cat /etc/hostname                  # vypíše celý soubor\nless /var/log/pacman.log           # stránkování, q = konec\nbat /etc/fstab                     # zvýrazňování syntaxe (sudo pacman -Syu bat)",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Editory"
+    },
+    {
+      "type": "code",
+      "text": "nano /etc/hosts                    # jednoduchý, pro začátečníky\nvim /etc/pacman.conf               # mocný, strmá učební křivka\nnvim ~/.config/nvim/init.lua       # neovim – modernější vim",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Základní vim survival kit:"
+    },
+    {
+      "type": "code",
+      "text": "i         → insert mode (psaní)\nEsc       → zpět do normal mode\n:w        → uložit\n:q        → zavřít\n:wq       → uložit a zavřít\n:q!       → zavřít bez uložení"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "grep — hledání v souborech",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "grep \"error\" /var/log/syslog                  # hledá \"error\" v souboru\ngrep -r \"ServerName\" /etc/nginx/              # rekurzivně v adresáři\ngrep -n \"Port\" /etc/ssh/sshd_config           # ukáže číslo řádku\njournalctl | grep \"failed\"                    # filtrování výstupu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "6. Oprávnění a vlastnictví"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "chmod — práva souborů",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "chmod +x skript.sh               # přidej právo spuštění\nchmod 644 soubor.txt             # rw-r--r--\nchmod 755 /usr/local/bin/skript  # rwxr-xr-x (typické pro spustitelné soubory)\nchmod -R 755 slozka/             # rekurzivně",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Orientace v číslech:"
+    },
+    {
+      "type": "code",
+      "text": "4 = čtení (r)\n2 = zápis (w)\n1 = spuštění (x)\n\n644 = vlastník rw, skupina r, ostatní r\n755 = vlastník rwx, skupina rx, ostatní rx"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "chown — změna vlastníka",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "chown user:group soubor.txt          # změna vlastníka i skupiny\nchown -R www-data:www-data /var/www  # rekurzivně (typické pro web server)",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "7. Systémové služby – systemd"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Stav služby"
+    },
+    {
+      "type": "code",
+      "text": "systemctl status nginx\nsystemctl status sshd",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Start / stop / restart"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl start nginx\nsudo systemctl stop nginx\nsudo systemctl restart nginx\nsudo systemctl reload nginx     # znovu načte config bez restartu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Povolení při startu systému"
+    },
+    {
+      "type": "code",
+      "text": "sudo systemctl enable nginx          # povolí autostart\nsudo systemctl enable --now nginx    # povolí + hned spustí (doporučeno)\nsudo systemctl disable nginx         # zakáže autostart",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Logy – journalctl"
+    },
+    {
+      "type": "code",
+      "text": "journalctl -xe                        # posledních X záznamů s kontextem chyb\njournalctl -u nginx                   # logy konkrétní služby\njournalctl -u nginx -f                # živý výstup (follow)\njournalctl --since \"1 hour ago\"       # logy za poslední hodinu\njournalctl -p err -b                  # jen chyby od posledního bootu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "8. Síťové příkazy"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "ip a — zobrazení síťových rozhraní",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "ip a                    # všechna rozhraní + IP adresy\nip a show eth0          # konkrétní rozhraní\nip r                    # routovací tabulka",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "ping — test dostupnosti",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "ping archlinux.org\nping -c 4 8.8.8.8       # pošle jen 4 pakety",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "curl — HTTP požadavky",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "curl https://archlinux.org                    # stáhni obsah stránky\ncurl -I https://archlinux.org                 # jen hlavičky (HTTP status atd.)\ncurl -O https://example.com/soubor.tar.gz     # stáhni soubor\ncurl -s https://api.ipify.org                 # zjisti svoji veřejnou IP",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "ss — síťová spojení a porty",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "ss -tuln                  # všechny naslouchající TCP/UDP porty\nss -tulnp                 # + zobrazí proces\nss -s                     # souhrn statistik",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "9. Užitečné nástroje"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "yay — správce AUR balíčků",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "AUR obsahuje tisíce balíčků mimo oficiální repozitáře."
+    },
+    {
+      "type": "code",
+      "text": "# Instalace yay (jednorázově):\nsudo pacman -Syu --needed git base-devel\ngit clone https://aur.archlinux.org/yay.git\ncd yay && makepkg -si\n\n# Použití:\nyay -Syu                        # aktualizace včetně AUR\nyay -S visual-studio-code-bin   # instalace z AUR\nyay -Ss spotify                 # hledání v AUR",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "rsync — synchronizace a zálohy",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 5
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rsync -avh ~/dokumenty/ /mnt/backup/dokumenty/         # lokální záloha\nrsync -avh ~/dokumenty/ user@server:/backup/           # na vzdálený server\nrsync -avh --delete ~/web/ user@server:/var/www/web/   # zrcadlení\nrsync -n -avh ~/dokumenty/ /mnt/backup/                # dry run",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "-a = archivní mód, -v = verbose, -h = human-readable",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 19,
+          "end": 21
+        },
+        {
+          "type": "code",
+          "start": 33,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "du a df — místo na disku",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 5,
+          "end": 7
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "df -h                           # místo na všech připojených discích\ndf -h /home                     # konkrétní oddíl\n\ndu -sh ~/dokumenty              # velikost adresáře\ndu -sh /var/cache/pacman/pkg    # kolik zabírá cache pacmanu\ndu -h --max-depth=1 /var        # přehled velikostí podadresářů",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "10. Tipy na závěr"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Aliasy – zkratky pro časté příkazy"
+    },
+    {
+      "type": "text",
+      "text": "Přidej do ~/.bashrc nebo ~/.zshrc:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 10,
+          "end": 19
+        },
+        {
+          "type": "code",
+          "start": 25,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "alias update='sudo pacman -Syu'\nalias ll='ls -lah'\nalias ..='cd ..'\nalias ...='cd ../..'\nalias grep='grep --color=auto'\nalias df='df -h'\nalias du='du -h'\nalias syslog='journalctl -xe'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Po úpravě:"
+    },
+    {
+      "type": "code",
+      "text": "source ~/.bashrc",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Historie příkazů"
+    },
+    {
+      "type": "code",
+      "text": "history                   # zobrazí historii\nhistory | grep pacman     # hledej v historii\n!!                        # zopakuj poslední příkaz\n!ssh                      # zopakuj poslední příkaz začínající na \"ssh\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Klávesové zkratky:"
+    },
+    {
+      "type": "code",
+      "text": "Ctrl+R   → interaktivní hledání v historii\n         → piš část příkazu, Enter = spustí, Ctrl+R znovu = starší shoda"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Cheat Sheet"
+    },
+    {
+      "type": "code",
+      "text": "╔══════════════════════════════════════════════════════════════════╗\n║                   ARCH LINUX — CHEAT SHEET                       ║\n╠══════════════════╦═══════════════════════════════════════════════╣\n║ SYSTÉM           ║ uname -a          → info o kernelu            ║\n║                  ║ uptime            → jak dlouho běží           ║\n║                  ║ htop              → procesy a zátěž           ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ PACMAN           ║ pacman -Syu       → aktualizace               ║\n║                  ║ pacman -Syu  → instalace                 ║\n║                  ║ pacman -Rns  → odebrání                  ║\n║                  ║ pacman -Ss   → hledání v repozitáři      ║\n║                  ║ pacman -Qs   → hledání v instalovaných   ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ SOUBORY          ║ ls -lah           → výpis adresáře            ║\n║                  ║ cp -r src/ dst/   → kopírování                ║\n║                  ║ mv src dst        → přesun / přejmenování     ║\n║                  ║ rm -rf slozka/    → smazání (POZOR!)          ║\n║                  ║ mkdir -p a/b/c    → vytvoření cesty           ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ OBSAH SOUBORŮ    ║ cat soubor        → výpis                     ║\n║                  ║ less soubor       → stránkování               ║\n║                  ║ grep \"text\" soubor→ hledání                   ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ SYSTEMD          ║ systemctl status  → stav služby               ║\n║                  ║ systemctl enable  ║                           ║\n║                  ║   --now      → povol + spusť             ║\n║                  ║ journalctl -xe    → logy s chybami            ║\n║                  ║ journalctl -u svc → logy služby               ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ SÍŤ              ║ ip a              → síťová rozhraní           ║\n║                  ║ ss -tuln          → otevřené porty            ║\n║                  ║ curl -s URL       → HTTP požadavek            ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ DISK             ║ df -h             → místo na discích          ║\n║                  ║ du -sh /cesta     → velikost adresáře         ║\n╠══════════════════╬═══════════════════════════════════════════════╣\n║ HISTORY          ║ Ctrl+R            → hledání v historii        ║\n║                  ║ !!                → zopakuj poslední příkaz   ║\n╚══════════════════╩═══════════════════════════════════════════════╝"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/arch-linux-zakladni-prikazy.md"
+  }
+}

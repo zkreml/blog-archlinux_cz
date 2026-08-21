@@ -1,0 +1,24 @@
+{
+  "slug": "pf-2023",
+  "title": "PF 2023",
+  "date": "2022-12-31T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Chtěli bychom Vám všem poděkovat za vaši podporu a přízeň, kterou jste nám v roce 2022 projevili. Přejeme Vám do nového roku naplnění všech Vašich předsevzetí, cílů a k tomu hlavně pevné zdraví."
+    },
+    {
+      "type": "text",
+      "text": "Vaše komunita Arch Linux Cz"
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/pf-2023.md"
+  }
+}

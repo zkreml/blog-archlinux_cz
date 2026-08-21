@@ -1,0 +1,202 @@
+{
+  "slug": "pixelfed-cz",
+  "title": "Pixelfed CZ",
+  "date": "2023-03-26T00:00:00+01:00",
+  "state": "published",
+  "tags": [
+    "Naše komunita",
+    "jekyll"
+  ],
+  "content": [
+    {
+      "type": "text",
+      "text": "Pixelfed CZ  je náš další komunitní projekt, kde je možné se zdarma zaregistrovat a užívat sociální síť bez reklam a sledování.",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://pixelfed.cz",
+          "start": 0,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Co je Pixelfed"
+    },
+    {
+      "type": "text",
+      "text": "Pixelfed je sociální síť zaměřená na sdílení fotografií a videí, která se v poslední době stává velmi populární. Jeho uživatelské rozhraní je podobné Instagramu, ale s mnoha vylepšeními, které ho činí jedinečným."
+    },
+    {
+      "type": "text",
+      "text": "Pixelfed byl vytvořen jako open-source alternativa k Instagramu, která by umožnila uživatelům sdílet své fotografie a videa bez zásahu externích společností. Pixelfed byl vytvořen jako federovaná platforma, což znamená, že uživatelé mohou hostovat své vlastní instance Pixelfedu a připojit se k federaci, aby sdíleli své příspěvky s uživateli z jiných instancí. To znamená, že uživatelé mají větší kontrolu nad svými daty a mohou se vyhnout problémům s ochranou soukromí, které se mohou objevit na centralizovaných sociálních sítích."
+    },
+    {
+      "type": "text",
+      "text": "Pixelfed také nabízí řadu funkcí, které se na Instagramu nevyskytují. Například umožňuje uživatelům vytvořit různé kolekce fotografií, aby mohli lépe organizovat své příspěvky. Uživatelé také mohou přidávat popisky k fotografiím a tagovat lidi na fotografiích."
+    },
+    {
+      "type": "text",
+      "text": "Pixelfed platforma byla vytvořena v roce 2018 kanadským vývojářem Danem Supernaultem. Supernault se zajímal o alternativu ke službě Instagram a vytvořil platformu, která nabízí podobné funkce, ale zároveň je decentralizovaná a umožňuje uživatelům více kontroly nad svými daty."
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Výhody Pixelfed"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Bez reklam a šetrné k soukromí"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Open source a decentralizované"
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Možnost spravovat licenci u každé fotografie"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Mobilní aplikace"
+    },
+    {
+      "type": "text",
+      "text": "Oficiální aplikace Pixelfed",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Oficiální aplikace je stále zatím v beta testování, ale lze použít bez problémů."
+    },
+    {
+      "type": "text",
+      "text": "Návod na stažení a instalaci oficiální aplikace najdete na webu infoek cz",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://infoek.cz/pixelfed-android-beta-2023/",
+          "start": 64,
+          "end": 73
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Určitě aplikace stojí za vyzkoušení. Oficiální aplikaci je možné naistalovat i na systém iOs, ale to jsem bohužel neměl jak vyzkoušet. Když se někdo podělíte jak aplikace funguje, tak mi prosím napište."
+    },
+    {
+      "type": "text",
+      "text": "Pro iOs lze aplikaci stáhnout zde",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://testflight.apple.com/join/ykZXjCjM",
+          "start": 30,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PixelDroid",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PixelDroid je asi nejznámější aplikací pro používání Pixelfed na Androidu. Ta je dostupná pouze v obchodě F-Droid, je přeložena do češtiny."
+    },
+    {
+      "type": "text",
+      "text": "Návod je opět na webu infoek cz",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://infoek.cz/pixeldroid-aktualizace-beta20-2022/",
+          "start": 21,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "####"
+    },
+    {
+      "type": "text",
+      "subtype": "heading3",
+      "text": "Odkazy"
+    },
+    {
+      "type": "text",
+      "text": "Oficiální stránky Pixelfed",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://pixelfed.org/",
+          "start": 0,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Stránky Infoek",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://infoek.cz/",
+          "start": 0,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Seznam serverů ",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://pixelfed.org/servers",
+          "start": 0,
+          "end": 15
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "jekyll",
+    "account": "content",
+    "original_id": "posts/pixelfed-cz.md"
+  }
+}

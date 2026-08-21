@@ -1,0 +1,590 @@
+/* arch-linux.cz skin for blog.sh
+ *
+ * Recreates the look of the previous Hugo/Blowfish site: Tailwind
+ * slate/blue palette, system font stack, a compact one-row top bar
+ * (logo + wordmark + menu), bordered horizontal list cards with the
+ * featured image on the left, outline tag chips, Monokai code blocks
+ * and a single centered footer line.
+ *
+ * Loaded AFTER colors.css and site.css via site.extra_css -- everything
+ * here is an override, the engine itself is untouched. The seven
+ * palette colors per mode live in config/site.yml (colors:); this file
+ * only adds the handful of derived tones the engine doesn't expose.
+ */
+
+/* ---------- skin custom properties (both modes) ---------- */
+
+:root {
+  --arch-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif,
+               "Apple Color Emoji", "Segoe UI Emoji";
+  --arch-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", monospace;
+}
+
+:root,
+:root[data-theme="light"] {
+  --arch-heading: #0f172a;      /* slate-900 */
+  --arch-pill-border: #60a5fa;  /* blue-400 */
+  --arch-input-bg: #f8fafc;     /* slate-50 */
+  --arch-code-bg: #e8edf3;
+  --arch-code-text: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --arch-heading: #f8fafc;      /* slate-50 */
+    --arch-pill-border: #2563eb;  /* blue-600 */
+    --arch-input-bg: #334155;     /* slate-700 */
+    --arch-code-bg: rgba(15, 23, 42, 0.7);
+    --arch-code-text: #22d3ee;    /* cyan-400 */
+  }
+}
+
+:root[data-theme="dark"] {
+  --arch-heading: #f8fafc;
+  --arch-pill-border: #2563eb;
+  --arch-input-bg: #334155;
+  --arch-code-bg: rgba(15, 23, 42, 0.7);
+  --arch-code-text: #22d3ee;
+}
+
+/* ---------- typography ---------- */
+
+body { font-family: var(--arch-sans); }
+button, input, select, textarea { font-family: inherit; }
+
+h1, h2, h3, .post-list-item h2 a, .listing-heading { color: var(--arch-heading); }
+h3 { text-transform: none; letter-spacing: 0; }
+b, strong { color: var(--arch-heading); }
+
+.content :is(h1, h2, h3, h4, h5, h6),
+.chrome-text :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--arch-heading);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Links keep the accent on hover and gain an underline instead of
+   fading to the neutral hover-invert. */
+a:hover, .post-list-item h2 a:hover { color: var(--accent); text-decoration: underline; }
+nav a:hover, .date-badge a:hover, .tag-pill:hover, .read-more:hover,
+.social-icons a:hover, .file-card:hover { text-decoration: none; }
+
+/* ---------- page frame ---------- */
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem 1rem;
+  border: none;
+  border-radius: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1.5rem;
+}
+
+.wrap > .layout, .wrap > footer { grid-column: 1 / -1; }
+
+/* The Blowfish page keeps its content in a ~1016px column inside the
+   1280px frame; the bar and footer span the frame. */
+.layout { max-width: 1040px; width: 100%; margin: 0 auto; }
+
+/* ---------- top bar: logo + wordmark ---------- */
+
+.banner-wrap {
+  position: static;          /* the theme toggle escapes to .wrap */
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 64px;
+}
+
+.banner-link { display: flex; align-items: center; }
+.banner { width: 32px; height: 32px; }
+
+.banner-overlay {
+  position: static;
+  padding: 0;
+  display: block;
+}
+
+.banner-title {
+  max-width: none;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--arch-heading);
+  text-shadow: none;
+}
+
+/* ---------- top bar: menu ---------- */
+
+.wrap > nav {
+  position: static;
+  background: transparent;
+  border: none;
+  min-height: 64px;
+  padding: 0 3.2rem 0 0;     /* room for the theme toggle on the right */
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+html { scroll-padding-top: 0; }
+
+nav li {
+  height: auto;
+  line-height: 1.5;
+  text-transform: none;
+  font-size: 1rem;
+  margin-left: 1.15rem;
+}
+
+nav a {
+  height: auto;
+  margin-top: 0;
+  padding: 0.3rem 0;
+  border-top: none;
+  border-bottom: 2px solid transparent;
+  letter-spacing: 0;
+  box-sizing: border-box;
+}
+
+nav a:hover { color: var(--accent); border-top-color: transparent; border-bottom-color: transparent; }
+
+nav a[aria-current="page"] {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0.3rem 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+nav li:first-child a[aria-current="page"] { padding-left: 0; margin-left: 0; }
+
+nav a[aria-current="page"]:hover { background: transparent; color: var(--accent); }
+
+.nav-toggle { color: var(--text); }
+
+/* ---------- search field ---------- */
+
+.search-form input[type="search"] {
+  background: var(--arch-input-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 34px;
+}
+
+.search-form input[type="search"]::placeholder { color: var(--meta-text); }
+.search-form button { color: var(--meta-text); height: 34px; }
+
+/* ---------- theme toggle ---------- */
+
+#theme-toggle {
+  /* Above the menu bar: the engine gives nav z-index 5 for its sticky
+     mode, and in a GRID container z-index binds even on static items --
+     so the (transparent) bar was swallowing every click on the toggle. */
+  z-index: 6;
+  top: 32px;                 /* center of the 64px top bar */
+  right: 1.5rem;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1rem;
+  min-width: 0;
+  padding: 0.3rem 0.4rem;
+}
+
+#theme-toggle:hover { background: transparent; border-color: transparent; color: var(--accent); }
+
+/* ---------- homepage heading (the Blowfish profile block) ---------- */
+
+.listing-heading--home {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 2.5rem 0 0.5rem;
+  padding: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+}
+
+.listing-heading--home::after {
+  content: "Česká komunita Arch Linuxu";
+  display: block;
+  margin: 0.4rem 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--meta-text);
+}
+
+/* ---------- homepage intro (the Blowfish profile block) ---------- */
+
+/* The sidebar exists only to carry the About text and any widget
+   cards. The layout never reserves a column for it on ordinary pages
+   (aside is hidden outright there); the homepage instead turns
+   .layout into a two-column grid, and both main and aside go
+   display:contents so their children -- the heading and post cards
+   from main, the About card and the widgets from aside -- become
+   items of that SAME grid and can be placed independently by column
+   and order: the heading and the About card stay a full-width intro
+   above the grid, the post cards fill the left column, and any widget
+   card after the About one lands in the right column instead. */
+.layout { grid-template-columns: minmax(0, 1fr); }
+aside { display: none; }
+
+.layout:has(.listing-heading--home) {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  column-gap: 2.5rem;
+  /* Sparse (default) auto-placement advances a single shared row
+     cursor as each post card is placed in the left column, so by the
+     time the widget card (last in DOM/order) is placed, the cursor
+     has already passed row 3 -- it lands under the last post instead
+     of beside the first one. dense lets it back-fill that empty
+     right-column cell instead of only ever moving the cursor forward. */
+  grid-auto-flow: dense;
+}
+
+.layout:has(.listing-heading--home) main,
+.layout:has(.listing-heading--home) aside { display: contents; }
+
+.layout:has(.listing-heading--home) .listing-heading--home {
+  grid-column: 1 / -1;
+  order: -2;
+}
+
+/* Everything else main renders (the post cards, the pagination nav)
+   belongs to the left column only -- the heading is the sole item
+   that spans both. */
+.layout:has(.listing-heading--home) main > *:not(.listing-heading--home) {
+  grid-column: 1;
+}
+
+/* The About card: a full-width intro between the title and the grid
+   below it, same measure and centering as before. */
+.layout:has(.listing-heading--home) aside > .card:first-child {
+  grid-column: 1 / -1;
+  order: -1;
+  max-width: 46rem;
+  width: 100%;
+  margin: 0 auto 2.75rem;
+  text-align: center;
+}
+
+/* Any card after it (the RSS widget, or a future one) moves into the
+   right column, top-aligned with the first row of post cards instead
+   of stacking under the About text. */
+.layout:has(.listing-heading--home) aside > .card:not(:first-child) {
+  grid-column: 2;
+  align-self: start;
+}
+
+/* aside.html.erb checks the widgets in a fixed code order (toots,
+   pixelfed, commits, bluesky, rss) regardless of the order they're
+   declared in site.yml, so with only commits and rss configured the
+   Commits card always renders before the Fediverse one: About,
+   Commits, Fediverse. Bump Commits' order past the default (0) so the
+   dense auto-placement above (see grid-auto-flow: dense) processes
+   Fediverse first -- it then claims the earlier grid row, landing
+   above Commits in the right column instead of below it. */
+.layout:has(.listing-heading--home) aside > .card:nth-child(2) {
+  order: 1;
+}
+
+/* Since engine 1.3.2 a listing continuation announces itself on <body>
+   (page-cont), and the intro belongs to the front page alone. Scoped
+   negatively -- against the skinning guide's own preference -- on
+   purpose: an engine without the mark (1.3.1 and older) matches
+   neither class, and a `.page-first`-scoped intro would vanish there
+   entirely. Flip this to positive scoping once 1.3.2 is the floor. */
+body.page-cont .layout:has(.listing-heading--home) aside { display: none; }
+
+aside .card {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+aside > .card:first-child { margin-top: 0; }
+aside .card h3:empty { display: none; }
+
+aside .chrome-text :is(h2, h3) {
+  font-size: 1.5rem;
+  margin: 1.9rem 0 0.4rem;
+}
+
+/* ---------- list cards ---------- */
+
+main .post-list-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.card { background: transparent; }
+
+.post-header {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: baseline;
+  gap: 0 0.6rem;
+  margin: 0;
+}
+
+.post-body { display: contents; }
+
+.post-header :is(h1, h2) { order: 1; flex: 0 0 100%; margin: 0 0 0.3rem; }
+.post-list-item h2 { font-size: 1.25rem; font-weight: 700; }
+.post-list-item h2 a { text-decoration: none; }
+.post-list-item h2 a:hover { text-decoration: underline; }
+.post-header .date-badge { order: 2; flex: 0 0 auto; }
+.post-header .post-meta { order: 3; flex: 0 0 auto; margin: 0; gap: 0.6rem; }
+.post-header .series-note { order: 4; flex: 0 0 100%; margin: 0.45rem 0 0; font-size: 0.95rem; }
+.post-header .tags { order: 4; flex: 0 0 100%; margin: 0.55rem 0 0; }
+.post-header .content { order: 5; flex: 0 0 100%; }
+.post-header .read-more { order: 6; margin-top: 0.5rem; }
+.post-header .series-nav { order: 7; flex: 0 0 100%; }
+
+.post-header .content { margin-top: 0.75rem; }
+
+/* The date tile becomes a plain metadata line. */
+.date-badge {
+  width: auto;
+  background: transparent;
+  color: var(--meta-text);
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.date-badge svg { display: none; }
+.date-badge:hover { background: transparent; color: var(--meta-text); }
+.date-badge a:hover { color: var(--accent); }
+
+/* The dot separates date from reading time -- only where a date exists
+   (pages carry no date badge, and a lone dot would open the line).
+   A page hides the whole metadata line, as the original does. */
+.post-header:has(.date-badge) .post-meta::before { content: "·"; color: var(--meta-text); }
+.post-header:not(:has(.date-badge)) .post-meta { display: none; }
+.post-stat.reading-time { font-size: 0.875rem; }
+
+/* Featured image on the left of the card, as on the Blowfish list.
+   first-of-type, not first-child: real posts often open with a heading
+   and carry the image a block or two later -- absolute positioning
+   lifts it out of the flow from wherever it stands, so no gap is left.
+   A multi-photo block renders as div.photo-grid (no direct figure
+   child) and deliberately stays in the flow. */
+main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+  padding-left: calc(33% + 2rem);
+  min-height: 175px;
+}
+
+/* The excerpt is the figure's positioned ancestor in the engine's own
+   stylesheet -- un-position it so the figure anchors to the card, and
+   trade the gradient fade (which would now anchor wrongly too) for a
+   plain clip, which is also how Blowfish summaries end. */
+main .post-list-item .content.excerpt { position: static; }
+main .post-list-item .content.excerpt::after { display: none; }
+
+main .post-list-item .content.excerpt > figure:first-of-type {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 33%;
+  margin: 0;
+}
+
+main .post-list-item .content.excerpt > figure:first-of-type img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.content.excerpt { max-height: 190px; }
+
+/* ---------- tag chips ---------- */
+
+.tag-pill {
+  background: transparent;
+  border: 1px solid var(--arch-pill-border);
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.tag-pill:hover { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+
+/* ---------- post page ---------- */
+
+/* The article column: prose measure as on the original (~65ch), and
+   CENTERED -- the sidebar is off, so a left-pinned column would read as
+   space held open for a panel that isn't there. Capped on <main> rather
+   than on .content (a max-width on a flex item with flex-basis 100%
+   shrinks the row until it fits NEXT TO the metadata line) and rather
+   than on the card alone, so the back-to-listing link under it keeps
+   the same left edge. */
+.layout main:has(> .card:not(.post-list-item)) {
+  max-width: 46rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+main > .card:not(.post-list-item) { padding: 1.5rem 0; }
+main > .card:not(.post-list-item) .post-header h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0.5rem 0 0.4rem;
+}
+
+.toc {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.toc a, .series-nav a { color: var(--text); }
+.toc a:hover, .series-nav a:hover { color: var(--accent); }
+
+.series-note a { color: var(--meta-text); text-decoration: none; }
+.series-note a:hover { color: var(--accent); text-decoration: underline; }
+
+/* The contents list floats right at the level the article text starts.
+   layout.hero lifts the lead image above the title and OUT of the text
+   column, and on a hero card the engine lays .post-header out as
+   blocks -- so the engine's own float-right contents works and the text
+   wraps beside and then under it. A quarter of the column, small type. */
+@media (min-width: 701px) {
+  main > .card:not(.post-list-item) .toc {
+    width: 25%;
+    margin: 0.25rem 0 1rem 1.5rem;
+  }
+}
+
+.toc-heading { font-size: 0.65rem; }
+.toc ol { font-size: 0.75rem; }
+.toc li, .toc a { line-height: 1.45; }
+
+/* The hero pieces inherit the engine's card padding; this card carries
+   its own (1.5rem 0), so zero the horizontal one out and round the
+   image like the list cards. */
+.card.has-hero .post-hero__content,
+.card.has-hero .post-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.post-hero__media img { border-radius: 8px; }
+
+/* Monokai-style code blocks in both modes, as Chroma renders them. */
+.content pre, .chrome-text pre {
+  background: #272822;
+  color: #f8f8f2;
+  border: none;
+  border-radius: 6px;
+}
+
+.content pre code, .chrome-text pre code {
+  background: transparent;
+  color: inherit;
+  font-family: var(--arch-mono);
+}
+
+.content code, .chrome-text code {
+  background: var(--arch-code-bg);
+  color: var(--arch-code-text);
+  font-family: var(--arch-mono);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* ---------- footer ---------- */
+
+footer {
+  background: transparent;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  display: block;
+  text-align: center;
+  margin-top: 2.5rem;
+  padding: 1.5rem 0 0.5rem;
+}
+
+footer .copyright { color: var(--meta-text); font-size: 0.875rem; }
+footer .chrome-text { font-size: 0.875rem; }
+
+.social-icons { justify-content: center; margin-top: 0.6rem; }
+
+.social-icons a {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  color: var(--meta-text);
+}
+
+.social-icons a:hover { background: transparent; color: var(--accent); }
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 700px) {
+  .wrap { display: block; padding: 0 1rem 1rem; }
+  .banner-wrap { min-height: 56px; }
+  .wrap > nav { min-height: 0; padding: 0; justify-content: flex-start; }
+  #theme-toggle { top: 28px; right: 1rem; transform: translateY(-50%); }
+
+  main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+    padding-left: 1.25rem;
+    min-height: 0;
+  }
+
+  main .post-list-item .content.excerpt { max-height: 420px; }
+
+  main .post-list-item .content.excerpt > figure:first-of-type {
+    position: static;
+    width: calc(100% + 3rem);
+    height: 180px;
+    margin: 0 -1.5rem 0.75rem;
+  }
+
+  .listing-heading--home { font-size: 1.75rem; }
+
+  /* The two-column intro grid collapses to one column; without the
+     reset the widget card would keep grid-column: 2 and be squeezed
+     into a stray implicit column instead of stacking under the posts. */
+  .layout:has(.listing-heading--home) { grid-template-columns: minmax(0, 1fr); }
+  .layout:has(.listing-heading--home) aside > .card:not(:first-child) { grid-column: 1; }
+}
+
+/* ---------- archos: compact homepage cards ---------- */
+main .post-list-item {
+  padding: 0.85rem 1.1rem;
+}
+.post-list-item h2 { font-size: 1.1rem; }
+main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+  padding-left: calc(26% + 1.5rem);
+  min-height: 130px;
+}
+main .post-list-item .content.excerpt > figure:first-of-type {
+  width: 26%;
+}
+.content.excerpt { max-height: 140px; }
