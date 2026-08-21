@@ -120,6 +120,24 @@ nav a:hover, .date-badge a:hover, .tag-pill:hover, .read-more:hover,
   text-shadow: none;
 }
 
+/* site.css's corner scrims (.banner-wrap::before/::after) are
+   position: absolute; inset: 0, meant to darken the corners of a
+   photographic banner behind light overlay text. With .banner-wrap
+   static here (see above) they have no positioned ancestor of their
+   own and escape to .wrap instead -- painting a diagonal gradient over
+   the whole page (nav, content, footer), not just the 64px bar. This
+   skin has no banner photo for them to protect text contrast against,
+   so drop them outright rather than re-contain them.
+
+   Selector matches site.css's :has() form on purpose: :has() counts
+   toward specificity like a pseudo-class, so a plain .banner-wrap::before
+   here would lose the cascade to site.css's rule (2 classes vs. 1) even
+   loaded later, and content: "" would keep winning over content: none. */
+.banner-wrap:has(.banner-title)::before,
+.banner-wrap:has(.banner-claim)::after {
+  content: none;
+}
+
 /* ---------- top bar: menu ---------- */
 
 .wrap > nav {
@@ -588,3 +606,13 @@ main .post-list-item .content.excerpt > figure:first-of-type {
   width: 26%;
 }
 .content.excerpt { max-height: 140px; }
+
+/* ---------- archos: flatten --card-bg into --bg ---------- */
+
+/* --card-bg (lib/colors_css.rb color_properties) is white in light mode
+   and nav_bg in dark mode -- a separate token from --bg that only reads
+   as one page colour when a palette happens to set them equal. .layout,
+   .card and everything else that paints --card-bg (site.css) picks this
+   up automatically, so the whole page -- edges and middle column alike
+   -- stays a single flat colour regardless of which palette is active. */
+:root { --card-bg: var(--bg); }
