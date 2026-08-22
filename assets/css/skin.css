@@ -495,7 +495,9 @@ main > .card:not(.post-list-item) .post-header h1 {
 @media (min-width: 701px) {
   main > .card:not(.post-list-item) .toc {
     width: 25%;
-    margin: 0.25rem 0 1rem 1.5rem;
+    /* symmetric breathing room: the same gap above (to the byline) and
+       below (to the text that wraps under the box) */
+    margin: 1.25rem 0 1.25rem 1.5rem;
   }
 }
 
@@ -775,4 +777,12 @@ body.page-cont .layout:has(.listing-heading--home) aside > .card:first-child { d
 .toc ol {
   list-style: none;
   padding-left: 0.2rem;
+}
+
+/* ---------- contents box spacing on a phone ---------- */
+
+/* The engine's mobile reset leaves the box touching the byline above
+   it; give it the same air on both sides, matching the desktop rule. */
+@media (max-width: 700px) {
+  .toc { margin: 1.25rem 0; }
 }
