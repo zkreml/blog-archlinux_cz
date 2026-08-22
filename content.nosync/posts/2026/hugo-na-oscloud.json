@@ -19,7 +19,9 @@
       "type": "image",
       "media": [
         {
-          "url": "featured.png"
+          "url": "featured.png",
+          "width": 865,
+          "height": 329
         }
       ]
     },
