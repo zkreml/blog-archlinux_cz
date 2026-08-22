@@ -1,0 +1,344 @@
+{
+  "slug": "moderni-cli-uvod",
+  "title": "\"Moderní CLI nástroje: úvod do nové generace utilit\"",
+  "date": "2026-08-22T13:38:05+02:00",
+  "state": "published",
+  "tags": [
+    "cli",
+    "rust",
+    "tipy",
+    "arch",
+    "terminal"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 1074,
+          "height": 634
+        }
+      ],
+      "alt_text": "Moderní CLI nástroje"
+    },
+    {
+      "type": "text",
+      "text": "Klasické Unix nástroje jako ls, cat, find a grep slouží desítky let. Jsou spolehlivé, jsou všude a v systému bez nich nešlápneš. Za tu dobu ale svět kolem nich pokročil – gitové repozitáře, .gitignore, obří monorepa, terminály s emoji a Nerd Fonts. Původní utility na tohle prostředí nebyly stavěné.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 28,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 32,
+          "end": 35
+        },
+        {
+          "type": "code",
+          "start": 37,
+          "end": 41
+        },
+        {
+          "type": "code",
+          "start": 44,
+          "end": 48
+        },
+        {
+          "type": "code",
+          "start": 190,
+          "end": 200
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Poslední roky se objevila celá vlna nástrojů, které řeší stejný úkol, ale moderně: rychleji, hezčí výstup, chytré defaulty, integrace s gitem. Většina je napsaná v Rustu, takže jsou i bezpečnější a paralelní out-of-the-box."
+    },
+    {
+      "type": "text",
+      "text": "Tahle série ti představí sadu, kterou používám denně a bez které si už terminál nedokážu představit."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co budeme probírat"
+    },
+    {
+      "type": "text",
+      "text": "Sérii jsem rozdělil na pět praktických dílů plus bonus:"
+    },
+    {
+      "type": "list",
+      "style": "ol",
+      "items": [
+        {
+          "text": "Úvod – tenhle článek, kontext a filozofie",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "eza – náhrada ls s ikonami a git statusem",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "type": "code",
+              "start": 14,
+              "end": 16
+            }
+          ]
+        },
+        {
+          "text": "bat – náhrada cat se zvýrazněním syntaxe",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 3
+            },
+            {
+              "type": "code",
+              "start": 14,
+              "end": 17
+            }
+          ]
+        },
+        {
+          "text": "fd – rychlejší a přátelštější find",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 2
+            },
+            {
+              "type": "code",
+              "start": 30,
+              "end": 34
+            }
+          ]
+        },
+        {
+          "text": "ripgrep – bleskové hledání v souborech",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 7
+            }
+          ]
+        },
+        {
+          "text": "Bonus – kompletní setup, aliasy a integrace s fzf",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Každý díl obsahuje instalaci na Archu, praktické příklady, srovnání s klasickou variantou a pár triků z praxe."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Proč zrovna Rust?"
+    },
+    {
+      "type": "text",
+      "text": "Většina těch nástrojů je psaná v Rustu a není to náhoda:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Rychlost – kompiluje se do nativního kódu, žádný interpret ani JIT",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Paralelismus – Rust má silné garance okolo threadů, takže autoři nemají problém pouštět práci na víc jádrech",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 12
+            }
+          ]
+        },
+        {
+          "text": "Bezpečná paměť – žádné segfaulty a buffer overflows jako v C",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 14
+            }
+          ]
+        },
+        {
+          "text": "Ekosystém – cargo a crates.io udělaly z distribuce knihoven příjemnou zkušenost",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "type": "code",
+              "start": 12,
+              "end": 17
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Když vidíš, že ripgrep je 10× rychlejší než grep, není to marketing – je to tím, jak je napsaný.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 15,
+          "end": 22
+        },
+        {
+          "type": "code",
+          "start": 44,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Přerušuju původní nástroje?"
+    },
+    {
+      "type": "text",
+      "text": "Ne. Klasické ls, cat, find a grep zůstávají v systému (jsou součást balíčků coreutils, findutils, grep). Aliasy je jen překryjí, když je zavoláš interaktivně.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 15
+        },
+        {
+          "type": "code",
+          "start": 17,
+          "end": 20
+        },
+        {
+          "type": "code",
+          "start": 22,
+          "end": 26
+        },
+        {
+          "type": "code",
+          "start": 29,
+          "end": 33
+        },
+        {
+          "type": "code",
+          "start": 76,
+          "end": 85
+        },
+        {
+          "type": "code",
+          "start": 87,
+          "end": 96
+        },
+        {
+          "type": "code",
+          "start": 98,
+          "end": 102
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Ve skriptech se pořád vyplatí sáhnout po originálech – jsou všude, chovají se předvídatelně a nemají volitelné závislosti. Když v aliasu máš alias grep='rg', uvnitř skriptu použij command grep nebo \\grep – tím obejdeš alias.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 141,
+          "end": 156
+        },
+        {
+          "type": "code",
+          "start": 180,
+          "end": 192
+        },
+        {
+          "type": "code",
+          "start": 198,
+          "end": 203
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nainstalujme všechno najednou"
+    },
+    {
+      "type": "text",
+      "text": "Ať máš základ pro celou sérii, můžeš to udělat jedním příkazem:"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S eza bat fd ripgrep",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Všechny nástroje jsou v oficiálním Arch repozitáři, žádný AUR není potřeba. Pár set kilobajtů, žádné komplikace."
+    },
+    {
+      "type": "text",
+      "text": "V dalších dílech se na každý nástroj podíváme detailně. Začneme příště s eza – náhradou za ls, která ti ukáže git status u každého souboru přímo ve výpisu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 73,
+          "end": 76
+        },
+        {
+          "type": "code",
+          "start": 91,
+          "end": 93
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "type": "post",
+  "series": "Moderní CLI",
+  "series_part": 1,
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M0MM712KPB9MG47DPY84B52C",
+  "created_at": "2026-08-22T13:26:19+02:00"
+}
