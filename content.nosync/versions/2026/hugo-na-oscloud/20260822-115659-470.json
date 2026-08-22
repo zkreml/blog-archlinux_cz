@@ -23,6 +23,16 @@
           "width": 865,
           "height": 329
         }
+      ]
+    },
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "02.png",
+          "width": 865,
+          "height": 329
+        }
       ],
       "alt_text": "Hugo na OSCloud"
     },
