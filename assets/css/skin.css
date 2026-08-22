@@ -667,8 +667,10 @@ main .post-list-item .content.excerpt > figure:first-of-type {
 /* ---------- listing refinements (review 21. 8.) ---------- */
 
 /* The widget column takes a quarter of the layout, no more. */
-.layout:has(.listing-heading--home) {
-  grid-template-columns: minmax(0, 1fr) 25%;
+@media (min-width: 701px) {
+  .layout:has(.listing-heading--home) {
+    grid-template-columns: minmax(0, 1fr) 25%;
+  }
 }
 
 /* A widget card used to sit in ONE auto row and inflate it -- the card
@@ -688,13 +690,16 @@ main .post-list-item .content.excerpt > figure:first-of-type {
 body.page-cont .layout:has(.listing-heading--home) aside { display: contents; }
 body.page-cont .layout:has(.listing-heading--home) aside > .card:first-child { display: none; }
 
-/* The thumbnail earns half the card. */
-main .post-list-item:has(.content.excerpt > figure:first-of-type) {
-  padding-left: calc(50% + 1.5rem);
-}
+/* The thumbnail earns half the card. Guarded: unguarded these two
+   would outrank the base mobile resets by sheer source order. */
+@media (min-width: 701px) {
+  main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+    padding-left: calc(50% + 1.5rem);
+  }
 
-main .post-list-item .content.excerpt > figure:first-of-type {
-  width: 50%;
+  main .post-list-item .content.excerpt > figure:first-of-type {
+    width: 50%;
+  }
 }
 
 @media (min-width: 701px) {
@@ -710,4 +715,64 @@ main .post-list-item .content.excerpt > figure:first-of-type {
   main .post-list-item:has(.content.excerpt > figure:first-of-type) .read-more {
     left: calc(50% + 1.5rem);
   }
+}
+
+/* ---------- mobile listing (review 21. 8., 2nd round) ---------- */
+
+/* Under 700px the two-column grid has no room to exist. Switching the
+   homepage layout to a flex column neutralizes every grid rule above
+   (template columns, spans, dense flow) without touching them: with
+   main and aside still display:contents, the pieces order themselves
+   into one stream -- title, intro, post cards, widgets last. */
+@media (max-width: 700px) {
+  .layout:has(.listing-heading--home) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .layout:has(.listing-heading--home) .listing-heading--home { order: -2; }
+
+  .layout:has(.listing-heading--home) aside > .card:first-child {
+    order: -1;
+    max-width: none;
+    margin: 0 0 1.5rem;
+    text-align: center;
+  }
+
+  .layout:has(.listing-heading--home) aside > .card:not(:first-child) {
+    order: 99;
+    margin-top: 1.5rem;
+  }
+
+  /* The compact-card and half-thumbnail rules above sit later in this
+     file than the base mobile resets, so they would win on a phone by
+     sheer source order. Re-assert the mobile card shape here: full
+     width, image as a full-bleed strip on top, excerpt back to the
+     taller phone clamp (the base's 420px). Offsets follow the compact
+     1.1rem padding. */
+  main .post-list-item:has(.content.excerpt > figure:first-of-type) {
+    padding-left: 1.1rem;
+    min-height: 0;
+  }
+
+  main .post-list-item .content.excerpt > figure:first-of-type {
+    position: static;
+    width: calc(100% + 2.2rem);
+    height: 180px;
+    margin: 0 -1.1rem 0.75rem;
+  }
+
+  main .post-list-item .content.excerpt { max-height: 420px; }
+}
+
+/* ---------- contents list without its own numbers ---------- */
+
+/* The engine numbers the list; authors here number their headings
+   themselves ("## 1. Instalace Hugo"), so the box read "6. 1.
+   Instalace Hugo". The original site's contents carried no numbers at
+   all -- drop them and keep the level indent, which comes from the
+   engine's .toc-l3/.toc-l4 classes, not from nesting. */
+.toc ol {
+  list-style: none;
+  padding-left: 0.2rem;
 }
