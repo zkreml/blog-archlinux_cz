@@ -120,5 +120,5 @@ widgets:
   commits:
     heading: "Poslední commity"
     username: "Archos"
-    limit: 3
+    limit: 5
     instance: "https://git.arch-linux.cz"
