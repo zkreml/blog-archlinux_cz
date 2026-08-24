@@ -1,0 +1,249 @@
+{
+  "slug": "moderni-cli-eza",
+  "title": "Moderní CLI: eza – ls jak má vypadat v roce 2026",
+  "date": "2026-08-24T15:43:21+02:00",
+  "state": "published",
+  "tags": [
+    "cli",
+    "rust",
+    "tipy",
+    "arch",
+    "eza",
+    "navody"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 1097,
+          "height": 607
+        }
+      ],
+      "alt_text": "eza výpis s ikonami a git statusem"
+    },
+    {
+      "type": "text",
+      "text": "ls je základní nástroj Unixu už od 70. let. Funguje spolehlivě, ale jeho výstup dneska vypadá archaicky – jenom sloupce textu, žádný git status, žádné ikony. eza řeší přesně tohle.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 158,
+          "end": 161
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Je to fork populárního exa, které přestalo být udržované. eza v tom pokračuje: aktivní vývoj, opravy bugů, nové funkce.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 23,
+          "end": 26
+        },
+        {
+          "type": "code",
+          "start": 58,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S eza",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Balíček je v oficiálním extra repozitáři, žádný AUR.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 24,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro ikony budeš potřebovat Nerd Font nainstalovaný a nastavený v terminálu. Bez něj eza --icons ukáže čtverečky místo ikon.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 84,
+          "end": 95
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S ttf-jetbrains-mono-nerd",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní použití"
+    },
+    {
+      "type": "code",
+      "text": "eza -la --icons --git --group-directories-first",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co eza umí navíc oproti ls"
+    },
+    {
+      "type": "text",
+      "text": "Ikony podle typu souboru. Složky, Python skripty, markdown, obrázky – každý typ má svou ikonu.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Git status. Vedle názvu souboru vidíš N (nový), M (modifikovaný), I (ignorovaný).",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "code",
+          "start": 38,
+          "end": 39
+        },
+        {
+          "type": "code",
+          "start": 48,
+          "end": 49
+        },
+        {
+          "type": "code",
+          "start": 66,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Stromový výpis.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "eza --tree --level=2 --icons",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Nahrazuje tree a nemusíš instalovat další balíček.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 10,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aliasy pro každodenní použití"
+    },
+    {
+      "type": "text",
+      "text": "Do ~/.zshrc:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 3,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "alias ls='eza --icons --group-directories-first'\nalias ll='eza -la --icons --git --group-directories-first'\nalias lt='eza --tree --level=2 --icons'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kdy se vrátit k ls?"
+    },
+    {
+      "type": "text",
+      "text": "Ve skriptech a cronu, kde potřebuješ striktní POSIX chování."
+    },
+    {
+      "type": "code",
+      "text": "files=$(\\ls *.md)   # obejde alias",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Shrnutí"
+    },
+    {
+      "type": "text",
+      "text": "eza je jedna z nejjednodušších náhrad – nainstaluješ, přidáš alias a hned máš hezčí a informativnější výpis.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Příště se podíváme na bat – náhradu cat, která přidává zvýraznění syntaxe a integraci s gitem.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 25
+        },
+        {
+          "type": "code",
+          "start": 36,
+          "end": 39
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "series": "Moderní CLI",
+  "series_part": 2,
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M0T05TDHCN7P3GTEFYFK6DFG",
+  "created_at": "2026-08-24T15:41:21+02:00"
+}
