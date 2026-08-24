@@ -14,7 +14,7 @@ site:
   base_url: "https://arch-linux.cz"
   extra_css:
     - "/assets/css/skin.css"
- 
+
 banner:
   # The community logo -- skin.css lays it out as a compact top-bar
   # wordmark next to the site name instead of a full-width banner.
@@ -119,5 +119,6 @@ widgets:
     limit: 5
   commits:
     heading: "Poslední commity"
-    username: "zkreml"
+    username: "Archos"
     limit: 3
+    instance: "https://git.arch-linux.cz"
