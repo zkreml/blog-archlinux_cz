@@ -109,6 +109,9 @@ mastodon:
   instance: "gts.arch-linux.cz"
   toot_length: 5000
 
+comments:
+  approval: fav
+
 widgets:
   rss:
     heading: "Z Fediverse"
