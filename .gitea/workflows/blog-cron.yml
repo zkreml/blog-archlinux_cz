@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: install ruby
         run: sudo apt-get update && sudo apt-get install -y ruby-full
+      - name: install cloudron cli
+        run: sudo npm install -g cloudron
       - name: create env.sh
         run: |
           cp env.sh.example env.sh
@@ -23,3 +25,7 @@ jobs:
         run: ./scripts/refresh-sidebar.sh
       - name: publish scheduled
         run: ./scripts/publish-scheduled.sh
+      - name: deploy to LAMP
+        run: |
+          cloudron login my.oscloud.cz --token ${{ secrets.CLOUDRON_TOKEN }}
+          cloudron sync push --app arch-linux.cz public.nosync/ /app/data/public
