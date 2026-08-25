@@ -17,6 +17,8 @@ jobs:
           chmod 600 env.sh
           echo "export SITE_BASE_URL=https://arch-linux.cz" >> env.sh
           echo "export MASTODON_ACCESS_TOKEN=${{ secrets.MASTODON_ACCESS_TOKEN }}" >> env.sh
+      - name: build site
+        run: ruby build/build_blog.rb
       - name: refresh sidebar
         run: ./scripts/refresh-sidebar.sh
       - name: publish scheduled
