@@ -1,0 +1,21 @@
+name: blog-cron
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install ruby
+        run: sudo apt-get update && sudo apt-get install -y ruby-full
+      - name: refresh sidebar
+        run: ./scripts/refresh-sidebar.sh
+        env:
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+      - name: publish scheduled
+        run: ./scripts/publish-scheduled.sh
+        env:
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
