@@ -30,6 +30,4 @@ jobs:
       - name: publish scheduled
         run: ./scripts/publish-scheduled.sh
       - name: deploy to LAMP
-        run: |
-          cloudron login my.oscloud.cz --token ${{ secrets.CLOUDRON_TOKEN }}
-          cloudron sync push --app arch-linux.cz public.nosync/ /app/data/public
+        run: cloudron sync push --server my.oscloud.cz --token ${{ secrets.CLOUDRON_TOKEN }} --app arch-linux.cz public.nosync/ /app/data/public
