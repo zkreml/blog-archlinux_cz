@@ -1,0 +1,550 @@
+{
+  "slug": "moderni-cli-bat-cat-se-superschopnostmi",
+  "title": "Moderní CLI: bat – cat se superschopnostmi",
+  "date": "2026-08-29T07:21:07+02:00",
+  "created_at": "2026-08-29T07:20:50+02:00",
+  "state": "published",
+  "tags": [
+    "cli",
+    "rust",
+    "tipy",
+    "arch",
+    "bat",
+    "navody"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 992,
+          "height": 563
+        }
+      ],
+      "alt_text": "Moderní CLI Bat"
+    },
+    {
+      "type": "text",
+      "text": "Když si soubor vypíšu přes cat, dostanu holý text. Bez barev, bez čísel řádků, bez orientace. bat (jako netopýr 🦇) přidává všechno, co bys od moderního nástroje čekal – a stále se chová jako cat, když ho pipuješ dál.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 27,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 94,
+          "end": 97
+        },
+        {
+          "type": "code",
+          "start": 191,
+          "end": 194
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S bat",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Balíček je v oficiálním repu. Pro plnou funkčnost (git integrace, stránkování) je dobré mít i less a git, což na Archu máš.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 94,
+          "end": 98
+        },
+        {
+          "type": "code",
+          "start": 101,
+          "end": 104
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní použití"
+    },
+    {
+      "type": "code",
+      "text": "# jednoduchý výpis\nbat soubor.md\n\n# bez čísel řádků\nbat -n soubor.md\n\n# bez stránkování (jako cat)\nbat --paging=never soubor.md\n\n# jen konkrétní řádky\nbat -r 10:20 soubor.py\n\n# více souborů najednou\nbat *.md",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co bat umí navíc oproti cat"
+    },
+    {
+      "type": "text",
+      "text": "Zvýraznění syntaxe pro víc než 150 jazyků – bash, python, yaml, JSON, markdown, Rust, Go, TOML, INI, systemd unit files a spousta dalších. Autodetekce podle přípony.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Čísla řádků vlevo, s barevnou hranicí sekcí.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Git integrace. Vedle čísla řádku vidíš + (přidaný), ~ (změněný), - (smazaný) oproti HEAD. Rychlý přehled bez git diff.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "code",
+          "start": 39,
+          "end": 40
+        },
+        {
+          "type": "code",
+          "start": 52,
+          "end": 53
+        },
+        {
+          "type": "code",
+          "start": 65,
+          "end": 66
+        },
+        {
+          "type": "code",
+          "start": 109,
+          "end": 117
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Automatické stránkování. Když je soubor delší než terminál, bat ho pošle do less. Krátký výpis se rovnou vypíše.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "type": "code",
+          "start": 60,
+          "end": 63
+        },
+        {
+          "type": "code",
+          "start": 76,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Detekce non-textových souborů. Když omylem cat-uješ binárku, bat tě upozorní místo toho, aby ti rozházel terminál.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 61,
+          "end": 64
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Chování v pipe"
+    },
+    {
+      "type": "text",
+      "text": "Klíčové: když bat pipuješ dál, chová se jako cat – jen holý text, žádné barvy, žádné čísla.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 14,
+          "end": 17
+        },
+        {
+          "type": "code",
+          "start": 45,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat data.json | jq .\ncat data.json | jq .    # totéž",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Tohle je důvod, proč můžeš cat nahradit aliasem bez obav, že rozbije skripty.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 27,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aliasy"
+    },
+    {
+      "type": "text",
+      "text": "Do ~/.zshrc:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 3,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "alias cat='bat --paging=never'\nalias catp='bat'             # cat s pagingem, když ho chceš",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Když opravdu potřebuješ původní cat (třeba pro rychlé pipe operace):",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 32,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "\\cat soubor.txt",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Praktické triky"
+    },
+    {
+      "type": "text",
+      "text": "Použij bat jako pager pro man:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 26,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "export MANPAGER=\"sh -c 'col -bx | bat -l man -p'\"\nexport MANROFFOPT=\"-c\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Manuálové stránky teď dostanou zvýrazněnou syntax."
+    },
+    {
+      "type": "text",
+      "text": "Kombinace s find / fd a fzf:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fzf --preview 'bat --color=always {}'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Máš okamžitý náhled souboru při procházení."
+    },
+    {
+      "type": "text",
+      "text": "Diff přes bat:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "diff soubor1 soubor2 | bat -l diff\ngit diff | bat -l diff --paging=never",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Nebo nainstaluj rovnou git-delta, který používá bat pod kapotou.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 23,
+          "end": 32
+        },
+        {
+          "type": "code",
+          "start": 48,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Zvýraznění pro nestandardní přípony:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat -l ini /etc/pacman.conf\nbat -l bash /etc/profile",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Výpis všech podporovaných jazyků:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat --list-languages",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "Vytvoř config:"
+    },
+    {
+      "type": "code",
+      "text": "mkdir -p ~/.config/bat\nbat --generate-config-file",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Otevře se ~/.config/bat/config s příklady. Typická konfigurace:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 10,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "--theme=\"Catppuccin Mocha\"\n--style=\"numbers,changes,header\"\n--paging=auto\n--italic-text=always"
+    },
+    {
+      "type": "text",
+      "text": "Dostupná témata:"
+    },
+    {
+      "type": "code",
+      "text": "bat --list-themes",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Vlastní téma můžeš přidat do ~/.config/bat/themes/ a pak spustit:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 29,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat cache --build",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Souborové operace navíc"
+    },
+    {
+      "type": "text",
+      "text": "Sjednotit více souborů (jako cat file1 file2 > out):",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat -pp file1.md file2.md > combined.md",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "-pp = plain plain = žádné dekorace, jen text.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Vytisknout s hlavičkou souboru:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "bat --style=\"header,numbers\" *.md",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kdy se vrátit k cat?"
+    },
+    {
+      "type": "text",
+      "text": "Ve skriptech – i když bat v pipe funguje jako cat, přidává zbytečnou závislost. Když píšeš skript, který má běžet i na jiných strojích, použij cat.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 25
+        },
+        {
+          "type": "code",
+          "start": 46,
+          "end": 49
+        },
+        {
+          "type": "code",
+          "start": 143,
+          "end": 146
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Ve výkonově kritických operacích – bat má o něco víc overheadu při inicializaci. Když děláš velké dávkové operace, cat bude rychlejší.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 35,
+          "end": 38
+        },
+        {
+          "type": "code",
+          "start": 115,
+          "end": 118
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Shrnutí"
+    },
+    {
+      "type": "text",
+      "text": "bat je pravděpodobně nejjednodušší upgrade, který můžeš svému terminálu udělat. Pár set kilobajtů, jeden alias, a najednou vidíš struktury v každém konfiguráku.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Příště se podíváme na fd – rychlejší, jednodušší a přátelštější náhradu za find.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 24
+        },
+        {
+          "type": "code",
+          "start": 75,
+          "end": 79
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "series": "Moderní CLI",
+  "series_part": 3,
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M15ZDTG5NEM4BYT10B1NRV8G"
+}
