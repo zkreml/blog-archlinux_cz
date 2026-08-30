@@ -40,3 +40,4 @@ tests/
 # graphics above: nothing generated should be able to ride along on an
 # unrelated commit.
 tmp/
+.build_cache.json
