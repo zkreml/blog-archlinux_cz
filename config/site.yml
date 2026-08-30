@@ -63,6 +63,8 @@ nav:
   - { label: "Návody", tag: "navody" }
   - { label: "Zprávy", tag: "zpravy" }
   - { label: "O Arch Linuxu", url: "/o-arch-linuxu/" }
+  - { label: "Archiv", url: "/archive/" }
+  - { label: "Štítky", url: "/tag/" }
   - { label: "Wiki", url: "https://wiki.arch-linux.cz/shelves/arch-linux-cz" }
   - { label: "Fórum", url: "https://forum.arch-linux.cz/" }
   - { label: "Komunita", url: "/komunita/" }
