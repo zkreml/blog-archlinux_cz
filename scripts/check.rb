@@ -12,18 +12,16 @@
 # would be indistinguishable from a hang, so it narrates -- the same rule
 # the importers follow.
 
-require 'yaml'
-require_relative '../lib/yaml_compat'
+require_relative '../lib/config_lang'
 require_relative '../lib/site_config'
 
 ROOT = File.expand_path('..', __dir__)
 
-lang = begin
-  data = YamlCompat.load_file(File.join(ROOT, 'config', 'site.yml'))
-  data.is_a?(Hash) ? data.dig('site', 'lang') : nil
-rescue StandardError
-  nil
-end
+# The same dig doctor does, and for a reason check now shares with it: a
+# config that will not parse is something check REPORTS (Checker's
+# check_config), so the sentence about it has to arrive in the language the
+# file asks for -- which is inside the file that will not parse.
+lang = ConfigLang.of(File.join(ROOT, 'config', 'site.yml'))
 
 require_relative '../lib/i18n'
 I18n.force_lang(lang.to_s.empty? ? 'en' : lang.to_s)
@@ -31,6 +29,16 @@ I18n.force_lang(lang.to_s.empty? ? 'en' : lang.to_s)
 require_relative '../lib/tui'
 require_relative '../lib/site_header'
 require_relative '../lib/checker'
+
+# A script that ASKS has to flush before it blocks. stdout is block
+# buffered whenever it is not a terminal, so `cmd | tee log`, `cmd > log`
+# and every wrapper that captures output leaves the question sitting in
+# the buffer while the process waits for an answer to it. Reproduced on
+# the import wizard: at the confirmation gate the log was 0 bytes -- and
+# that gate is deliberately built so the answer IS a number from the
+# preview, which was in the buffer too. All 1499 bytes arrived when the
+# process finally exited.
+$stdout.sync = true
 
 # An unknown switch is refused rather than ignored. `--online` sat here
 # unimplemented for a while and a run that quietly accepted it told its

@@ -63,6 +63,22 @@ already carries, so each can be read as well as changed:
   as "a typo, or the first part?" -- so a misspelling doesn't quietly
   found a second series. `check` catches the older ones
   ([below](#checking-the-archive)).
+- **`link:`** gives the post a link card: the address it is about, drawn
+  above the text. `link_title:` and `link_description:` are the words on
+  it, and a post with no `title:` of its own is named by the card. It is a
+  header key rather than a line in the body because a paragraph that is
+  only a link already means something else -- an ordinary link in ordinary
+  prose -- and because the card belongs to the post, not to a paragraph of
+  it. `edit` writes all three lines back out, so a save cannot drop a card
+  the author never touched. The address is a whole `http://`/`https://`
+  one, or one rooted at this site (`/posts/2026/some-post/`) for a card
+  about another post here -- which is also the shape `check --repair`
+  leaves behind when it straightens a relative link out of an import.
+- **`publish: yes`** publishes the post the moment `add <file>` writes
+  it -- the date settled, the announcement sent, the site rebuilt -- the
+  road `publish <slug> --yes` takes at a desk. It is the one key only the
+  file route reads; the wizard never publishes directly. Absent, or
+  anything but yes/true/1, is a draft.
 - **`toc: true` / `toc: false`** overrides the table of contents. A post
   with four headings or more gets one on its own -- that is the length at
   which a reader starts scrolling to look for something rather than
@@ -165,8 +181,31 @@ the announcement -- and offers the guarded actions:
   review the old addresses that redirect here, delete;
 - **draft**: publish, schedule (or reschedule, or cancel the schedule),
   rename the slug, delete;
+- **either**: `[e]` opens the post's properties -- which series it is in
+  and which part of it, its tags, its type, and the three flags (out of
+  the listings, lead image, chapter list);
 - **either, once there is one**: `[v]` restores what the post said before
   one of its recent saves.
+
+**Properties are what the post IS, not what it says**, and until 1.7 the
+only way to change one was `edit` -- the whole article open in an editor
+to add a series somebody forgot. Worse, on a post whose blocks markdown
+cannot all write down (an imported embed, a link card that is not the
+first block) that edit asks whether it may drop them, which is a great
+deal of risk for one word of metadata.
+
+`[e]` writes each answer as it is given and rebuilds once on the way out.
+Two of the rows are pickers rather than prompts, on purpose: the series
+row lists the series the site already has, with how many posts carry
+each, because a series typed a second time is a second series and `check`
+only notices afterwards -- and the type row lists the eight the engine
+knows plus the way back to letting the content decide, which is what a
+post with no `type` of its own has always done. The tags row prints the
+site's most-used tags above the line it asks for, for the same reason.
+
+The lead image and the chapter list have three states, not two: on, off,
+and whatever the site does -- which is what a post that says nothing
+about them takes, and a different thing from saying no.
 
 **Undoing an edit** is what `[v]` is for. Every `edit` keeps the previous
 text first, up to ten of them per post, and `[v]` lists them newest first
@@ -281,8 +320,477 @@ player), or that it is a QuickTime `.mov` (the video inside is usually
 ordinary H.264, but not every browser accepts the container). Both come
 with the `ffmpeg` command that fixes them -- re-encoding for the codec,
 repacking for the container, which copies the video across untouched.
+A third line is about neither: a video whose index sits at the end of the
+file, which is where a recorder has to put it, and which makes a reader
+wait for the whole download before the first frame appears. The same
+repack moves it to the front.
+
+`media: remux_video: true` has the engine do that repack itself, when
+`ffmpeg` is on the machine -- index to the front, `.mov` to `.mp4`, the
+picture and the sound copied across untouched, about a second for a phone
+video. It is off by default, like the HEIC conversion, because it shells
+out to a tool the engine does not ship. Unlike the HEIC conversion it
+never refuses: no `ffmpeg`, or a repack that will not go through, and the
+post is saved with the file as it arrived and the sentence the author
+would have had anyway. A video in the wrong wrapper still plays for
+nearly everybody; a HEIC photo does not.
+
 The post is saved either way; the only hard stop for a video is the
-per-file size limit, and a long 4K clip reaches that on its own.
+per-file size limit, and a long 4K clip reaches that on its own -- a
+phone clip out of the share sheet runs about 1.3 MB a second, so the
+24 MB default is roughly seventeen seconds of it. A longer one wants a
+smaller size chosen in the shortcut's own Encode Media step.
+
+### Handing over a whole file
+
+Every step above is a conversation: the CLI opens an editor, waits for a
+photo, asks what to do with the draft. `./blog.sh add <file>` is the same
+work with the conversation removed -- it takes a markdown file with the
+usual header, writes the draft, and returns. It never asks anything, so
+it is the route for a shortcut, a script or anything else running where
+nobody is at the keyboard.
+
+```bash
+./blog.sh add clanek.md
+```
+
+A bare name -- one with no slash in it -- is looked for in `incoming/`,
+so the file can arrive by the same upload as the photos. Anything else is
+a path and is used as given, relative to wherever you were standing. A
+file that came out of `incoming/` is deleted once the post is written --
+the photos already work that way, and an empty `incoming/` is what says
+nothing is pending. **A file outside `incoming/` is never touched**: on a
+Mac that is quite possibly the only copy. The rule is about where the
+file *is*, not how you named it, so `./blog.sh add "$PWD/incoming/x.md"`
+tidies up after itself like any other upload.
+
+Where the wizard would ask, this refuses instead, and writes nothing:
+
+- a photo that has not finished uploading -- the wizard waits and
+  re-checks on Enter; here there is nobody to wait for, so the missing
+  names are printed and the post is not written. Upload them and run it
+  again.
+- an empty body, a file that is not text, a file this account cannot
+  read, something that is not a file at all, an option the command does
+  not have, or a second filename (one file, one post -- a name silently
+  dropped is a post a looping script thinks it made).
+
+It stops at the draft. The file says *write this down*, not *put it in
+front of the world* -- publishing stays a second command:
+
+```bash
+./blog.sh publish <slug> --yes
+```
+
+`--yes` answers the draft dialog with "publish" in advance. `--json`,
+which needs `--yes` beside it, prints the same object `add --json` does --
+`slug`, `path`, `state`, `url`, `deploy`, `warnings` -- or a refusal with
+its reason as a code (`not_found`, `already_published`, `publish_refused`),
+and leaves with **zero** either way, for the reason `add` does: a phone
+throws away the output of a command that failed.
+`--no-announce` publishes the page and sends nothing to Mastodon or
+Bluesky; it works with or without `--yes`, and because nothing was
+attempted, `./blog.sh toot <slug>` can still send the announcement by
+hand afterwards. (It does not travel into a *scheduled* publish -- the
+cron works from the post itself and will announce it when its date
+arrives; the run says so if you schedule under the flag.)
+
+One question `--yes` will not answer for you: a post dated outside the
+recent window is published but **not** announced, and the run says so.
+Announcing is the one step that cannot be taken back. Two more it
+refuses rather than guesses: `--yes` needs the slug spelled out (without
+one, `publish` offers the drafts to pick from, and picking belongs with
+the preview in front of you), and it will not choose between two posts
+sharing a slug in different years -- it names the years and stops.
+
+`--json` turns the answer into data -- one object on standard output and
+nothing else, so a caller can read it without parsing prose:
+
+```json
+{
+  "slug": "psano-v-posteli",
+  "path": "content.nosync/posts/2026/psano-v-posteli.json",
+  "state": "draft",
+  "url": "https://example.com/draft/89260b63fb498e75/psano-v-posteli/",
+  "deploy": "done",
+  "warnings": []
+}
+```
+
+Every key is always there. `deploy` is `done` when the site is already
+carrying the draft and `pending` when it owes an upload that the next
+scheduled run will finish -- the difference between "open this address
+now" and "open it shortly". `warnings` collects everything the run said
+for itself, which on this route is the only place to hear it: a photo
+over the size limit, a video whose container some browsers refuse, a
+HEIC that was converted. `url` is empty rather than half an address when
+the site has no `base_url` yet, and the reason is in `warnings`. The
+exit code is 0 or 1, nothing else. A refusal answers in the same place
+and leaves with zero too, as a different object -- `ok`, `error`,
+`message` -- because the status answers a question the object cannot:
+whether an answer arrived at all. Only a flag the command does not have
+and a second filename fall outside this, and those end in prose on
+standard error.
+
+### A post sent from the phone itself
+
+`write: true` publishes a page at `/write/` to write the post on: a title,
+the text, tags, and photographs each with its description. It keeps what
+is typed in the browser, so closing the tab in a tunnel loses nothing --
+the text in localStorage, the bytes of the pictures and videos in
+IndexedDB, which holds hundreds of megabytes where localStorage holds
+five. The
+page is marked `noindex` and holds no secret of its own -- what sending
+needs is the key, and that lives in the shortcut on the phone. Add it to
+the home screen and it opens as an app -- that is what the manifest among
+the published files is for.
+
+It also carries a content policy of its own, which is the one thing it
+could not inherit: the page is copied onto the site as a file and never
+goes through the layout every other page is rendered by, so until 1.7 it
+had none. Now it does, and it is a short list -- scripts and styles from
+the blog, pictures and video only as the page's own `data:` and `blob:`
+bytes, one place to connect to (itself, for the receipt), the preview
+frame same-origin, no form action at all, and scripts never inline. A
+reply arriving in the address bar has nowhere to reach even if it
+carried something that ran.
+
+The page is the same file on every site; what is this site's the build
+writes beside it as `write/site.js`: the short name and claim for the
+header, the palette from `colors:` so the page is dressed like the blog,
+the favicon, and every tag the blog has used, with its count of all time
+and of the last twelve months. The tags are offered as they are typed:
+with nothing typed yet, what the blog has tagged in the last year, most
+used first -- not the most used of all time, which on an imported
+archive are the places it came from; then whatever begins with or
+contains the letters so far, searched across every tag. So a tag is
+tapped rather than typed, and typed as it was before instead of the blog
+growing a second spelling of it.
+
+The page speaks the blog's language, `site.lang`, whatever the phone is
+set to; the browser's is used only where there is no `site.js`, or where
+the blog's language is one the page has not been translated into. Above
+the text sits a row of marks -- bold, italic, strikethrough, code, link,
+heading, quote, list, numbered list, code block. A paired mark wraps
+what is selected, and a second tap takes it off; with nothing selected
+it puts the pair in and leaves the caret between. A line mark goes to
+the start of every line the selection touches, and comes off the same
+way. The link mark reads the selection, widened to whole words: an
+address -- `https://…`, or a bare domain, which gets its `https://` --
+becomes a link with the words left to type; words become one with the
+address left to type.
+
+A picture does not travel as it is. The page draws it through a canvas
+first -- 2560 px on its long edge, JPEG at quality 0.88 -- which is what
+makes a post of four photographs fit under the ceiling at all, and it is
+why the file arrives as `vlak-v-chocni.jpg` whatever the phone called it:
+the name is folded to ASCII so the markdown can name it without escaping,
+and a second picture folding to the same name gets `-2`. A picture this
+browser cannot decode -- a HEIC outside Safari -- is passed through
+untouched under its own extension. Send the original by SFTP and use
+`add` if the re-encode is not what you want.
+
+A video goes the same way as a picture -- the same button, the same
+card, the same description -- and into the text as `!![description]
+(clip.mp4)`, two marks where a picture has one. Nothing on the page
+shrinks it: it travels as it is, and the blog says on arrival what it
+says of any phone video (see below). What limits it is the receiver's
+ceiling on one delivery, `BLOGSH_MAX_MB` (24): the page carries that
+number in `site.js`, says under the pictures what happens to a picture,
+what to a video and how much the server takes, and turns the batch line
+red the moment the post outgrows it -- before the phone spends the
+upload finding out. The first tap on Send stops there and says it; a
+second tap sends anyway, because the page's number is the build's and
+the server's may have been raised since. The receiver reads the variable in its own
+environment, the forced command's, and the build reads it in the
+build's; raise it in both places or in neither.
+
+*Preview*, under the text, shows the post as the blog would show it --
+in the blog's own stylesheets, which `site.js` names, with the pictures
+in their places. Near enough, not exact: the engine renders the real
+thing, and the draft's preview after sending is that. What it is for is
+seeing the shape of a post before it leaves the phone.
+
+Pressing send hands the files to iOS: **one for each picture, and one for
+the text**. Nothing is packed for the server: it takes files, not
+archives. A browser that refuses to hand files over at all gets the post
+saved as one archive instead -- a net, so a post written on the way home
+is not lost to a browser that will not share it, rather than a road this
+page offers. `/write/` is for a phone; on a phone the files go over.
+
+**Two shortcuts, because the one that receives the files may not open an
+SSH connection.** A shortcut started from the Share Sheet runs in
+Shortcuts' background runner, whose only screen is a banner; *Run Script
+over SSH* asks for a screen there -- the host prompt, the first-run
+privacy question -- and is refused with "This action could not be run
+with the current user interface", before any connection is made. The
+action that would hand the run over to the full app, *Continue in
+Shortcuts App*, is no longer offered. A shortcut started from a URL,
+on the other hand, always runs in the app. So the receiving shortcut
+writes a file and opens a URL, and the sending shortcut does the rest.
+
+*Shortcut A* -- "Show in Share Sheet" on, accepting Images and Files;
+"If there's no input": Stop and Respond:
+
+1. **Repeat with Each** over Shortcut Input, and inside it: Get **Name**,
+   Get **File Extension**, then a **Text** holding `mov mp4 m4v MOV MP4
+   M4V` and an **If** *Text contains File Extension*. Inside the If:
+   **Encode Media** the Repeat Item with Size **1280x720**, and **Set
+   Variable** `item` to *Encoded Media*; in Otherwise: **Set Variable**
+   `item` to *Repeat Item*. After End If: **Base64 Encode** `item`, a
+   **Text** of three lines -- `Name.File Extension`, `Base64 Encoded`,
+   `.` -- and **Add to Variable** `batch`.
+
+   The If is what makes a video from the phone fit: a clip from an
+   iPhone, 32.5 MB of HEVC, came out of Encode Media at 5 MB of H.264, in the
+   QuickTime container it arrived in, so the extension the batch names
+   is still right. A picture takes the Otherwise branch untouched. The
+   page cannot know the shortcut does this, so its red line for a video
+   measures the original; send anyway, and the answer says what
+   arrived.
+2. After the loop: **Combine Text** `batch` with New Lines.
+3. **Save File** the combined text to iCloud Drive, into the Shortcuts
+   folder, *Ask Where to Save* off, subpath `incoming/batch.txt`,
+   *Overwrite If File Exists* on -- the same folder shortcut B reads it
+   back from.
+4. **Open URLs**: `shortcuts://run-shortcut?name=UploadIncoming`.
+
+![Shortcut A as the Shortcuts app shows it: the Repeat with Each loop with the If around Encode Media, the base64 Text and Add to Variable, then Combine Text, Save File and Open URLs](shortcut-a.png)
+
+*Shortcut B*, named exactly `UploadIncoming`, not in the Share Sheet:
+
+1. **Get File** `incoming/batch.txt` from the Shortcuts folder, without
+   the document picker.
+2. **Run Script over SSH** with that file as the **Input**; the script is
+   the receiver, or the wrapper that reaches it.
+3. **Base64 Encode** the *Shell Script Result* (Line Breaks: None, if
+   the option is offered; the page copes either way).
+4. **Text**: `https://YOUR-BLOG-URL/write/#b=` followed by the *Base64
+   Encoded* variable, with nothing between them.
+5. **Open URLs** with that text.
+
+![Shortcut B as the Shortcuts app shows it, with placeholders where the server's details go: Get File, Run Script over SSH, Base64 Encode, the Text with #b=, Open URLs](shortcut-b.png)
+
+Both can be imported instead of built: [blog.sh Send post](shortcuts/blog.sh-send-post.shortcut)
+is shortcut A and [UploadIncoming template](shortcuts/UploadIncoming-template.shortcut)
+is shortcut B, signed so that anyone may import them. After importing,
+rename the second to exactly `UploadIncoming` -- the first opens it by
+that name -- and fill in what is yours. In *Run Script over SSH*: the
+machine you log into (a host name or an IP address), its SSH port, the
+user, and the path to `scripts/receive.sh` or the wrapper that reaches
+it. In the *Text*: `YOUR-BLOG-URL` is the address the site is served at,
+`base_url` in `config/site.yml`. The SSH action carries no key; pick or
+generate one there and put its public half on the server, as the key
+line below shows. The first shortcut needs nothing changed.
+
+Base64, not URL Encode, and not for taste: Shortcuts reads a reply
+that is JSON as a Dictionary and then refuses to hand a Dictionary to
+URL Encode -- "couldn't convert from Dictionary to Text" -- on exactly
+the replies that matter, the refusals. Base64 Encode takes anything.
+(The page also still reads a percent-encoded reply after `#r=`.)
+
+The last three carry the answer back to the page. It opens with the
+reply after `#b=` -- a fragment, so it never leaves the browser -- and
+says what the server did: the pictures it kept, the draft's preview
+address or the post's public one, the command that publishes a draft
+from a keyboard, and a refusal in the reader's language where the page
+knows the code, in the server's own words where it does not. A post the
+server took is cleared from the device; a refusal keeps everything, so
+it can be mended and sent again.
+
+**And the page asks, as well as waiting.** That road back has one break
+in it that nothing on this end can mend: a page kept on a phone's home
+screen runs with storage of its own, so a reply that arrives as a URL
+opens in the browser, where the draft it is about does not exist -- and
+the draft stays on the home-screen copy, looking unsent. So the page
+picks a name for its answer before it sends anything (`receipt:`, sixteen
+hexadecimal characters, written into the markdown), and the build leaves
+a small JSON file at `/write/r/<receipt>.json` saying the slug, the
+state, the title, the address, and whatever the save had to complain
+about -- a picture whose size could not be read, a video that will make
+the reader wait, a player that was not found. The page draws those the
+way it draws the answer that comes back through the address bar, because
+the phone is the one place with no terminal to read them in. Only what
+was said about the POST: the file is served to anyone who has the
+sixteen characters, so what the run says about the SITE afterwards (a
+missing `base_url`, whatever the rebuild warns about) stays out of it.
+The page asks for it every three seconds for five minutes, and says so
+if it never comes. Whichever answer arrives first is the one that is
+shown.
+
+The file is written by the BUILD, which is what keeps it true: publish
+the post and the next build says published and gives the public address;
+delete the post and nothing generates the file, so the sweep takes it
+away. It exists only on a site that serves the page, and only for a post
+that asked for one.
+
+**Publishing from the phone.** The answer for a draft carries a Publish
+button, and it sends one file called `publish.txt` holding the slug --
+down the same connection, through the same two shortcuts. The receiver
+knows that shape: exactly one file, called that, and it runs
+`publish <slug> --yes --json` rather than storing anything. The slug is
+checked as hard as a filename is, because it becomes an argument to a
+command: a leading dash is a flag, and anything outside a slug's own
+alphabet is refused here rather than explained by whatever it hits. The
+page then asks the same receipt again until it says published.
+
+One connection carries the post however many photographs are in it, which
+is the point: connections are the scarce thing, not bytes. The first run
+in the app asks whether the shortcut may send its items to the host --
+answer Always Allow; that is the very question the background runner
+could not put on screen.
+
+The page that sent the files sees the share end in an abort -- that is
+how the hand-off to the app looks from a web page, not a failure -- so it
+says the files have left. The answer arrives when shortcut B opens the
+page again with it.
+
+The order inside the batch matters, because the markdown arriving is what
+makes the post and everything its text names has to be on the server by
+then. The app puts the markdown last for exactly this reason. Get it wrong
+and nothing breaks -- the engine answers `missing_images` and writes
+nothing, and sending the text again once the pictures are up is all it
+takes.
+
+**Draft or public is decided when the post is sent.** The page has a
+switch, Draft or Publish now; Draft is the default and writes nothing.
+Publish now writes `publish: yes` into the front matter, and `add` then
+takes the road `publish <slug> --yes` takes at a desk: the date is
+settled, the announcement goes out to the networks the site has
+configured, the site is rebuilt and deployed, and the answer carries the
+public address rather than a draft one. There is no third state: a post
+that is public is announced, on a phone as at a desk. The key is only
+read by `add <file>`; the wizard never publishes directly.
+
+`add <file>` wants the file to be on the server already. `receive.sh` is
+how it gets there: **the whole post down one connection**. Each file is a
+name on its own line, its base64 after it, and a line holding a single `.`
+to say that was all of it -- then the next name.
+
+```bash
+{ for f in photo.jpg post.md; do
+    printf '%s\n' "$f"; base64 < "$f"; printf '.\n'
+  done
+} | ssh blog ./scripts/receive.sh
+```
+
+**One connection, not one per file.** It was one per file once, which is
+simpler and does not work: a server worth running drops new SSH
+connections that arrive in a rush, and a common setting allows about four
+a minute. A post with three photographs sat exactly on that line and one
+with nine had no chance -- the sender saw "could not connect to the SSH
+server" and the pictures that never arrived were missed by nobody, since
+each connection answered for itself alone.
+
+Every name in the delivery is read before a single byte is written, so a
+batch refused on its fifth name leaves nothing behind from the first four.
+
+**The closing dot is not decoration.** A connection that drops halfway
+ends the same way a finished one does -- the receiver reads to the end
+of the stream either way -- so half a photograph arrived, decoded into
+half a picture, and was answered with `ok`. Without the dot the transfer
+is refused as `truncated` and nothing is stored.
+
+A shortcut on a phone sends a whole post that way -- every picture, then
+the markdown, down one connection -- and **the markdown last**, because
+the markdown arriving is what makes the post. Everything its text names
+is already staged under the name it
+uses, so there is no other signal to send and none is needed. The answer
+to a picture is `{"ok":true,"stored":"photo.jpg"}`; the answer to the
+markdown is the same JSON `add --json` gives.
+
+⚠️ **The shortcut has to SHOW the answer, or every refusal looks like it
+worked.** A refusal leaves with zero -- deliberately, because iOS Shortcuts
+discards the output of a remote command that failed, and the reason is the
+whole point of the answer. The cost is that Shortcuts then reports a tick
+for a refusal exactly as it does for a post. End the shortcut by opening the
+page with the answer, as shortcut B above does, or with a *Show Content*
+of the SSH output. The reply is one JSON object per file, so read it
+whole: a picture answers `"ok":true`, a refusal answers `"ok":false` and
+names the reason, and the post that was written answers with a `slug`
+and no `ok` at all. Without that, a shortcut whose Input field is empty connects,
+waits out the thirty-second deadline, is refused for `empty_input`, and
+shows a tick -- which is a slow, silent way to learn nothing.
+
+**The exit code answers a different question from the JSON.** Zero means
+an answer arrived -- read the object, which says `"ok"` and, when that is
+false, names the reason. Non-zero means there is no object to read at
+all: the script was killed, or the shell never got to run it. Everything
+the receiver can put into words leaves with zero, and that includes the
+refusals about the installation rather than the delivery -- no
+`incoming/`, no engine, a ceiling that is not a number. Which kind of
+trouble it is, the error code says. (iOS Shortcuts discards the output of
+a remote command that failed, so a refusal that exited non-zero reached a
+phone as a bare status with its reason gone -- exactly when the reason
+was the point, and those refusals are the ones a new install meets on its
+very first delivery.)
+
+The body has a deadline of its own, `BLOGSH_BODY_SECONDS` (600): a delivery
+that has not finished by then is dropped and, if the sender is still
+listening, told `timeout`; it is set where `BLOGSH_MAX_MB` is, below.
+Two files under one name in one delivery are
+refused (`bad_name`) rather than one silently replacing the other, every
+body is decoded before any file is written, so a refusal on the third
+picture leaves nothing of the first two behind, and a blank line after a
+complete delivery is not held against it. When the engine itself does
+not answer in JSON -- no `env.sh`, no ruby, a configuration that will not
+parse -- the receiver answers for it with `engine_failed` and the words
+the engine printed, and every delivery ends with status 0 once an answer
+has been given -- a ceiling that is not a number (`bad_limit`) included.
+
+A delivery that goes wrong halfway can simply be repeated. Pictures wait
+in `incoming/` until a text names them, so a refused post leaves them
+where they are and sending it again finds them -- nothing has to be
+uploaded twice.
+
+**Nothing new listens on the network.** It travels over the SSH the
+server already has, and the key it travels on wants a forced command:
+
+    restrict,command="/path/to/blog/scripts/receive.sh" ssh-rsa AAAA... phone
+
+The key has to be RSA. Shortcuts' *Run Script over SSH* does not speak
+ed25519 and says nothing when it meets one -- the run simply fails.
+
+**What a stranger chooses is a filename and some bytes**, so that is what
+is checked. A name carrying a path or a backslash, beginning with a dot,
+empty, longer than a filesystem will take, or holding a control
+character is refused (`bad_name`) and nothing is written. What arrives
+is bounded before it lands rather than weighed afterwards:
+`BLOGSH_MAX_MB` (24) is a ceiling on reading, so a sender costs that
+much and not whatever they felt like sending. The number is measured on
+the encoded stream, not on the files -- base64 is a third larger -- so a
+24 MB ceiling takes about eighteen megabytes of photographs; the page's
+legend says the same, and the red line it draws counts the encoded
+size. A delivery that overshoots
+is read to its end into nothing -- up to four times the ceiling -- and
+then refused, so the sender finishes and hears `too_large`; refused the
+moment the ceiling was reached, a phone with megabytes still to send sat
+on "running" with no timeout to save it, and the answer never arrived.
+Beyond that bound the channel closes, and a hostile sender costs
+reading, never storage. And the post
+itself is handed to the engine as **untrusted**, so a picture may be
+named only by a bare filename -- `![](/etc/passwd)` is refused
+(`bad_reference`), because otherwise it would read that file into the
+post and publish it.
+
+**Raising the ceiling is two settings, not one.** The receiver reads
+`BLOGSH_MAX_MB` from its own environment -- the one the forced command
+runs in: put it in the key's line, `command="BLOGSH_MAX_MB=64
+/path/to/blog/scripts/receive.sh"`, or, where the command is a wrapper
+that enters a container, in that wrapper (`docker exec -e
+BLOGSH_MAX_MB=64 …`). The page at `/write/` never asks the server; it
+shows the number the BUILD saw in `BLOGSH_MAX_MB` when it wrote
+`site.js` -- so set the same value where the build runs (`env.sh`) and
+rebuild, or the page will warn at 24 while the server takes 64, or say
+nothing while the server refuses. Unset on both sides, both say 24.
+
+There is deliberately no archive. An earlier design took a ZIP and
+unpacked it here; three adversarial audits found blocking faults in three
+successive rewrites of it, and nearly all of them lived in the unpacking
+-- entries that were symlinks, names that collapsed onto each other, a
+bomb that wrote gigabytes from megabytes, a half-failed extraction that
+published a truncated photograph and reported success. None of that can
+be expressed when there is nothing to unpack.
 
 ## Pinning a post to the front page
 
@@ -525,20 +1033,54 @@ tag_icons:
     icon_svg: '<svg viewBox="0 0 24 24" ...>...</svg>'
 ```
 
+A tag is matched here by its **address** -- the `/tag/<name>/` its listing
+lives at -- so how the name is spelled, here or in a post, makes no
+difference: `sci-fi`, `Sci Fi` and `sci_fi` are one tag, share one page and
+wear one icon. A tag that leaves nothing to be addressed by, an emoji or a
+piece of punctuation, has no page and takes no icon either.
+
 The order is the priority. Most posts carry more than one tag -- 68% of
 them on the archive this engine was built around -- and the tag a post was
 given FIRST is usually the one an importer added, not a subject: `twitter`
 opens 1256 posts there. So the first entry in this list that a post has is
 the one it wears, and the site owner decides once instead of post by post.
 
-`icon` names one of the eight the engine ships: text, quote, chat, image,
-video, audio, link, document. `icon_svg` is your own drawing, on the same
+`icon` names one the engine ships. Eight of them are the content types
+themselves -- text, quote, chat, image, video, audio, link, document --
+and the rest are the things blogs are about:
+
+| | |
+|---|---|
+| getting about | `bike` `car` `train` `plane` `boat` `walk` |
+| places and weather | `map` `pin` `mountain` `tree` `sun` `cloud` `rain` `snow` |
+| a day | `coffee` `beer` `food` `wine` `clock` `calendar` `home` `heart` `star` `gift` |
+| making things | `pen` `brush` `camera` `film` `mic` `music` `book` `tools` `hammer` |
+| machines | `laptop` `phone` `code` `terminal` `server` `bug` `lock` `key` |
+| living things | `paw` `bird` `leaf` `flower` |
+| ideas | `bulb` `flag` `globe` `eye` `chart` `target` `rocket` `mail` `briefcase` `box` |
+
+They are line drawings on the same grid as the eight, so a badge wearing
+one looks like a badge. `doctor` prints the whole list when a name is not
+among them, which is usually a synonym away -- `bicycle` for `bike`. A
+footer link in `social:` can wear one too, where the network marks have
+nothing to offer: `icon: globe` for somebody's other site.
+
+`icon_svg` is your own drawing, on the same
 24-unit grid (`viewBox="0 0 24 24"`) and stroked in `currentColor` so it
-follows the light and dark themes. Scripts, styles and event handlers are
+follows the light and dark themes. It does not have to be drawn from
+scratch: open an icon from any set that works on that grid -- Lucide,
+Feather and Tabler all do -- copy the `<path>` elements out of its file
+and paste them between `<svg viewBox="0 0 24 24" width="20" height="20"
+fill="none" stroke="currentColor" stroke-width="2">` and `</svg>`. Mind
+the licence of whatever you take, and if the set fills its shapes rather
+than stroking them, drop the `fill="none"` and take `stroke` out. Scripts, styles and event handlers are
 stripped out of it before it reaches a page -- the same treatment an
 imported embed gets, and for the same reason. `doctor` says when an icon
 name is one the engine does not have, when an `icon_svg` holds no `<svg>`,
-and when it is drawn to another scale.
+and when it is drawn to another scale. An `icon_svg` that is not a
+drawing at all -- a filename, an address, an emoji -- is refused rather
+than printed where the glyph goes, and the tag falls back to what it
+would have had with no entry here.
 
 A tag with no entry here changes nothing: its listing keeps the generic
 tag icon and its posts keep the icon of their content type.
@@ -590,13 +1132,30 @@ before a deploy. `check` reads the content on disk, so it works before a
 build has ever run, and it names a post and a slug for every finding
 rather than a file under `public.nosync`: something to go and fix.
 
+The one thing it looks at outside the archive is `config/site.yml`, and
+for the same reason: this is the command people run before a build, and a
+config the build will refuse is not something to find out afterwards. It
+reports that file in `doctor`'s words, so the two never describe it
+differently.
+
 What it looks for, each with a line saying what to do about it:
 
+- **A `config/site.yml` that is missing, empty, will not parse, or cannot
+  be opened.** The build stops on all four and `doctor` explains all four;
+  `check` used to read the config only to pick the language it printed in
+  and say nothing about it, so an edited config could be answered with
+  "the archive is sound" and an exit code of 0. The parse error carries
+  the line and column Psych knew about.
 - **A post file that will not read, a date nothing can parse, a post whose
-  text is not a list of blocks, or a slug that is not one path segment
-  (a slash or a `..` in it).** The build refuses to run on any of them, or
-  writes the page nowhere good, so check says so first: without this it
-  counted the archive minus the broken file and called the rest sound.
+  text is not a list of blocks, a slug that is not one path segment
+  (a slash or a `..` in it), or a `type:` the engine does not know.** The
+  build refuses to run on the first four, or writes the page nowhere
+  good, so check says so first: without this it counted the archive minus
+  the broken file and called the rest sound. The unknown type is stored
+  on the post and read by nobody -- no listing, no menu entry, no icon --
+  and the fix line points at the tag route, which is usually what
+  somebody reaching for a ninth type wanted: a tag named in `nav:` has a
+  listing, pagination, a menu entry and a feed.
 - **A file a queue move stepped aside and a crash left parked.** The
   parking name is dotted precisely so no listing shows it -- which also
   means nothing would ever find one again without this. What to do with
@@ -609,7 +1168,9 @@ What it looks for, each with a line saying what to do about it:
   included -- usually an import whose download failed. The page renders
   a hole. A file that is there and useless -- empty, unreadable, or a
   folder under the picture's name -- is reported the same way, with a
-  sentence that says which it is.
+  sentence that says which it is; and a video whose index sits at the end
+  of the file is noted, since it plays but makes every reader wait for the
+  whole download before the first frame.
 - **Images stored as 1px or smaller.** The build treats those as tracking
   pixels and drops them *together with their caption*, so the page loses
   both without saying so.
@@ -739,6 +1300,139 @@ each line is there:
 
 `--json` prints the same figures unlocalized and unrounded, so the
 numbers can go into a post, a cron job or a graph.
+
+## Letting a reader pass a post on
+
+The old way to do this was a row of buttons for Facebook, Twitter and
+Pinterest, each with one address to send somebody to. The fediverse has no
+such address: the destination is the READER's instance, and a page has no
+way to know it.
+
+So the block is a list you write, and it holds three different kinds of
+thing:
+
+```yaml
+share:
+  - mastodon
+  - bluesky
+  - email
+  - copy
+  - system
+```
+
+Leave `share:` out and no block appears. The order here is the order they
+are drawn in.
+
+`bluesky`, `email`, `facebook`, `linkedin`, `threads` and `x` are plain
+links: one address each, nothing to ask, no script. `mastodon` asks the
+reader once which instance they are on -- in a row that opens under the
+buttons, in the site's own type -- and remembers the answer in their
+browser. Not in a dialog from the browser: those look like something the
+page did not make, browsers throttle them, and a box demanding the name of
+a server is the shape people are taught not to trust. And no third-party
+redirector, which would put an outside service on every post page and in
+the way of every share. `copy`
+puts the address on the clipboard and says that it did. `system` hands it
+to the operating system's own share sheet, which on a phone is Signal and
+WhatsApp and Telegram and whatever else is installed, so one control
+covers what a row of them could not.
+
+Three of them need the browser to co-operate, and none is drawn where it
+cannot work -- a control that opens nothing is worse than no control.
+`mastodon` stays hidden until its script has run, `system` unless the
+browser has a share sheet, and `copy` unless there is a clipboard to write
+to. That last one has a condition worth knowing about: browsers only give
+a page the clipboard over **https**, so on a site served over plain
+`http://` the copy button is not drawn at all. If the whole block would be
+empty -- every target you named turned out to be one of these three, and
+none of them could run -- the block stays hidden too, rather than leaving
+a heading over nothing.
+
+Pixelfed is not on the list. It has no share address to send anyone to --
+the request for one was closed without it -- and a post there wants a
+photograph rather than a link.
+
+What gets prefilled is the post's NAME and its address; the reader writes
+the part that is theirs. Nothing appears on a page, on a draft preview or
+on an unlisted post: there is nothing to pass on from a contact page, a
+draft has no address anybody else can open, and handing a reader a button
+that posts an unlisted post to Bluesky is the mistake the unlisted flag
+exists to prevent.
+
+## Rebuilding only what changed
+
+A publish rebuilds the site, and until 1.6 that meant rebuilding all of
+it: every page rendered, and every file read back off disk to find out
+whether its bytes had moved. On an archive of a few thousand posts that is
+most of a minute, every time, for a change that touched a dozen files.
+
+Since 1.6 the build writes down what it produced -- in `.build_cache.json`
+in the installation directory -- and the next build leaves alone the pages
+whose inputs have not moved. Nothing you do changes: `./blog.sh publish`
+and `./blog.sh rebuild` work exactly as before, only quicker. The summary
+at the end says how many pages were left alone, so you can see it working.
+
+Measured on this project's own archive of 6,639 posts, on the server it
+lives on: a rebuild that changes nothing now costs a seventh of what it did,
+and an ordinary publish about two fifths. Backdating is the case it can do least about,
+and the measurement says so plainly -- a post dated into the early 2000s
+still costs four fifths of the old build. A post arriving in the middle of
+the archive shifts every listing page between the front page and where it
+lands, so those pages really did change and really do have to be built.
+Importing an archive, which is backdating several thousand times over, is
+a full build for the same reason.
+
+The ratio is what travels; the seconds behind it are one machine's. These
+are our own measurements, on our own archive, on its own server. Yours will
+differ with your archive, your disk, and whatever else the machine is doing
+at the time.
+
+The cache is an optimisation and never an authority. Anything it cannot
+vouch for is built the old way -- rendered, read back, compared. A page
+somebody deleted or damaged in `public.nosync/` by hand comes back on the
+next build, because the record is checked against what is actually on
+disk, and `public.nosync/` is still swept clean of anything the build does
+not produce on every build, cache or no cache. Editing a template, a
+locale or `site.yml` throws the whole cache away, since any of those can
+change every page; so does changing `SITE_BASE_URL`, and so does a change
+of timezone -- including the one that happens without you touching
+anything, when a system update rewrites the rules of the zone you publish
+in. A stylesheet is the exception worth knowing: pages link it rather than
+embed it, so editing one changes the stylesheet and nothing else -- the
+build skips every page it would have rebuilt and the deploy sends the one
+file. The palette in `site.yml` is not that case, since the stylesheet it
+generates and the theme colour in every page's head both come from it.
+
+```bash
+./blog.sh rebuild --full        # build every page again, then deploy
+```
+
+Reach for `rebuild --full` when you want the site rendered from scratch --
+after restoring `public.nosync/` from a backup, say, or when you suspect
+what is on disk is not what the archive says it should be. It costs one
+slow build, and it still leaves a usable record behind for the build after
+it. (`ruby build/build_blog.rb --full` does the building half alone, if
+you want the site rebuilt without being deployed.)
+
+## A published picture is the archive's own file
+
+Until 1.6 every picture existed twice: once in `media.nosync/`, and once
+as a copy of itself under `public.nosync/`. On this project's own
+installation that was 1.8 GB counted twice, and every import doubled again.
+
+They are one file under two names now. Nothing about publishing changes,
+and neither does the archive's copy: deleting a picture from
+`public.nosync/` -- by hand, or by the sweep, or by a deploy with
+`--prune` -- drops that name and leaves the archive's. What DOES follow
+the link is the mode: making the published picture readable makes the
+original readable too, which is the direction that was wanted, because a
+picture the web server cannot read was the bug this makes impossible.
+
+It saves disk and it does not save backups. Measured against this
+project's own: 200 files under two names take 101 MB on the disk and 201
+MB in the backup, because the backup copies file by file and stores each
+name in full. Back up `media.nosync/` as you always did -- that is the
+archive's copy, and it is the one that matters.
 
 ## Deploying
 
@@ -950,7 +1644,7 @@ everything generated is rebuildable:
 | --- | --- |
 | `content.nosync/posts/` | the posts -- the one thing that's truly irreplaceable |
 | `content.nosync/versions/` | what each edited post said before its last ten saves, which is what `[v]` restores from ([Properties and actions](#properties-and-actions)). It sits beside the content and dies with it, so a backup of the posts alone keeps the archive and loses the undo |
-| `media.nosync/` | their images and videos |
+| `media.nosync/` | their images and videos. A published picture has been a hardlink to this file since 1.6, so a backup still stores it once per name -- this is the copy that matters ([A published picture is the archive's own file](#a-published-picture-is-the-archives-own-file)) |
 | `config/site.yml` | site identity and integrations |
 | `assets/images/header.png`, `assets/images/favicon.png` | your banner and icon -- gitignored, so a fresh clone brings back the engine's defaults instead, silently ([Banner and favicon](install.md#4-banner-and-favicon)) |
 | `env.sh` | tokens (or re-create them; mind the file's 600 mode in backups too) |
@@ -960,7 +1654,9 @@ everything generated is rebuildable:
 Not needed: `public.nosync/` (build output), `.deploy_manifest*.json`
 (self-heals with one full re-upload), `.deploy_baseline.json` (the guards'
 reference; losing it costs one deploy with the growth guard standing down,
-and it is rewritten by that same run), `incoming/` (transient staging), and
+and it is rewritten by that same run), `incoming/` (transient staging),
+`.build_cache*.json` (what the last build wrote, so the next one can skip
+re-making it -- per-machine, and deleting it costs one full build), and
 the working files next to them -- `.last-edit.md` (the text from the last
 editor session, with `.last-edit.meta` recording which command it came
 from), `.deploy-pending` (a marker that says a scheduled publish still
@@ -1005,6 +1701,9 @@ whole), but restoring from the archive itself is exact.
 | `Unreadable post file(s) ... build stopped` | A post's JSON is truncated or isn't a post object -- the message names every offending file. Fix or remove them; `list` and the pickers keep working meanwhile and name it too. |
 | `The image size could not be read` when attaching a photo | PNG, JPEG, GIF and WebP are measured; anything else is attached and rendered without reserved space, so the page jumps once while loading. |
 | `HEIC displays only in Safari` when attaching a photo | The iPhone default format. Convert it with the command the message prints, set `media.convert_heic: true` to have the engine do it, or set the phone to Settings → Camera → Formats → Most Compatible. |
+| A post sent from the phone came back refused | The answer names a code. `bad_name`, `too_large`, `truncated`, `empty_input`, `empty_file` and `bad_base64` are about the delivery -- send it again, and see [A post sent from the phone itself](#a-post-sent-from-the-phone-itself) for the ceiling and the closing dot. `bad_reference` means the markdown named a picture by a path rather than a bare filename. `missing_images` means the text arrived before a picture it names: send it again, the pictures already there are found. |
+| `name_taken` from the receiver | Something in `incoming/` under that name is not a plain file -- a directory, or a symlink. Nothing was replaced; clear the name on the server. |
+| `write_failed`, `no_incoming`, `no_engine`, `no_tmp`, `no_cd` | The installation, not the delivery: the path in the shortcut's command is wrong, `incoming/` is missing, or the account behind the key cannot write into it. Every one of them answers with its code and leaves with a zero status, the same as any other refusal: the phone discards the output of a command that failed, and these are the answers a first delivery to a new install most needs to read. |
 | `/markdown/` page missing | `templates/markdown-cheat-sheet.<lang>.md` was removed -- restore it from the repo (`git checkout templates/`). |
 | A published post shows the wrong date | Publishing uses "now" and scheduling uses the date you entered, so a surprising date means a `date:` line was typed into the frontmatter by hand -- it's respected, including past dates (which skip the homepage -- by design). |
 | sftp deploy hangs | It's waiting for a password -- the sftp backend needs key-based auth (see [install.md](install.md#sftp-hosts-with-neither-rsync-nor-git)). |

@@ -24,6 +24,14 @@ module MarkdownParser
   # --- frontmatter -------------------------------------------------------
 
   def parse_frontmatter(text)
+    # A byte-order mark first, because three invisible bytes in front of
+    # the opening --- mean this method sees no frontmatter at all and
+    # hands the WHOLE header back as body. Nothing then fails: the post
+    # is written with no title and no tags, its name derived from the
+    # words "title:" and "tags:", and the run exits 0. Windows editors
+    # and several iOS apps write one by default, and `add <file>` made
+    # that reachable without anybody ever seeing the file.
+    text = text.sub("\uFEFF", '') if text.start_with?("\uFEFF")
     return [{}, text] unless text.start_with?("---\n") || text.start_with?("---\r\n")
 
     _, fm, body = text.split(/^---\s*$/, 3)
@@ -264,6 +272,12 @@ module MarkdownParser
   UL_ITEM_RE = /\A[-*]\s+(.+)\z/
   OL_ITEM_RE = /\A\d+[.)]\s+(.+)\z/
   BLOCKQUOTE_LINE_RE = /\A>[ \t]?(.*)\z/
+  # The hard break an author asked for, at the end of a line. Neither the
+  # line before one nor the line CARRYING one can join a list item: an item
+  # holds plain text with no newline in it, so the break would be dropped
+  # and its marker published as a stray backslash in the middle of the
+  # bullet. Such a paragraph stays prose, where the break still works.
+  HARD_BREAK_END_RE = /(?<!\\)\\\z/
   TABLE_SEPARATOR_RE = /\A\|?[\s:|-]*-[\s:|-]*\|?\z/
   VIDEO_EXTENSIONS = %w[.mp4 .mov .m4v].freeze
   AUDIO_EXTENSIONS = %w[.mp3 .m4a .ogg .opus .aac .flac .wav].freeze
@@ -487,9 +501,38 @@ module MarkdownParser
 
   # --- lists ---------------------------------------------------------------
 
+  # A line that carries the rest of the item above it rather than opening
+  # something of its own -- the second line of a bullet longer than the
+  # editor it was typed in, which is how anybody writes a long bullet.
+  #
+  # Everything a reader would see as a new block is refused here, so the
+  # paragraph falls back to prose exactly as it did before rather than
+  # having a heading or a quote quietly swallowed into the bullet above it.
+  # The same set markdown lets end a paragraph with no blank line in front
+  # of it, and the same set Import::Jekyll#interrupts_list? already uses --
+  # they answer the same question and must not drift apart.
+  #
+  # A fence cannot actually reach this far -- split_code_fences takes fenced
+  # segments out of the body before any paragraph is split, and it strips
+  # the line first, so an indented fence is caught there -- but it is listed
+  # anyway: the day that stops being true, a code block would end up as the
+  # tail of a bullet with nothing said about it.
+  def continuation_line?(line)
+    stripped = line.strip
+    return false if stripped.empty?
+    # A new item at any depth belongs to the list, not to the item above:
+    # deeper opens a nested list, same or shallower ends this level.
+    return false if UL_ITEM_RE.match?(stripped) || OL_ITEM_RE.match?(stripped)
+
+    !HEADING_RE.match?(stripped) && !BLOCKQUOTE_LINE_RE.match?(stripped) &&
+      !HR_RE.match?(stripped) && !CODE_FENCE_LINE_RE.match?(stripped) &&
+      !stripped.start_with?('|')
+  end
+
   # Parses one nesting level of a list starting at `lines[idx]`, where every
   # line belonging to this level has exactly `indent` leading spaces (deeper
-  # indentation opens a nested list attached to the preceding item; shallower
+  # indentation opens a nested list attached to the preceding item, or -- when
+  # it is not an item at all -- continues the one above it; shallower
   # indentation, a different marker style at the same indent, or a non-list
   # line ends this level). Returns [list_block, next_idx], or nil if the line
   # at idx isn't a list item at all.
@@ -548,6 +591,58 @@ module MarkdownParser
       break unless m
 
       body = m[1]
+      idx += 1
+
+      # The rest of a wrapped bullet. The item's own line is consumed above,
+      # so this reads forward from the line after it and leaves idx on the
+      # first line that belongs to somebody else.
+      #
+      # A paragraph was a list only if EVERY line of it was an
+      # item, so one continuation line -- an indented line carrying the end
+      # of a sentence too long for the editor's width -- turned the whole
+      # paragraph back into prose with the "- " markers left standing in the
+      # middle of it. The engine's own cheat sheet was written that way, and
+      # published its last section as one run-on paragraph on every site
+      # this engine has ever built, with nothing said by the build or by
+      # `check`.
+      #
+      # Indentation is required. An unindented line under an item is
+      # CommonMark's lazy continuation, and taking it would silently glue a
+      # sentence somebody appended after a list onto its last bullet --
+      # a loss where today's fallback to prose is at least visible. The one
+      # place lazy continuations are read is Import::Jekyll, which joins
+      # them before the markdown ever gets here: kramdown hard-wraps at
+      # column 120, so there the unindented line is a machine's doing and
+      # cannot be a sentence somebody meant to write.
+      #
+      # Joined with a space, not a newline, because a space is what the
+      # engine already means by a wrap (collapse_soft_breaks does the same
+      # to prose) and because an item's text has to survive the way back:
+      # MarkdownWriter writes an item on ONE line, so a newline stored here
+      # would come back out unindented, stop being a continuation, and turn
+      # the list into prose on a post nobody touched.
+      #
+      # Only directly after the item's own line: once a nested list has been
+      # attached, a line belonging to the item above it has nowhere to go
+      # that the writer could put back in the same place, so that shape
+      # keeps falling through to prose rather than being silently reordered.
+      #
+      # A line ending in the hard-break backslash is not continued at all.
+      # An item cannot hold a break -- there is no newline in it that would
+      # survive being written back -- and joining anyway left the marker in
+      # the middle of the text as a visible stray backslash. The paragraph
+      # stays prose, where the break the author asked for actually works.
+      # Trailing SPACES are a different matter and are simply trimmed: they
+      # are markdown's other break marker, but they are far more often a
+      # typo, and refusing there would fall back to prose over whitespace
+      # nobody can see.
+      while idx < lines.length && !HARD_BREAK_END_RE.match?(body) &&
+            lines[idx][/\A */].size > indent && continuation_line?(lines[idx]) &&
+            !HARD_BREAK_END_RE.match?(lines[idx].strip)
+        body = "#{body} #{lines[idx].strip}"
+        idx += 1
+      end
+
       # "- [ ] task" / "- [x] done" -- the marker is consumed here, so the
       # stored text is just the task, and `checked` carries the state.
       checked = nil
@@ -560,14 +655,14 @@ module MarkdownParser
       item['formatting'] = formatting unless formatting.empty?
       item['checked'] = checked unless checked.nil?
       items << item
-      idx += 1
     end
 
     [{ 'type' => 'list', 'style' => style, 'items' => items }, idx]
   end
 
   # A paragraph is a list block when its first line is a list item; nested
-  # (deeper-indented) lines become sub-lists attached to the preceding item.
+  # (deeper-indented) lines become sub-lists attached to the preceding item,
+  # and deeper-indented lines that are not items continue it.
   # If any line is left over once the top level's items are exhausted, the
   # whole paragraph is rejected and falls through to a plain text block --
   # same "must be a clean, fully-consistent list" rule as before.
@@ -608,7 +703,61 @@ module MarkdownParser
     name
   end
 
-  def resolve_image(path, media_dir, counter, media_files = {}, incoming_dir: nil)
+  # A picture reference this parse is not allowed to follow.
+  #
+  # Raised rather than collected the way a missing file is, because the two
+  # are different questions. A missing file is a delay -- upload it and run
+  # again. A reference the caller may not follow is a refusal, and the post
+  # around it must not be written either: whoever sent that markdown asked
+  # for something they are not entitled to, and writing the rest of their
+  # post would be answering half of it.
+  # ⚠️ A refusal that reached nobody. The two aborts below are right for a
+  # person at a terminal -- prose on stderr, a non-zero exit -- and useless
+  # for a program: `add --json` promises an object, and iOS Shortcuts
+  # throws away the output of a command that failed. A post written on a
+  # phone with the picture on the line under the sentence therefore came
+  # back to the phone as a blank screen, with the post never written and
+  # nothing anywhere saying why.
+  #
+  # Confined markdown is by definition somebody else's, arriving over a
+  # network, so it is the input whose refusals have to be catchable. Every
+  # other caller still gets the abort it has always got.
+  class Rejected < StandardError; end
+
+  class ConfinedPath < StandardError
+    attr_reader :reference
+
+    def initialize(reference)
+      @reference = reference
+      super("picture reference is not a bare filename: #{reference}")
+    end
+  end
+
+  # confined: the markdown did not come from somebody with a shell.
+  #
+  # `add <file>` and the editor both let a reference name any path on the
+  # machine, which is the whole convenience of writing at your own desk --
+  # ![](~/Pictures/x.jpg) works, and whoever typed it already had the file.
+  # The moment markdown arrives over a wire that convenience is a door:
+  # ![](/etc/passwd) pulled the file into the post's media and published
+  # it. So a caller that does not trust its input says so, and then only a
+  # BARE NAME is accepted -- resolvable in the post's own media or in
+  # incoming/, the two places a bundle can legitimately have put something.
+  #
+  # Enforced here, in the method that does the resolving, rather than by
+  # the caller inspecting the markdown first: a second reader of the same
+  # text is a second set of rules, and the gap between them is where the
+  # hole would be. One parser, one rule.
+  # Raise for a caller that has to answer in JSON; abort for a person.
+  def reject(message, confined)
+    raise Rejected, message if confined
+
+    abort message
+  end
+
+  def resolve_image(path, media_dir, counter, media_files = {}, incoming_dir: nil, confined: false)
+    raise ConfinedPath, path if confined && File.basename(path) != path
+
     expanded = File.expand_path(path)
     # realpath, not just expand_path: /tmp vs /private/tmp (macOS) or any
     # symlinked path names the same file two ways, and classifying the
@@ -650,6 +799,25 @@ module MarkdownParser
       expanded = File.expand_path(File.join(incoming_dir, path)) if incoming_dir
     end
 
+    # What the name resolves to has to be an ordinary file -- a directory
+    # under a bare name crashed the save halfway through with a raw
+    # EISDIR, media directory left behind, slug burnt -- and, when the
+    # markdown is not trusted, one that really lives in incoming/ or in
+    # the post's own media. The spelling test above cannot see where a
+    # symlink points: a link planted under a bare name read env.sh into a
+    # published picture. A name that resolves to nothing yet is left
+    # alone here; the missing-picture answer is the one for that.
+    if File.exist?(expanded) || File.symlink?(expanded)
+      reject("#{path} is not a file: a directory or a device cannot be a picture", confined) unless File.file?(expanded)
+      if confined
+        real_dir = File.dirname((File.realpath(expanded) rescue expanded))
+        allowed = [incoming_dir, media_dir].compact.map do |d|
+          (File.realpath(File.expand_path(d)) rescue File.expand_path(d))
+        end
+        raise ConfinedPath, path unless allowed.include?(real_dir)
+      end
+    end
+
     # If the post has already referenced this source once, reuse the same
     # filename. media_files is keyed by source path, so a second reference
     # to the same file would otherwise overwrite the first and one of the
@@ -675,13 +843,20 @@ module MarkdownParser
   # (the kept image can appear in any block, before or after the new one).
   # A brand-new post has no media directory yet, so nothing is skipped there
   # and its images stay numbered 01, 02, 03...
+  #
+  # A name is read for the number it STARTS with rather than compared whole:
+  # a repacked video is stored as `01-web.mp4`, which is not the string
+  # "01", so the number stayed free, the next video attached was numbered 01
+  # again, and the repack turned it back into `01-web.mp4` -- straight over
+  # the file the first block still names. Nothing warned, nothing went to
+  # the trash, and the post then played the second clip twice.
   def free_media_name(counter, ext, media_dir, taken)
     used = taken.dup
     used.concat(Dir.children(media_dir)) if media_dir && Dir.exist?(media_dir)
-    stems = used.map { |name| File.basename(name.to_s, '.*') }
+    numbers = used.filter_map { |name| File.basename(name.to_s, '.*')[/\A(\d+)/, 1]&.to_i }
 
     number = counter
-    number += 1 while stems.include?(format('%02d', number))
+    number += 1 while numbers.include?(number)
     format('%02d%s', number, ext)
   end
 
@@ -792,17 +967,17 @@ module MarkdownParser
     lines.map { |l| l.strip.empty? ? '' : l[common..] }.join("\n").strip
   end
 
-  def parse_prose_block(para, media_dir, media_files, counter, incoming_dir: nil)
+  def parse_prose_block(para, media_dir, media_files, counter, incoming_dir: nil, confined: false)
     if (m = VIDEO_RE.match(para))
       caption, target = m[1].strip, m[2].strip
-      abort "Video needs a caption: !![caption](#{target})" if caption.empty?
+      reject("Video needs a caption: !![caption](#{target})", confined) if caption.empty?
 
       # Same !! marker, told apart by extension -- a third sigil would be one
       # more thing to remember for what is the same gesture: "embed this
       # media file with a caption".
       if audio_path?(target)
         counter += 1
-        filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir)
+        filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir, confined: confined)
         media_files[src] = filename if src
         counter -= 1 unless src
         return [{ 'type' => 'audio', 'media' => [{ 'url' => filename }], 'caption' => caption }, counter]
@@ -825,7 +1000,7 @@ module MarkdownParser
       end
 
       counter += 1
-      filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir)
+      filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir, confined: confined)
       media_files[src] = filename if src
       counter -= 1 unless src # filename was recycled, the number wasn't consumed
       return [{ 'type' => 'video', 'media' => [{ 'url' => filename }], 'caption' => caption }, counter]
@@ -855,7 +1030,7 @@ module MarkdownParser
       # would render as a broken <img>, so this warns about it rather than
       # letting it pass silently.
       warn "Note: #{File.basename(path)} looks like a video but is written as an image. For a video, use !![caption](#{path})." if video_path?(path)
-      filename, src = resolve_image(path, media_dir, counter, media_files, incoming_dir: incoming_dir)
+      filename, src = resolve_image(path, media_dir, counter, media_files, incoming_dir: incoming_dir, confined: confined)
       media_files[src] = filename if src
       counter -= 1 unless src
       return [{ 'type' => 'image', 'media' => [{ 'url' => filename }], 'alt_text' => (alt.empty? ? nil : alt), 'caption' => caption }.compact, counter]
@@ -867,7 +1042,7 @@ module MarkdownParser
       # better than a link reading "download".
       counter += 1
       label, target = m[1].strip, m[2].strip
-      filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir)
+      filename, src = resolve_image(target, media_dir, counter, media_files, incoming_dir: incoming_dir, confined: confined)
       media_files[src] = filename if src
       counter -= 1 unless src
       file = { 'url' => filename }
@@ -891,7 +1066,8 @@ module MarkdownParser
       # An image in the middle of a paragraph can't be rendered -- the
       # schema only knows image blocks. This used to silently turn into a
       # link to the file plus a stray exclamation mark.
-      abort "Both images and videos must be on their own line, separated by blank lines. The problem is here:\n#{para}"
+      reject("Both images and videos must be on their own line, separated by " \
+             "blank lines. The problem is here:\n#{para}", confined)
     elsif !para.include?("\n") && HR_RE.match?(para)
       return [{ 'type' => 'hr' }, counter]
     elsif !para.include?("\n") && TEASER_END_RE.match?(para)
@@ -929,7 +1105,7 @@ module MarkdownParser
     end
   end
 
-  def parse_body(body, media_dir, incoming_dir: nil)
+  def parse_body(body, media_dir, incoming_dir: nil, confined: false)
     blocks = []
     media_files = {}
     counter = 0
@@ -970,7 +1146,8 @@ module MarkdownParser
       # above, so a marker inside one is left exactly as it was typed.
       text = segment[:text].gsub(/^[ \t]*(\/\/--more--\/\/)[ \t]*$/, "\n\\1\n")
       text.split(/\n\s*\n/).map { |para| dedent(para) }.reject(&:empty?).each do |para|
-        block, counter = parse_prose_block(para, media_dir, media_files, counter, incoming_dir: incoming_dir)
+        block, counter = parse_prose_block(para, media_dir, media_files, counter,
+                                                 incoming_dir: incoming_dir, confined: confined)
         # nil is a paragraph that turned out to hold nothing a reader could
         # see -- see the heading branch. Every other path returns a block.
         blocks << block if block

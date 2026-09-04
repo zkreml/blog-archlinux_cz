@@ -3,7 +3,6 @@
 require 'json'
 require 'digest'
 require_relative 'atomic_write'
-require_relative 'path_glob'
 
 # lib/build_cache.rb -- what the last build wrote, so this one can skip
 # producing the same bytes a second time.
@@ -59,7 +58,24 @@ module BuildCache
   # bytes of a rendered page. Deliberately whole directories rather than a
   # list of files, so a template or a helper added later is covered without
   # anybody remembering to add it here.
-  FINGERPRINT_TREES = %w[templates lib build locales assets config].freeze
+  #
+  # ⚠️ assets/ is deliberately NOT among them, and the reason is the rule
+  # above rather than an exception to it: a page LINKS a stylesheet, a
+  # script and a favicon, it never carries their bytes. There is no ?v=
+  # cache-buster on any of those links -- that is a decision of its own,
+  # written down where the links are made -- so no edit under assets/ can
+  # change the bytes of a rendered page. What assets/ needs instead, it
+  # already has: emit_copy compares every file byte for byte on every
+  # build, before this cache is even opened, and registers it against the
+  # sweep. Including the tree here bought nothing and cost a full rebuild
+  # of every page for a one-line change of colour.
+  #
+  # The one thing under assets/ that DOES reach a page is colors.css, and
+  # it is generated from config/site.yml rather than read from the tree,
+  # so config -- which is in the list -- covers it. If a template is ever
+  # written that inlines the CONTENT of a file under assets/, that content
+  # has to come back into this fingerprint with it.
+  FINGERPRINT_TREES = %w[templates lib build locales config].freeze
 
   class << self
     attr_reader :root, :public_dir
@@ -96,8 +112,10 @@ module BuildCache
       @reuse = reuse
     end
 
-    # The file this build's state will be written to. Exposed for the tests
-    # and for doctor, which reports on it.
+    # The file this build's state will be written to. Read by the build
+    # itself, in load_previous and save!; nothing outside this file asks
+    # for it today -- the comment here used to name doctor and the tests
+    # as consumers, and neither has ever called it.
     attr_reader :path
 
     # Takes the fingerprint and loads the previous state if it matches.
@@ -115,16 +133,8 @@ module BuildCache
         dir = File.join(@root, tree)
         next unless File.directory?(dir)
 
-        PathGlob.under(dir, '**', '*').sort.each do |file|
-          next unless File.file?(file)
-
-          # Size and mtime rather than contents. Reading every library and
-          # template on every build to hash them would spend a slice of
-          # what this exists to save, and an engine file whose mtime did
-          # not move is an engine file nobody edited. `git checkout` and
-          # `git pull` both touch mtime, so a version change is seen.
-          stat = File.stat(file)
-          parts << "#{file.delete_prefix(@root)}:#{stat.size}:#{stat.mtime.to_i}"
+        engine_files(dir).each do |file|
+          parts << "#{file.delete_prefix(@root)}:#{file_digest(file)}"
         end
       end
       @fingerprint = Digest::SHA256.hexdigest((parts + facts.map(&:to_s)).join("\n"))
@@ -169,28 +179,6 @@ module BuildCache
       @outputs[rel(path)] = [digest, stat.size, stat.mtime.to_i]
     end
 
-    # A file the build COPIED rather than rendered -- media, and the assets
-    # carried across beside them. Remembered by name, size and mtime, with
-    # no digest: hashing 1.8 GB of photographs on every build to learn
-    # something the NAME already answers would cost more than the walk this
-    # exists to skip.
-    #
-    # Without it, media were the one output the record could not see stop
-    # being produced. Take a photograph out of a post that keeps its slug
-    # and every PAGE is still written, so outputs_dropped? answered "none
-    # dropped", prune_public was skipped, and the orphan stayed in
-    # public.nosync/ -- and then on the site, because the deploy after a
-    # publish mirrors whatever is there.
-    #
-    # `written?` can never vouch for one of these: it is asked with a real
-    # digest, and nil equals none of them.
-    def note_copy(path)
-      stat = stat_of(path)
-      return unless stat
-
-      @outputs[rel(path)] = [nil, stat.size, stat.mtime.to_i]
-    end
-
     # --- what a page renderer asks ---------------------------------------
 
     # True when the page at `dest` was last built from exactly these inputs
@@ -232,26 +220,6 @@ module BuildCache
       @pages[rel(dest)] = key
     end
 
-    # --- what prune asks --------------------------------------------------
-
-    # Whether anything the last build produced is missing from this one --
-    # the only circumstance in which prune_public has something to delete.
-    # When nothing was dropped there is no orphan to find, and walking
-    # 16,000 entries to confirm it is a second of every publish spent
-    # proving a negative.
-    #
-    # Unknown state answers true, so a first build, an invalidated cache and
-    # a --full run all walk the tree as they always did.
-    def outputs_dropped?(written)
-      return true unless @reuse
-      return true if @previous_outputs.empty?
-
-      @previous_outputs.each_key do |relative|
-        return true unless written.key?(File.join(@public_dir, relative))
-      end
-      false
-    end
-
     # --- saving ------------------------------------------------------------
 
     # Written at the END of a successful build, never from an at_exit hook:
@@ -272,6 +240,69 @@ module BuildCache
     end
 
     private
+
+    # What the engine is MADE of, hashed. This used to be size and mtime,
+    # on the reasoning that reading every template and library to hash them
+    # would spend a slice of what the cache exists to save. Measured on the
+    # engine itself: 136 files, 3.3 MB, 9 ms -- against the seven seconds a
+    # publish saves. And the build reads all of it anyway; Ruby loads lib/
+    # and build/ at startup, the renderer reads templates/ and locales/,
+    # and emit_copy compares assets/ byte for byte.
+    #
+    # Contents cut both ways and both ways are the right one. Stricter
+    # where mtime lied: rsync -a, tar -p and a restore from backup all
+    # carry mtime across, so an engine that changed underneath kept its
+    # cache and the site went on serving the old markup with nothing
+    # saying so. More forgiving where mtime moved for nothing: a git pull
+    # bringing back what was already there no longer throws the cache away
+    # and buys a full build for no change at all.
+    def file_digest(path)
+      Digest::SHA256.file(path).hexdigest
+    rescue SystemCallError
+      # Unreadable is a fact about the file, and a steady one -- recording
+      # it keeps the fingerprint still rather than making the cache the
+      # thing that kills a build over a file it was only looking at.
+      'unreadable'
+    end
+
+    # Walked by hand rather than globbed, for two reasons.
+    #
+    # Dir.glob's "**" does not descend into a SYMLINKED directory, and then
+    # drops the link itself for not being a file -- so everything behind
+    # one was in no fingerprint at all. templates/partials is the reachable
+    # case: edit a partial through such a link and every page kept its old
+    # bytes, while each newly published post got the new ones, so the site
+    # served two different footers with nothing saying which was which.
+    # File.directory? and File.file? both follow a link, which is the
+    # point; realpath remembers where we have been, so a link pointing at
+    # its own ancestor ends the walk instead of the process.
+    #
+    # And a walk carries no pattern, so an installation whose own path
+    # holds a glob metacharacter -- "blog [1]", "blog {old}" -- cannot be
+    # misread. That is the whole reason PathGlob exists, answered here by
+    # not having a pattern in the first place.
+    def engine_files(dir, seen = {})
+      real = File.realpath(dir)
+      return [] if seen[real]
+
+      seen[real] = true
+      Dir.children(dir).sort.flat_map do |name|
+        # Dot-names are not the engine. The glob this replaced skipped them
+        # by default and nothing in six trees has ever been called one --
+        # but a Finder window opened over assets/images/ leaves a .DS_Store
+        # behind, and counting it threw the whole cache away on a machine
+        # whose owner had merely LOOKED at their own artwork.
+        next [] if name.start_with?('.')
+
+        path = File.join(dir, name)
+        if File.directory?(path) then engine_files(path, seen)
+        elsif File.file?(path) then [path]
+        else []
+        end
+      end
+    rescue SystemCallError
+      []
+    end
 
     def suffix_for(root, public_dir)
       default = File.join(root, 'public.nosync')

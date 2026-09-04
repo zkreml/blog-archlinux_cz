@@ -21,7 +21,8 @@ no database, no admin server, no PHP.
 publishing its own documentation -- every page there was built and
 deployed by `./blog.sh` itself.
 
-MIT licensed (see [LICENSE](LICENSE)).
+MIT licensed (see [LICENSE](LICENSE)); the fonts and brand marks it
+ships belong to other people, and [NOTICE](NOTICE) says who.
 
 > **Who it's for:** one person writing their own blog, at home in a
 > terminal, who wants to own the whole archive -- including everything
@@ -136,6 +137,19 @@ the wizard prints. The complete command list is under
 [`blog.sh` -- authoring](#blogsh----authoring) below.
 → [operations.md → Writing and publishing](docs/operations.md#writing-and-publishing)
 
+**A post can be sent from a phone.** `./blog.sh add <file>` writes a post
+from a markdown file without asking anything, which is the route for a
+shortcut or a script; `--json` turns its answer into one object.
+`scripts/receive.sh` is how the file gets to the server -- a whole post
+over one SSH connection, nothing new listening on the network -- and
+`write: true` publishes a page at `/write/` to write the post on, with
+the tags the blog already uses and a preview in the blog's own
+stylesheets. The post arrives as a draft; the page then says what became
+of it -- it asks the blog, rather than only waiting to be told -- and
+offers to publish it, which sends one more file down the same
+connection. Two iOS shortcuts do the sending.
+→ [operations.md → A post sent from the phone itself](docs/operations.md#a-post-sent-from-the-phone-itself)
+
 **Markdown.** One parser (`lib/markdown_parser.rb`), shared by the build
 and the authoring tool: headings, the usual inline marks, titled and bare
 links, ordered, nested and task lists, blockquotes with attribution, chat
@@ -156,9 +170,12 @@ for the tags, series and types the site actually has, RSS, a sitemap,
 own chrome instead of the host's default, and a search index split into an
 eager recent half and a lazily loaded archive. Search itself is entirely
 client-side -- quoted
-phrases, `-word` exclusion, diacritics never deciding a match. Only
-changed files are written, and whatever the build didn't produce this run
-is removed afterwards.
+phrases, `-word` exclusion, diacritics never deciding a match. A page
+whose inputs have not moved is not rendered at all -- the build keeps a
+record of what went into each one -- so publishing costs the size of the
+change rather than the size of the archive; only changed files are
+written, and whatever the build didn't produce this run is removed
+afterwards.
 → [architecture.md → Build pipeline](docs/architecture.md#build-pipeline-buildbuild_blogrb)
 
 **Finding what is there.** `/archive/` is a map of the whole site in two
@@ -279,6 +296,7 @@ build/                   Build script (JSON posts -> static HTML)
 scripts/                 Ruby CLI, import/deploy scripts, and their .sh wrappers:
                            deploy-web.sh      standalone deploy of public.nosync/ to the configured target (no rebuild)
                            refresh-sidebar.sh cron: refreshes only the sidebar widgets (no site rebuild)
+                           receive.sh         takes a whole post over one SSH connection into incoming/
                            migrate_*.rb       one per import source, scriptable alternative to import.sh
 lib/                     Shared Ruby libraries (Surfer client, fetchers, post writer, i18n, ...)
 lib/import/              Import adapters plus the layer they share (media, run, CLI)
@@ -286,6 +304,8 @@ locales/                 UI strings for the generated site and the CLI (en.yml, 
 templates/               ERB templates (layout, post, index, search, partials)
                          + markdown-cheat-sheet.<lang>.md, the /markdown/ page's source
 assets/                  CSS/JS/fonts (drop your own images into assets/images/)
+write/                   The page served at /write/ when write: true -- the editor itself, its
+                         locale sources and the script that turns them into i18n.js
 config/site.yml.example  Documented config template -- copy to config/site.yml (gitignored) per deployment
 env.sh.example           Documented secrets/env template -- copy to env.sh (gitignored) per deployment
 docs/                    Install & operations guides, plus this README's screenshots
@@ -322,7 +342,10 @@ iCloud doesn't exist, it's just a name.
   iPhone HEIC photos to JPEG on save), an image tool the machine
   typically already has: `sips` (built into macOS), `heif-convert`,
   ImageMagick or vips. Off by default; without a tool the engine refuses
-  the file with instructions instead of breaking
+  the file with instructions instead of breaking. `media.remux_video`
+  (repacking a phone video so it starts playing before it has finished
+  downloading) asks for ffmpeg in the same spirit: off by default, and
+  without it the post is saved anyway
 
 ## Getting started
 
@@ -385,14 +408,22 @@ and whether an upgrade is urgent for you -- is [CHANGELOG.md](CHANGELOG.md);
 
 ```bash
 ./blog.sh                      # interactive wizard (menu)
-./blog.sh add                  # creates a draft, shows a preview, asks what's next
+./blog.sh add [<file>] [--json] [--untrusted]
+                               # creates a draft, shows a preview, asks what's next;
+                               # with a markdown file it asks nothing, and --json answers as data;
+                               # --untrusted refuses a picture reference that is not a bare filename
 ./blog.sh edit [<slug>]        # without a slug, offers the last 50 posts
-./blog.sh props [<slug>]       # a post's state + actions (publish, rename the slug, delete...)
-./blog.sh publish [<slug>]     # shows the draft's preview, asks what's next
+./blog.sh props [<slug>]       # a post's state, its properties (series, tags, type, flags) and its actions
+./blog.sh publish [<slug>] [--yes] [--no-announce] [--json]
+                               # shows the draft's preview, asks what's next;
+                               # --yes publishes without asking, --no-announce keeps it off Mastodon and Bluesky;
+                               # --json (with --yes) answers as one object, for a script or a phone
 ./blog.sh schedule [<slug>]    # asks for a date, then auto-publishes the draft when it arrives
 ./blog.sh unpublish [<slug>]   # moves a published post back to draft (also deletes its announcement)
 ./blog.sh delete [<slug>]      # deletes a post to trash/
 ./blog.sh restore [<slug>]     # restores a post from trash
+./blog.sh empty trash          # deletes everything in the trash, for good
+./blog.sh empty versions       # keeps each post's newest version, removes the older ones
 ./blog.sh toot [<slug>]        # (re-)sends the comment toot (Mastodon sites)
 ./blog.sh bluesky [<slug>]     # (re-)sends the announcement (Bluesky sites)
 ./blog.sh rebuild [--full]     # rebuilds and deploys the whole site;

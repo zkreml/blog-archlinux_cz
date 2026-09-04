@@ -10,6 +10,610 @@ changes configuration, content or the shape of a post file; a minor release
 adds features and stays compatible with existing sites. `./blog.sh version`
 prints what an installation is running.
 
+## 1.7 -- 2026-09-03
+
+A release about the two ends of a post: the phone it may be written on,
+and the file it is written into -- and about changing what a post IS
+without opening what it says. Publishing from a phone works now --
+draft, look at it, publish, without a terminal anywhere in the sequence.
+A post can carry a link card written as ordinary front matter, which is
+what release posts have wanted since 1.3. A tag can wear one of about
+fifty drawings the engine now ships instead of an SVG typed into the
+config. A video can be repacked on the way in so it starts playing before
+it has finished downloading. And a stylesheet is no longer a reason to
+rebuild every page on the site.
+
+Nothing to migrate: `git pull`, rebuild, deploy.
+
+### Added
+
+- **A post's properties, without opening the post.** `props` gains `[e]`:
+  the series it belongs to and which part of it, its tags, its type, and
+  three flags -- out of the listings, lead image, chapter list. Every one
+  of those used to need `edit`, the whole article open in an editor to add
+  a series somebody forgot, and on a post whose blocks markdown cannot all
+  write down that edit asks whether it may drop them. A property is not
+  the text and should not cost the text. Two of the rows are pickers
+  rather than prompts: the series row lists the series the site already
+  has with how many posts carry each -- a series typed a second time is a
+  second series, and `check` only notices afterwards -- and the type row
+  lists the eight the engine knows plus the way back to letting the
+  content decide. The lead image and the chapter list keep three states,
+  because "whatever the site does" is not the same answer as "no". One
+  rebuild at the end, not one per change.
+- **Publishing from the phone, and an answer the page can go and get.**
+  A post written at `/write/` arrived as a draft, and putting it out took
+  a terminal -- which is the one thing the person holding the phone does
+  not have. The answer for a draft now carries a Publish button, and it
+  sends one file called `publish.txt` holding the slug, down the same
+  connection and through the same two shortcuts. `scripts/receive.sh`
+  knows that shape and runs `publish <slug> --yes --json` for it instead
+  of storing anything; the slug is checked as hard as a filename, since it
+  becomes an argument to a command.
+- **`publish <slug> --yes --json`.** The same object `add --json` prints
+  -- `slug`, `path`, `state`, `url`, `deploy`, `warnings` -- or a refusal
+  with its reason as a code, and zero either way, because a phone throws
+  away the output of a command that failed. `--json` wants `--yes` beside
+  it: without it the run would stop at the draft dialog, waiting for a
+  keypress no program is going to send.
+- **A receipt, so the page can ask rather than wait.** The road the
+  answer takes back has one break in it that nothing on the server can
+  mend: a page kept on a phone's home screen has storage of its own, so a
+  reply arriving as a URL opens in the browser, where the draft is not.
+  The page now picks a name for its answer before it sends anything
+  (`receipt:` in the front matter, sixteen hex characters), and the build
+  leaves a small JSON file at `/write/r/<receipt>.json` with the slug, the
+  state, the title, the address, and whatever the save had to complain
+  about -- a picture whose size could not be read, a video that will make
+  the reader wait. Without those the card looked identical whether the
+  post had arrived clean or not, and the phone is the one place where
+  nobody can go and read the terminal instead. What the run says about the
+  SITE rather than the post stays out: the file sits at a public address.
+  The page asks for it every three seconds for five minutes, and says so
+  if it never comes. Written by the build, which is what keeps it true:
+  publishing the post rewrites it, deleting the post stops it being
+  produced and the sweep takes it away.
+- **A link card is written in the front matter.** `link:`, with
+  `link_title:` and `link_description:` beside it, gives a post the card
+  it opens with -- the address it is ABOUT. It had no markdown form at
+  all: the writer dropped the block, so `edit` offered to lose it and
+  `add <file>` could not make one, which is why this project's own release
+  posts stopped being link posts after 1.3. It is a header key rather
+  than a line in the body because a paragraph that is only a link already
+  means something else, and because the card belongs to the post rather
+  than to a paragraph of it. A post with no title of its own is still
+  named by the card.
+- **About fifty drawings, by name.** `tag_icons` could name one of eight
+  icons -- and those eight are the content TYPES, so a tag about bicycles
+  had the choice between the icon for "audio" and writing SVG by hand.
+  The engine now carries a set of line drawings for the things blogs are
+  about (`bike`, `mountain`, `coffee`, `camera`, `terminal`, `paw`,
+  `rocket`...), on the same grid and in the same stroke as the eight, and
+  they are listed in `doctor` when a name is not one of them. A footer
+  link in `social:` can wear one too, where the network marks have nothing
+  to offer. All of them live in `lib/icons.rb`, which is also where doctor
+  now validates from -- it used to keep its own hand-typed copy of the
+  eight names, and a list kept in step by hand is a list that goes out of
+  step.
+- **`media: remux_video: true` repacks a video on the way in.** A
+  recorder writes the index at the END of the file, because it is only
+  complete when the recording is -- so a video from a phone makes a reader
+  wait for the whole download before the first frame. With `ffmpeg` on the
+  machine the engine now moves it to the front and, while it is there,
+  out of the QuickTime container: the picture and the sound are copied
+  across untouched, about a second for a phone video. Off by default, like
+  the HEIC conversion. Unlike it, a failure is never a refusal -- no
+  ffmpeg, or a repack that will not go through, and the post is saved with
+  the file as it arrived: a video in the wrong wrapper still plays for
+  nearly everybody, where a HEIC photo does not.
+- **`check` names a video whose index is at the end**, as something to
+  look at rather than a fault, and the save says the same about a new one
+  -- with the command that fixes it, which now carries `+faststart` in
+  both places it is offered.
+
+### Changed
+
+- **A stylesheet is no longer part of the engine's fingerprint.** Editing
+  `site.css` threw the whole page record away and rebuilt every page in
+  the archive to produce, byte for byte, the pages that were already
+  there -- 47 seconds of it on this project's own, for one line of colour.
+  Pages LINK a stylesheet, they never carry its bytes (there is no `?v=`
+  on that link, on purpose), and assets are compared byte for byte on
+  every build by a path that has never consulted the cache. The palette in
+  `site.yml` is a different matter and still rebuilds everything, because
+  the stylesheet it generates and the theme colour in every page's head
+  both come from it.
+- **`/write/` carries a content policy.** It is the one page the engine
+  publishes as a file rather than rendering, so it never went through the
+  layout that gives every other page its `Content-Security-Policy` -- and
+  it is the page that reads the server's reply out of the address bar and
+  now asks the blog for its receipt. The list is short: scripts and styles
+  from the blog, pictures and video only as the page's own `data:` and
+  `blob:` bytes, one place to connect to, the preview frame same-origin,
+  no form action, and scripts never inline. Checked in a browser against
+  every shape the page uses -- the preview with the blog's stylesheet, a
+  picture and a clip inside it, the receipt -- and against one it must
+  refuse.
+- **`NOTICE`.** The fonts and the brand marks the engine ships belong to
+  other people -- Open Sans and JetBrains Mono under the SIL Open Font
+  License, the network glyphs from Simple Icons under CC0 -- and nothing
+  in the repository said so. Now something does.
+
+### Fixed
+
+- **A tag written `[release]` or `#foto` was filed under that name.** The
+  front matter is not YAML and takes a value literally, so the YAML habit
+  (`tags: [release]`) and the social habit (`#foto`) each minted a tag
+  with the punctuation in its name -- which reads as a bug in the blog
+  rather than in what was typed, and did exactly that on this project's
+  own site. Both are folded away now, as the writer page has always
+  folded them.
+- **`tag_icons:` written as a mapping drew nothing and said nothing.** The
+  key is a list, because the order in it is the priority -- but `kolo:
+  bike` indented under it is the shape half of `site.yml` is written in,
+  and it is the one a person reaches for first. It was read as no entries
+  at all: no icons on any badge, no warning from the build, and doctor
+  called the file sound and exited 0. It was the last of the engine's list
+  keys missing from the shape check, and it is refused now the way the
+  others are -- by the build at the top of the run and by `doctor`, in the
+  site's own language. A mapping is not accepted instead, because a mapping
+  cannot say an order out loud and the order is the whole reason this key
+  is a list.
+- **The `ffmpeg` command the engine suggested could name its own input.**
+  An HEVC video already in an `.mp4` -- which is what a phone records when
+  it is not writing `.mov` -- produced `ffmpeg -i klip.mp4 … klip.mp4`,
+  and ffmpeg refuses to write the file it is reading. The suffix is added
+  only where it is needed, so the `.mov` case keeps the name it had.
+- **A bullet wrapped onto a second line stopped being a bullet.** A
+  paragraph counted as a list only if every line of it was an item, so one
+  wrapped continuation line -- the second line of a bullet longer than the
+  editor it was typed in -- turned the whole paragraph back into prose with
+  the `- ` markers left standing in the middle of the sentences. Nothing
+  said so: not the build, not `check`. An indented line that opens nothing
+  of its own now carries on the bullet above it, joined with a space, the
+  way a wrap inside a paragraph already was. A line that is a new item, a
+  heading, a quote, a rule, a fence or a table row still ends the bullet,
+  and a line ending in the hard-break backslash keeps its paragraph as
+  prose -- an item holds no newline, so the break would be dropped and its
+  marker published. An unindented line under a list is still not a
+  continuation: gluing a sentence somebody appended after a list onto its
+  last bullet would be a loss, where falling back to prose is at least
+  visible.
+- **The cheat sheet's last list rendered as a run-on paragraph.** A list is
+  read all-or-nothing, so one wrapped continuation line turns the whole
+  paragraph back into text with the dashes still in it -- and the engine's
+  own markdown page was written that way, in all three languages, on every
+  site it has ever built. The page that teaches the markdown is now
+  written in it.
+- **A page called "Write" took the writer app off the site.** The build
+  copies the phone-authoring page to `/write/` and renders the pages
+  afterwards, so a published page with that slug was written over it and
+  won -- no warning, a clean exit, nothing from `check` or `doctor`, and
+  the home-screen icon opening a blog page while the receipts went on
+  being built beside it. `write` is a reserved address now, the way
+  `archive` has been since 1.5.
+- **A link card's address could reach a live `href`.** A post with no
+  title of its own borrows the card's as its heading, and that one heading
+  printed the address with escaping alone while the card below it was
+  already defused. A card built by an importer out of somebody else's
+  markup can carry any scheme at all, so it went out live in the post's
+  `<h1>` and in the `<h2>` of every listing. It goes through the same
+  allowlist as every other link now.
+- **A second video could be written over the first.** With
+  `media.remux_video` on, a repacked `.mp4` is stored as `01-web.mp4` --
+  and the rule that stops a new file taking a name already on disk
+  compared the whole stem, where `01-web` is not `01`. So the next video
+  attached in an edit was numbered `01` again, repacked to the same name,
+  and copied over its predecessor: no warning, no trash copy, both blocks
+  pointing at one file. A stored name now holds the number it starts with.
+- **`hero: false` did not survive the next edit.** The properties screen
+  offers three answers about a lead image -- yes, no, and whatever the
+  site does -- but a post's own answer was written into the JSON only
+  where it DISAGREED with `layout.hero`, so a post saying "not me" on a
+  site that shows no heroes was read back as a post saying nothing and
+  the line was dropped on the next save. Nothing looked different at the
+  time: the two states render alike for as long as the site agrees, and
+  the loss would have shown the day `layout.hero` was turned on, when
+  every post that had opted out grew a lead image. All three states are
+  kept now, through `edit` and through `add <file>`, and what means "no
+  opinion" is an unanswered header line -- no `hero:` at all, or one with
+  nothing after the colon, which is the rule `toc` has always followed.
+  The one value still read as silence is the one the editor fills in
+  itself with the site's answer, for a post that has never had one of
+  its own.
+- **An `icon_svg` that was not a drawing was printed as words.** A tag
+  whose icon was given as a filename, an address or a sentence had that
+  text pasted where the icon goes -- on every badge carrying the tag and
+  in the heading of its listing -- while `doctor` reported the
+  configuration as sound, and while a capital `<SVG>`, which a browser
+  draws exactly as it draws `<svg>`, was refused. The two ask one question
+  in `lib/icons.rb` now. A value that is not a drawing is refused rather
+  than printed, so the tag falls back to what it would have had with no
+  entry at all, and the footer's `social:` icons, which share that code
+  and shared the hole, are refused the same way.
+- **A tag icon could miss the tag it was written for.** The icon was
+  matched against the tag NAME folded, while a tag's page groups its posts
+  by the ADDRESS they share -- so the two agreed only on names the two
+  rules normalize alike, and parted on the space, the underscore, the dot
+  and the ampersand that an address flattens and a fold keeps. `Sci Fi`
+  and `sci-fi` are one page, `/tag/sci-fi/`, and the icon written for it
+  reached only the posts spelled the way `site.yml` spelled it: on that
+  shared page the badges wore the icon and the heading above them did not.
+  Nothing said so -- not the build, not `doctor`. Both ends go by the
+  address now, which is what a tag is everywhere else in the engine.
+- **A tag list written the YAML way still kept its brackets.** 1.7 folded
+  away `tags: [release]` and `#foto`, and said so -- but the fold ran on
+  each name after the commas were split, so a list bracketed as a whole,
+  `tags: [release, foto]`, left the opening bracket on the first tag and
+  the closing one on the last. The writer page had taken both off since it
+  existed; the header, `add`, `edit` and the new properties screen had
+  only half of it. Each bracket now comes off on its own, so the tag in
+  the middle of a list -- which has neither -- is untouched, and a quoted
+  name keeps the comma somebody typed inside it.
+- **`check` called an archive sound while the config would not parse.**
+  Reported from outside the project: a hand-edited `config/site.yml`, a
+  `check` that answered "the archive is sound" and exited 0, and a
+  `rebuild` that then refused the same file. `check` had read the config
+  only to pick the language it printed in and swallowed the parse error
+  there -- so the one command people run before a build was the one that
+  did not know. It now reports the four states `doctor` distinguishes
+  (missing, empty, unparseable, unreadable), in `--json` as well, in the
+  language the config asks for, and in doctor's own words so the two
+  cannot disagree. The hole was as old as `check` itself.
+- **A fresh install answered the phone with a bare exit code.** The
+  receiver's refusals leave with zero on purpose -- a phone discards the
+  output of a remote command that failed, so the status has to say
+  whether an answer arrived and let the answer say the rest. Five
+  refusals were left out of that rule: no `incoming/`, no `blog.sh`, no
+  temporary directory, an installation directory that could not be
+  entered, and a `BLOGSH_MAX_MB` that is not a number. They are the ones
+  a new install meets on its very first delivery, and the only ones that
+  say which part is not ready -- and they were exactly the ones whose
+  sentence never arrived. `/write/` ships all five translated into all
+  three languages and never got to show one: it said "the server said
+  nothing, it may still have saved the post" about a server that had
+  answered and had saved nothing. Which kind of trouble it is was never
+  in the status anyway; it is in the error code, which arrives.
+- **The build answered an unreadable config with a backtrace.**
+  A `config/site.yml` whose permissions were wrong -- the usual story
+  after a wizard ran under `sudo` -- surfaced as eight frames of Psych
+  and no sentence naming the file. It now says which file cannot be read
+  and what to check, the way it already did for a file that will not
+  parse.
+- **A part number sent a post to the front of its series instead of to
+  that position.** `series_part` is documented as "the number is for the
+  rare insert" -- parts 1, 2, 4, 5 written in order, then the missing
+  part 3 written last and told `3`. What it did instead was put every
+  numbered post ahead of every unnumbered one, whatever the number said:
+  the latecomer became part 1 and the two real first parts were relabelled
+  2 and 3, on the series listing, in the "part N of M" line on each page
+  and in the links from one part to the next. Meanwhile `props` went on
+  showing the number the post carries, so the CLI said "part 3" about a
+  post the site called part 1. The number is now a position: parts
+  without one keep their dates, and a part that names a position is put
+  there among them. Series where every part is numbered, and series where
+  none is, come out exactly as before. A number the series cannot honour
+  -- below the first, past the last -- takes the nearest position it has,
+  and two parts claiming one slot take it and the one after it, oldest
+  first. A draft's preview counted the same way and is corrected with it:
+  the sentence a draft carrying a series gets -- "published, this would be
+  part N" -- added one to the number of published parts, so a draft told
+  `3` among four published parts was previewed as part 5, on the one
+  screen its number is there to be checked on. It asks the ordering where
+  the post will land now, which is what the page will say once it is
+  published. The part-number row on the new `[e]` screen stops taking a
+  `0` with it: a series has a first part and no zeroth one, and a 0 was
+  the one number that screen could write which no series can honour.
+
+## 1.6 -- 2026-09-03
+
+A release about the time between deciding to publish and the site saying
+so. The build stopped rebuilding what nobody changed, a photograph
+stopped being stored twice, and a post can now be handed over as a file
+by something that is not a person -- a phone shortcut, a cron job, a
+script. Around those, a row of share controls under each post, an icon a
+tag can carry, a way out of the trash and the versions, and eleven places
+where the engine behaved differently depending on whether a terminal
+happened to be watching -- nine of them named below.
+
+The cache is the change everyone will feel. Publishing used to cost the
+size of the archive rather than the size of the change: a post dated
+today alters a dozen files, and the build rendered every page in the
+archive and read every one back off disk to find that out. It now
+records what each page was made of and skips the ones whose inputs have
+not moved. Measured on this project's own archive of 6,639 posts, on
+the server it lives on: a rebuild that changes nothing costs a seventh
+of what it did and an ordinary publish about two fifths; backdating into
+the early 2000s still costs four fifths, because a post landing there
+moves every listing page between the front page and where it lands, and
+there is no way around that. The ratio is what travels; the seconds
+behind it are one machine's. On that server the full first build after
+the upgrade, with its upload, took 197 seconds.
+
+Nothing to migrate -- `git pull`, rebuild, deploy. Four things happen by
+themselves on an existing site. The first build after the upgrade is a
+full one and writes `.build_cache.json` in the installation directory
+(gitignored, per-machine, always safe to delete). Published pictures
+become hardlinks to the archive's own copies, which halves what they take
+on disk. `doctor` gains a line if the trash is not empty, and `check`
+gains one for any post whose `type:` the engine does not recognise. And
+`assets/js/share.js` is a new file that every page now loads: it does
+nothing on a site that never sets `share:`, but a deploy that misses it
+leaves a 404 in the console.
+
+### Added
+
+- **A page already on disk is not built again.** The build keeps a record
+  of what went into each page -- the post, the template, the locale, the
+  configuration, the engine itself -- and renders only the pages whose
+  record no longer matches. Files it did not have to render cost one
+  `stat` instead of a full read-back. Anything the record cannot vouch
+  for means "do the work": a missing record, a truncated one, a different
+  format, a build that died halfway. The escape hatch is
+  `./blog.sh rebuild --full`, which renders and compares everything while
+  still recording what it wrote, so reaching for it costs one slow build
+  and not two.
+- **`./blog.sh add <file>` writes a post without asking anything.** The
+  same work the wizard does, with the markdown handed over instead of
+  typed: no editor, no questions, no dialog at the end. A bare filename is
+  looked for in `incoming/`, so the file can arrive by the same upload as
+  the photos, and it is deleted once the post is written. Where the wizard
+  would ask, this refuses and writes nothing -- a photo that has not
+  finished uploading, an empty body, a file that is not text, a second
+  filename. `--json` answers as one object on standard output and nothing
+  else. A post that was written: `slug`, `path`, `state`, `url`,
+  `deploy`, `warnings`, every key always present. A refusal: `ok: false`,
+  the reason as a code, and a sentence -- and it leaves with **zero**
+  too, because iOS Shortcuts throws away the output of a command that
+  failed, and the reason is the whole point. A non-zero status answers
+  what the object cannot: no answer arrived at all -- the engine is
+  missing, the machine is not set up. Without `--json` nothing changes:
+  prose on stderr and a non-zero status, as always. It stops at the
+  draft unless the file asks otherwise -- see `publish: yes` below.
+- **A post can be sent from a phone.** `scripts/receive.sh` takes a
+  whole post over one connection -- for each file its name on a line,
+  its base64, and a line holding a dot -- and puts the files in
+  `incoming/`. Pictures go first and the markdown last, and the markdown
+  arriving is what makes the post. No archive and nothing to unpack:
+  what an untrusted sender chooses is a filename and a stream of bytes,
+  and both are bounded -- every name is checked before anything is
+  written, a delivery over the ceiling is drained rather than cut off, up
+  to four times the ceiling more, so an honest overshoot finishes and
+  hears `too_large` instead of sitting on a closed channel, and a
+  connection that opens and says nothing is let go after thirty seconds
+  rather than holding a process for as long as it lasts, and one that
+  has not finished in `BLOGSH_BODY_SECONDS` (600) is dropped too. Every
+  body is decoded before any file is written, so a refusal leaves
+  `incoming/` as it was found. **Nothing new listens on the network** --
+  it travels over the SSH the server already has, and the key wants a
+  forced command.
+- **And a page to write it on: `/write/`.** Set `write: true` and the
+  build publishes a small editor -- a title, the text, tags and
+  photographs, each picture with its description, everything kept in the
+  browser between visits: the text in local storage, the pictures' bytes
+  in IndexedDB, because five megabytes is all local storage gets and one
+  phone video is more than that. The send button hands the files to a
+  pair of iOS shortcuts -- one takes them from the share sheet, the other
+  opens the connection, because the shortcut that receives may not open
+  one. It is served from the blog it writes to, so the same `git pull`
+  moves both ends of the protocol and they cannot drift apart; it is off
+  by default, marked `noindex`, and holds no secret -- what sending needs
+  is the key in the shortcut, on the phone. Above the send button, a
+  Draft | Publish switch: choosing Publish renames the button, so the
+  thumb knows what it is about to do, and writes `publish: yes` into the
+  markdown. The answer comes back to the same page: the shortcut opens
+  it with the server's reply in the address, as base64 after `#b=`, and
+  it says what was kept, where the preview or the post is, and what was
+  refused -- in the reader's language where the page knows the code --
+  with the draft cleared from the device once the server has the post.
+- **The page wears the blog it writes to.** The build puts `site.js`
+  beside it with the site's name and claim for the header, its palette,
+  its favicon, and every tag it has used, with two counts -- all time,
+  and the last twelve months. An empty field offers what the blog has
+  tagged in the last year; typing searches every tag it has, most used
+  first -- so a tag is tapped rather than spelt a second way. And the
+  page speaks the blog's language, not the phone's.
+- **A preview, a row of marks, and video.** A preview, in the blog's own
+  stylesheets, of the post as the blog would show it -- near enough to
+  see its shape before it leaves the phone; the draft's own preview after
+  sending is the exact one. Above the text, a row of marks -- bold,
+  italic, strikethrough, code, link, heading, quote, lists, code block --
+  that wrap what is selected and come off again on a second tap. And a
+  video goes the same way as a picture, as it is, and the page says how
+  much the server takes before the phone spends the upload finding out.
+- **`publish: yes` in a file's front matter publishes it on arrival.** The
+  one thing a file may ask for that the wizard never could. A post sent
+  from a phone has no desk to come back to, so the choice draft-or-public
+  is made when it is sent -- and public means what it means at a desk:
+  the date settled, the announcement sent, the site rebuilt, the answer
+  carrying the public address. Absent, or anything but yes/true/1, is a
+  draft, as it always was.
+- **`add <file> --untrusted`.** The same refusal for markdown that came
+  from somewhere other than the person at the keyboard: a picture
+  reference may name only a bare filename. Without it,
+  `![](/etc/passwd)` reads the file into the post's media -- which is
+  right at a desk, where whoever typed it has the file anyway, and a door
+  the moment the markdown arrives over a wire.
+- **`publish <slug> --yes` and `publish --no-announce`.** `--yes` answers
+  the draft dialog with "publish" in advance; `--no-announce` puts the
+  page up and sends nothing to Mastodon or Bluesky, and because nothing
+  was attempted, `toot` can still send it by hand afterwards. One question
+  `--yes` will not answer for you: a post dated outside the recent window
+  is published but **not** announced, and the run says so. It also refuses
+  to guess between two posts sharing a slug in different years, and wants
+  the slug spelled out rather than picking from a list.
+- **A row of share controls under a post.** Off unless `share:` names
+  what you want, drawn in the order you name it. What is prefilled is the
+  post's own name and its address, where the target takes both --
+  Facebook and LinkedIn take the address alone and read the name off the
+  page; the reader writes the part that is theirs. `bluesky`, `email`,
+  `facebook`, `linkedin`, `threads` and `x` are plain links. Three are
+  not: the fediverse has as many addresses as it has
+  instances and a page cannot know which is the reader's, so `mastodon`
+  is a button that asks -- in a row that opens under the controls, in the
+  site's own type, remembered in that browser afterwards. `copy` puts the
+  address on the clipboard, and `system` hands the post to the operating
+  system's own sheet, which on a phone is Signal and WhatsApp and Telegram
+  at once. Those three appear only where they can work, and a block left
+  with nothing to draw hides itself rather than standing a heading over an
+  empty row.
+- **A tag can carry an icon.** `tag_icons` gives a tag one of the eight
+  the engine ships or an SVG of your own, and it shows up in the heading
+  of `/tag/<name>/` and on the date badge of every post that has the tag,
+  where it **replaces** the content-type icon rather than joining it.
+  Most posts carry more than one tag -- 68% of them on the archive this
+  was measured against -- so the order of the list is the priority and the
+  first entry a post matches is the one it wears. That rule was chosen
+  because the tag a post was given first is usually an importer's rather
+  than a subject: `twitter` alone opens 1,256 posts there. Asked for in
+  issue #45.
+- **`empty trash` and `empty versions`.** Both stores had a way back --
+  `restore`, and the version picker in `props` -- and no way out, so both
+  grew for years and nothing said by how much. Each prints what it is
+  about to remove, in items and in megabytes, and requires that count to
+  be typed back before anything goes. `empty versions` keeps each post's
+  newest version, because versions exist to answer "give me back what I
+  just overwrote".
+- **`doctor` says what is in the trash**, as a note rather than a fault --
+  a trash with posts in it is a trash doing its job, but nothing on the
+  site ever mentioned it, and on the installation this engine was built
+  around the only way to see it was `du` on the server.
+- **`check` says when a post asks for a `type:` the engine does not
+  know.** `type: story` was stored on the post and read by nobody: no
+  listing, no menu entry, no icon, and not a word about why. The eight it
+  knows are named, and so is the route somebody reaching for a ninth
+  usually wants -- a tag named in `nav:`, which gives a listing with its
+  own pagination, a menu entry and an RSS feed. Asked for in issue #42.
+
+### Changed
+
+- **A published picture is the archive's own file, under a second name.**
+  `public.nosync/` used to hold a second copy of every photograph;
+  it holds a hardlink now. The bytes are stored once, so the pictures take
+  half of what they did -- 1.8 GB on this project's installation. It does
+  **not** save anything in a backup: a backup copies file by file and
+  stores each name in full. That was measured rather than assumed -- 200
+  files under two names, 101 MB on disk, 201 MB in the backup.
+- **`browse --drafts` shows scheduled drafts**, the way `list --drafts`
+  always has. The two flags meant different things, and `browse` hid the
+  post going out tomorrow -- the one a person asking for their drafts most
+  wants to see -- without saying it had hidden anything.
+- **Esc backs out of the palette preview instead of accepting it.** The
+  style wizard asks whether to show a preview of a palette, and on a
+  deployed site a yes uploads that page to the web. Enter and Esc answered
+  that question identically, so the key people press to cancel published
+  something. Every other question with a default is about a setting, where
+  Esc meaning "leave it as it is" is the promise the wizard makes and
+  keeps.
+- **A relative path is read against where you are standing.** Both
+  wrappers move into the installation before starting Ruby, so
+  `add sub/post.md` meant a file next to the engine rather than next to
+  the caller -- silently the wrong file, or a refusal over a file that was
+  plainly there.
+- **`doctor` asks the footer's `social:` icons what it has always asked
+  the tag icons**: whether the name is one the engine has, whether a
+  hand-written `icon_svg` contains an `<svg>` at all, and whether it is
+  drawn to the same scale as the rest. An unknown name drew an empty space
+  and nothing said why. It checks the `share:` list too, for a name the
+  engine does not have.
+
+### Fixed
+
+- **Two posts written at the same instant left one post.** Settling a
+  post's file name and writing the file were two steps with a media copy
+  between them, and a copy with photographs in it takes seconds. Two runs
+  that started together -- a delivery arriving from a phone while an
+  import ran, two phones one after the other -- both asked whether the
+  name was free, both were told yes, and the second one's file replaced
+  the first one's. Both callers were told it had gone well, and nothing
+  anywhere said a post was missing. The name is taken by creating the
+  file now, which of two runs asking at the same instant only one can
+  do; the other walks on to the next serial and both posts survive.
+- **A byte-order mark swallowed the whole frontmatter.** Three invisible
+  bytes in front of the opening `---` -- which Windows editors and several
+  iOS apps write by default -- and the header was read as body text: the
+  post arrived with no title and no tags, named after the words "title:"
+  and "tags:", and the run exited 0.
+- **Attaching a photo through a symlinked directory in `incoming/`
+  deleted the original.** `ln -s ~/Pictures incoming/photos` is the
+  obvious way to stop copying photographs twice. The tidy-up that clears
+  `incoming/` after a save compared path text, which follows no symlinks,
+  so every original behind that link was inside its reach and the archive
+  deleted the author's own picture from outside `incoming/` entirely.
+- **`./setup.sh | tee setup.log` echoed the access token in clear text.**
+  The prompt hid what was typed only when *both* streams were terminals,
+  and hiding acts on the keyboard alone. Anyone who set a site up that way
+  should assume the token is in that log and rotate it.
+- **A script that asks now flushes before it blocks.** None of the five
+  did, so piped or tee'd the question sat in a buffer while the process
+  waited for its answer. At the import wizard's confirmation gate that
+  meant a nought-byte log -- and that gate is built so the answer is a
+  number from the preview, which was in the buffer too.
+- **The QR code for a palette preview was trimmed to unscannable
+  thirds**, and the plain address, which is there for exactly the case
+  where the code cannot be read, had been trimmed off ahead of it. On the
+  ordinary 24-row terminal three rows of fifteen survived, under an intact
+  "scan this with your phone". A picture is kept whole or dropped whole
+  now, and the address is said last, because last said is last trimmed.
+- **A tag or type with a letter outside ASCII crashed on a terminal and
+  matched nothing down a pipe.** Command-line arguments carry the
+  encoding the environment declares, and `LANG` is unset under
+  `docker exec`, cron, systemd and launchd -- which is how a server runs
+  this. The bytes were always right; only the label on them was wrong.
+- **An embed could still smuggle a script past the sanitiser.** Three
+  spellings got through: `<svg/onload=...>`, which is the same tag to a
+  browser as `<svg onload=...>`; `javascript&#58;` written as an entity
+  rather than a colon; and `<animate attributeName="href"
+  values="javascript:...">`, a script in a form no URL rule would read.
+  The pass now walks a tag's attributes and asks each one what it is,
+  rather than matching shapes. This is the guard that also dresses a
+  tag's own `icon_svg`.
+- **A list item under a list item could not be found from the search
+  box.** The index flattened nested lists to their first level, so a
+  paragraph's worth of a post was missing from search on every site that
+  writes them. Rebuilding regenerates the index.
+- **One file that would not go took the whole build with it.** A single
+  unremovable file in `public.nosync/` aborted the sweep, and a picture
+  that could not be placed ended the run rather than the picture.
+- **Turning the sidebar off left yesterday's widget JSON on the site.**
+  The build registered every configured widget file as written whether or
+  not it had written one, which is what keeps the sweep from deleting
+  them -- so the files an author had just switched off were protected from
+  the sweep by a build that never produced them, and stayed on the site
+  for good. It registers what was actually written now.
+- **A page was written straight through a symlink** left in
+  `public.nosync/`, so a build could put a page somewhere the archive
+  never chose.
+- **The queue's `[m]` was offered on a terminal and accepted everywhere**,
+  so a piped run that typed it got forty lines of `ENOTTY` over a key its
+  own prompt had never shown it.
+- **Ctrl-C on the import wizard's first screens** escaped as an uncaught
+  interrupt and printed a stack trace, where the same key in the style
+  wizard says that nothing was written.
+- **The About and footer questions lost their labels on a terminal.** The
+  wizard painted the question and then repainted over it, leaving "Open it
+  in your editor? [y/N]" with nothing saying what "it" was -- the same
+  bare line for two different sections. A piped run had always been told
+  all three: the label, the hint and the value that is there now.
+- **"Nothing changed, no post" read as though recovered text had gone with
+  it.** Text left in the editor buffer by an interrupted session survives
+  when you continue without it, and the line saying so was printed only
+  after a restore.
+
+### Not fixed, on purpose
+
+- **Backdating still costs four fifths of a full build.** A post landing
+  in 2003 moves every listing page between the front page and there, and
+  those pages genuinely changed; the cache skips what did not, and cannot
+  skip what did.
+- **A nested list item is not in a post's excerpt.** It is findable --
+  search reaches it now -- but the excerpt, the description, the reading
+  time and the word count are all cut from the same plain text, and
+  widening it to fix a search would have changed all four.
+- **There is no `pixelfed` in `share:`.** Pixelfed has no address a page
+  can hand a post to; a button that opened nothing would be worse than
+  none.
+
 ## 1.5 -- 2026-08-30
 
 Two things happened here. The site learned to say what it holds -- a post

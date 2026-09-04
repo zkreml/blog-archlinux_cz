@@ -29,6 +29,10 @@ site on the internet.
   (libheif-examples), ImageMagick with the HEIF delegate, or vips.
   Without one, the engine refuses the file with instructions instead of
   breaking; off by default.
+- Optional, only with `media.remux_video: true` (moving a video's index to
+  the front of the file, and out of the QuickTime container, on save):
+  **ffmpeg**. Without it the post is still saved and the engine names the
+  command instead; off by default.
 
 ## Quick start
 
@@ -215,8 +219,18 @@ The example is fully commented. The short version:
   `publishing.slots` (the times posts usually go out, so scheduling stops
   asking for a date --
   [operations.md](operations.md#publishing-slots)),
-  `media` (`convert_heic` and `strip_location`, both discussed under
-  [Writing from a phone](operations.md#writing-from-a-phone)), and `seo`
+  `media` (`convert_heic`, `remux_video` and `strip_location`, all discussed under
+  [Writing from a phone](operations.md#writing-from-a-phone)),
+  `tag_icons` (an icon a tag carries, on its own listing and on the date
+  badge of every post that has it --
+  [operations.md](operations.md#giving-a-tag-its-own-icon)),
+  `share` (the row of controls under a post, drawn in the order you name
+  them --
+  [operations.md](operations.md#letting-a-reader-pass-a-post-on)),
+  `write` (`write: true` publishes a page at `/write/` to write a post on
+  from a phone --
+  [operations.md](operations.md#a-post-sent-from-the-phone-itself)),
+  and `seo`
   (`block_ai_crawlers` writes a maintained list of the crawlers that
   collect text to train on into `robots.txt`, `robots_extra` is appended
   verbatim -- off by default, because wanting to be findable in an answer
@@ -237,9 +251,12 @@ mistake `doctor` names and the build reads as empty, rather than a
 traceback out of an engine file.
 
 `social` is the row of icons in the footer. Each entry takes `name`,
-`url` and either `icon` (a name from the built-in set: mastodon, pixelfed,
-linkedin, github, gitea, forgejo, codeberg, gitlab, bluesky, instagram,
-threads, facebook, x, youtube, rss, email) or `icon_svg`
+`url` and either `icon` (a name from the built-in set: the network marks
+mastodon, pixelfed, linkedin, github, gitea, forgejo, codeberg, gitlab,
+bluesky, instagram, threads, facebook, x, youtube, rss, email -- or any
+of the general drawings the engine ships for tag icons, `globe` for
+somebody's other site among them, [listed in
+operations.md](operations.md#giving-a-tag-its-own-icon)) or `icon_svg`
 (your own markup), plus an optional `rel` that is passed through to the
 rendered link. `rel: "me"` on the Mastodon entry is what gets your site
 verified -- the green check mark next to it on your profile: Mastodon
@@ -551,7 +568,14 @@ variant:
    photos are uploaded there by name and referenced as bare filenames
    in posts (see
    [operations.md](operations.md#writing-from-a-phone)).
-4. In a container setup (Cloudron and similar), the engine lives inside
+4. For a post sent whole from a phone, add the key the shortcut uses to
+   `authorized_keys` with a forced command pointing at
+   `scripts/receive.sh` -- the line, the RSA requirement and the size
+   ceiling are in
+   [operations.md](operations.md#a-post-sent-from-the-phone-itself).
+   Nothing new listens on the network; it travels over the SSH the
+   server already has.
+5. In a container setup (Cloudron and similar), the engine lives inside
    the container's persistent data directory and commands run via
    `docker exec` / the platform's terminal -- the engine itself doesn't
    care, it's just Ruby + bash in a directory.
@@ -678,6 +702,13 @@ Worth knowing before switching it on:
 git pull
 ruby build/build_blog.rb && ./scripts/deploy-web.sh
 ```
+
+The first build after an upgrade may be a full one -- the engine's own
+fingerprint changed, so the record of the last build is thrown away --
+and it writes `.build_cache.json` in the installation directory, which
+is per-machine, gitignored and always safe to delete. Deploy the assets
+with it: a page that cannot fetch `assets/js/share.js` logs a 404 on
+every load.
 
 Per-deployment files (`content.nosync/`, `media.nosync/`,
 `config/site.yml`, `env.sh`, `incoming/`, `trash/`, `drafts/`,

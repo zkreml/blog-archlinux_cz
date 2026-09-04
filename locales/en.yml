@@ -62,6 +62,9 @@ build:
   # still a literal in the build: a post naming a picture its media folder
   # does not hold. Every import that met a dead image host leaves some.
   media_missing: "⚠️  %{slug}: names a media file its folder does not hold -- %{filename}. The page still links it, so that address stays a 404 until the file arrives."
+  name_not_ours: "⚠️  %{path} is a name another file already wears -- a link, or a symlink somebody left there. Writing it would reach that other file, so it was left alone and this page or picture is not on the site. Move whatever holds the name, or delete it, and build again."
+  media_unplaceable: "⚠️  %{path} could not be placed (%{reason}). The page still links it, so that address stays a 404 until it can be written."
+  prune_failed: "⚠️  %{path} is no longer part of the site but could not be removed (%{reason}). It stays where it is, and the deploy will keep publishing it, until whatever holds it lets go."
   # Not an archive's doing at all: the cheat sheet ships with the engine.
   cheat_sheet_missing: "⚠️  %{path} is missing -- the /markdown/ cheat sheet page is not built. It ships with the engine; a pull that went wrong is the usual reason."
   # The tail of the sign-off, counted the labelled way like everything
@@ -235,12 +238,15 @@ cli:
   buffer_restored: "Restored -- the editor opens with that text."
   buffer_discarded: "Discarded."
   buffer_kept_for_now: "Left in %{path} -- writing anything in this session replaces it."
-  buffer_still_kept: "Nothing changed, so the recovered text stays in %{path} -- the next add/edit offers it again."
+  buffer_still_kept: "Nothing changed, so the text in %{path} is still there -- the next add/edit offers it again."
   image_dimensions_unknown: "⚠️  %{file}: the image size could not be read, so the page cannot reserve space for it and may jump while loading. PNG, JPEG, GIF and WebP are always read."
   image_heic_hint: "   HEIC displays only in Safari -- convert it first: sips -s format jpeg FILE --out FILE.jpg (macOS), heif-convert FILE FILE.jpg (Linux)."
   frontmatter_date_invalid: "❌ Cannot read the date %{value} -- expected YYYY-MM-DD [HH:MM]. Your text is kept in the buffer; reopen the post after fixing it."
+  frontmatter_date_invalid_file: "❌ I cannot read the date %{value} -- I expect YYYY-MM-DD [HH:MM]. Nothing was written; fix the date in the file and run it again."
   post_changed_while_editing: "❌ '%{slug}' changed on disk while you were editing it (the scheduled-publish cron publishes on its own). Nothing was saved, so nothing of that change was lost -- reopen the post and redo your edit on the current version."
   unknown_frontmatter_key: "❌ Unknown key in the header: %{keys}. I know: %{known}. A typo here would be silently dropped on save, so nothing was written -- your text is kept, see below."
+  publish_key_file_only: "❌ %{keys} is read only when a post comes in as a file (./blog.sh add <file>). Here it would do nothing, so nothing was saved -- take the line out and publish with ./blog.sh publish <slug>."
+  unknown_frontmatter_key_file: "❌ Unknown key in the header: %{keys}. I know: %{known}. A typo here would be silently dropped on save, so nothing was written -- fix the key in the file and run it again."
   heic_refused: "❌ %{files}: HEIC displays only in Safari -- other browsers would show a broken image. Nothing was saved and the file stays where it is. Convert it first (%{command}), or set media.convert_heic: true in config/site.yml and the engine will convert it for you."
   heic_no_tool: "❌ %{files}: media.convert_heic is on, but no converter was found (tried sips, heif-convert, heif-dec, magick/convert, vips). Nothing was saved. Convert by hand: %{command}"
   heic_converted: "🔄 %{file} → %{target} (HEIC converted via %{tool})."
@@ -252,8 +258,15 @@ cli:
   # named out loud, because nothing about a stray file says it is safe to
   # destroy. The "media:" prefix is the directory, not a word to translate.
   media_name_taken: "media: %{name} was already taken -- the file that was there is now %{moved}"
+  receipt_shape: "`receipt:` is a name the sending page picks for its answer, and it has to be sixteen hexadecimal characters -- it becomes a filename on the site. Leave the line out and the post is written without one."
+  link_without_url: "A post can carry a link card, but `link_title:` and `link_description:` are lines ABOUT one -- there has to be a `link:` with the address."
+  link_not_http: "`link: %{url}` is not an address a card can point at. It wants a whole http:// or https:// address, or one rooted at this site (`/posts/2026/some-post/`); for a file next to the post, write it as an ordinary link line in the text."
   video_hevc: "⚠️  %{files}: recorded as HEVC, which most browsers play but not all -- readers on the rest get an empty player instead of the video. Saved either way. Re-encoding it plays everywhere (needs ffmpeg -- `brew install ffmpeg` on a Mac):\n     %{command}"
   video_quicktime: "⚠️  %{files}: a QuickTime .mov container. The video inside is fine, but not every browser accepts the container; .mp4 is the one they all take. Saved either way. Repacking copies the video across untouched, no re-encoding (needs ffmpeg):\n     %{command}"
+  video_tail_index: "⚠️  %{files}: the index sits at the end of the file, which is where a recorder has to put it. A browser needs it to start, so the reader waits for the whole video instead of the first second of it. Saved either way. Repacking moves it to the front and copies the video across untouched (needs ffmpeg):\n     %{command}"
+  video_remuxed: "🔄 %{file} → %{target} (repacked, index moved to the front)."
+  video_remux_no_tool: "⚠️  %{files}: ffmpeg is not installed, so the repack media.remux_video asks for was skipped. Saved as it is."
+  video_remux_failed: "⚠️  %{file}: the repack did not go through, so the file is saved as it arrived. To try it by hand:\n     %{command}"
   embed_lookup_working: "🔎 %{url}: asking the service where its player is…"
   embed_lookup_failed: "⚠️  %{url}: no player found -- the service did not answer, or offers none for this address. Saved with a link to it instead; editing and saving again retries."
 
@@ -288,6 +301,9 @@ cli:
       series name of a series; posts sharing a name form one
       hero   true/false -> lead image above the title for this post
       toc    true/false -> chapter list (appears by itself from four headings)
+      link   https://... -> a link card above the text: the address it
+             is about; link_title and link_description are the words on
+             it, and with no title of its own the post is named by the card
 
     Publish date isn't set here -- [p]ublish uses the moment you publish,
     [s]chedule asks for a future date/time when you pick it. To backdate,
@@ -301,6 +317,22 @@ cli:
   template_unchanged: "Template left unchanged (not saved?), no post was created."
   empty_content: "Empty content, nothing was written."
   wrote_draft: "Written as draft: %{path}"
+  add_file_not_found: "No such file: %{file}. A bare name is looked for in incoming/; anything with a directory in it is used as given."
+  bad_reference: "A picture reference names a path: %{reference}. This run does not follow paths -- a picture must be named on its own (photo.jpg), and the file must have arrived in incoming/ with the text. Nothing was written."
+  add_file_not_a_file: "Not a file: %{file}. That is a directory, a link pointing nowhere, or something else the archive cannot read a post out of."
+  add_file_unreadable: "Cannot read %{file}: %{reason}. If it arrived by upload it may belong to the upload account and not to this one -- `chmod 644` on it, or add yourself to its group."
+  add_extra_arguments: "One file at a time. These were left over and nothing was done with them: %{extra}"
+  add_file_not_text: "Not readable as text: %{file}. `add` takes a markdown file -- this one is not valid UTF-8, so it is probably a photo, an office document, or a transfer that has not finished."
+  add_file_empty: "Nothing to write: %{file} has no content below the frontmatter."
+  add_file_missing_images: "These files are not there yet: %{files}. Upload them to %{dir} first -- nothing was written. (Interactive `add` waits for them; with a file argument there is nobody to wait for.)"
+  add_json_needs_file: "--json needs a file to read: `add <file> --json`. Without one, `add` opens an editor and there is nothing to report until it closes."
+  add_unknown_option: "Unknown option: %{option}. add takes a file, --json and --untrusted, nothing else."
+  publish_unknown_option: "Unknown option: %{option}. publish takes a slug, --yes, --no-announce and --json, nothing else."
+  publish_json_needs_yes: "`publish --json` also wants `--yes`. Without it the run stops at the draft dialog, and there is nobody there to answer it."
+  publish_yes_needs_slug: "--yes needs to name the post: `publish <slug> --yes`. Without a slug, publish offers the drafts to choose from -- and choosing is something to do with the preview in front of you, not one keystroke away from an announcement that cannot be recalled."
+  no_announce_not_scheduled: "Note: --no-announce does not reach the scheduled publish. The cron works from the post itself, so it will announce this one when its date arrives. To keep it quiet, publish it by hand with --no-announce, or mark it unlisted."
+  publish_yes_ambiguous: "The slug %{slug} exists in more than one year (%{years}), and --yes has nobody to ask which. Publish it from `props %{slug}`, which shows them and lets you choose."
+  toot_skipped_old: "No announcement: the date (%{date}) is outside the recent window, and that question has nobody to answer it here. The post is published; `toot` still sends it by hand."
   incoming_not_cleaned: "Left in incoming/: %{files} — the copy is in the post, but the staged original could not be deleted (no write permission on incoming/). Remove it by hand, so an empty incoming/ still means nothing is pending."
   generating_preview: "Generating preview"
   draft_saved_preview_pending: "Draft is saved. The preview will show up after a successful deploy -- then run ./blog.sh edit %{slug}"
@@ -453,9 +485,9 @@ cli:
 
   empty_trash_none: "The trash is empty."
 
-  empty_trash_confirm: "Delete %{count} post(s) from the trash for good, freeing %{size}? This cannot be undone. Type how many POSTS are being deleted to confirm: "
+  empty_trash_confirm: "Delete %{count} item(s) from the trash for good, freeing %{size}? This cannot be undone. Type how many ITEMS are being deleted to confirm: "
 
-  empty_trash_done: "Trash emptied: %{count} post(s), %{size} freed."
+  empty_trash_done: "Trash emptied: %{count} item(s), %{size} freed."
 
   empty_versions_none: "Every post already keeps just its last version."
 
@@ -505,10 +537,14 @@ cli:
   header_mode: "Mode: %{mode}"
   usage: |
     usage:
-      ./blog.sh add                  creates a draft, shows a preview and asks what's next
+      ./blog.sh add [<file>]         creates a draft, shows a preview and asks what's next;
+                                     with a markdown file it asks nothing at all and just writes the draft,
+                                     which is the route for a phone, a script or a shortcut (--json reports it as data)
       ./blog.sh edit [<slug>]        edits a post; without a slug, offers the last %{recent_count} posts to edit
-      ./blog.sh props [<slug>]       shows a post's state and its actions (publish, unpublish, rename the slug, delete...)
-      ./blog.sh publish [<slug>]     shows a draft's preview and asks what's next (without a slug, offers drafts in progress)
+      ./blog.sh props [<slug>]       a post's state, its properties (series, tags, type, flags) and its actions
+      ./blog.sh publish [<slug>] [--yes] [--no-announce] [--json]
+                                     shows a draft's preview and asks what's next (without a slug, offers drafts in progress);
+                                     --yes publishes straight away without asking, --no-announce keeps it off Mastodon and Bluesky
       ./blog.sh schedule [<slug>]    asks for a date and schedules the draft for automatic publishing then; run again to cancel
       ./blog.sh queue                the scheduled-post queue -- reorder, publish now, return a post to the drafts
       ./blog.sh unpublish [<slug>]   moves a published post back to draft, deletes its toot too (without a slug, offers published posts)
@@ -564,6 +600,7 @@ cli:
   browse_filter_none: "all"
   browse_state_published: "published"
   browse_state_draft: "in progress"
+  browse_state_unpublished: "not published yet"
   browse_state_scheduled: "scheduled"
   browse_state_pinned: "pinned"
   browse_menu_hint: "↑↓ move · Enter select · Esc back"
@@ -577,10 +614,41 @@ cli:
   browse_preview_no_caption: "no caption"
   browse_preview_tags: "tags: %{tags}"
   edit_what_prompt: "Edit what? [Enter] the text  [v] properties and actions  [anything else] back: "
+  properties_heading: "Properties of %{slug} -- what the post is, not what it says:"
+  properties_hint: "↑↓ choose  ·  Enter open  ·  Esc back"
+  properties_prompt: "Which one (1-%{count}), or Enter to go back: "
+  property_saved: "Saved."
+  property_series: "series          %{value}"
+  property_series_part: "part of series  %{value}"
+  property_tags: "tags            %{value}"
+  property_type: "type            %{value}"
+  property_type_derived: "%{type} (from the content)"
+  property_unlisted: "unlisted        %{value}"
+  property_hero: "lead image      %{value}"
+  property_toc: "chapter list    %{value}"
+  property_none: "(none)"
+  property_yes: "yes"
+  property_no: "no"
+  property_default: "(the site's own)"
+  series_heading: "Which series does this post belong to?"
+  series_none_row: "(no series)"
+  series_row: "%{name} -- %{count} post(s)"
+  series_new_row: "a series that is not here yet..."
+  series_prompt: "Name of the series: "
+  series_part_prompt: "Which part is it (a number, or - to let the date decide): "
+  series_part_needs_series: "A part number wants a series first -- pick one in the row above."
+  tags_current: "Now: %{tags}"
+  tags_known: "Most used here: %{tags}"
+  tags_prompt: "Tags, separated by commas (- for none, Enter to leave them): "
+  type_heading: "What kind of post is this?"
+  type_derived_row: "let the content decide (now: %{type})"
+  type_row: "%{type}"
   props_label_state: "state"
   props_label_scheduled: "scheduled"
   props_label_type: "type"
   props_label_tags: "tags"
+  props_label_series: "series"
+  props_series_part: "%{name}, part %{part}"
   props_label_pinned: "pinned"
   props_label_unlisted: "unlisted"
   props_label_announced: "announced"
@@ -592,11 +660,11 @@ cli:
   props_announces_on_publish: "not yet -- goes out when the post publishes"
   props_announces_never_unlisted: "never -- an unlisted post is not announced"
   props_not_announced: "not announced"
-  props_attributes_hint: "Type and tags are edited in the header when you edit the text."
-  props_actions_draft: "[p] publish  [s] schedule  [r] rename slug  [x] delete  [Enter] back: "
-  props_actions_scheduled: "[p] publish now  [s] reschedule  [n] cancel the schedule  [r] rename slug  [x] delete  [Enter] back: "
-  props_actions_published: "[u] unpublish  [t] announce (%{network})  [c] pin/unpin  [r] rename slug  [a] old links  [x] delete  [Enter] back: "
-  props_actions_published_plain: "[u] unpublish  [c] pin/unpin  [r] rename slug  [a] old links  [x] delete  [Enter] back: "
+  props_attributes_hint: "Type, tags and the series are changed with [e]; the text itself with edit."
+  props_actions_draft: "[p] publish  [s] schedule  [e] properties  [r] rename slug  [x] delete  [Enter] back: "
+  props_actions_scheduled: "[p] publish now  [s] reschedule  [n] cancel the schedule  [e] properties  [r] rename slug  [x] delete  [Enter] back: "
+  props_actions_published: "[u] unpublish  [t] announce (%{network})  [c] pin/unpin  [e] properties  [r] rename slug  [a] old links  [x] delete  [Enter] back: "
+  props_actions_published_plain: "[u] unpublish  [c] pin/unpin  [e] properties  [r] rename slug  [a] old links  [x] delete  [Enter] back: "
   props_action_versions: "[v] earlier versions  "
   versions_none: "This post has no earlier versions yet -- one is kept each time it is edited."
   versions_heading: "What the post %{slug} said before its recent saves:"
@@ -889,12 +957,20 @@ import:
 # lives in, let alone which key.
 doctor:
   tag_icons_ok: "Tag icons: %{count}, all of them drawable."
+  tag_icon_stripped: "The `icon_svg` of the tag \"%{tag}\" carries something the engine takes out before it reaches a page -- a script, a style, an event handler or a javascript: address. The pages are safe; the icon is not what it was copied from, and whoever wrote it should say whether that source is worth trusting."
+  social_icon_unknown: "The link \"%{name}\" in the footer asks for an icon called \"%{icon}\", which the engine does not have -- it draws an empty space where the icon belongs. The ones it does have: %{known}. Your own SVG goes in `icon_svg` instead."
+  social_shape: "An entry under `social:` is not a mapping. Each one wants a `name:`, a `url:` and an `icon:`; anything else is read as empty and takes the build down with it."
+  social_icon_missing: "The link \"%{name}\" in the footer names no icon at all, so it publishes an empty, unclickable space on every page. Give it an `icon:` from the list the engine ships, or an `icon_svg:` of your own."
+  social_icon_not_svg: "The `icon_svg` of the footer link \"%{name}\" is not an SVG, so the engine refuses it -- the link goes out with an empty space where the icon belongs. Give it an `icon:` from the list the engine ships, or an `<svg>...</svg>` of your own."
+  social_icon_scale: "The `icon_svg` of the footer link \"%{name}\" is not drawn on the 24-unit grid the other icons use (`viewBox=\"0 0 24 24\"`), so it will sit crooked beside them."
+  social_icon_stripped: "The `icon_svg` of the footer link \"%{name}\" carries something the engine takes out before it reaches a page -- a script, a style, an event handler or a javascript: address. The pages are safe; the icon is not what it was copied from."
+  share_unknown: "`share:` names \"%{name}\", which is not somewhere this engine can send a reader -- it is dropped and no button appears. The ones it knows: %{known}."
   tag_icon_shape: "An entry under `tag_icons` is not a mapping -- each one needs a `tag` and either an `icon` name or an `icon_svg`."
   tag_icon_no_tag: "An entry under `tag_icons` has no `tag`, so it belongs to nothing and draws nothing."
   tag_icon_unknown: "The tag \"%{tag}\" asks for the icon \"%{icon}\", which this engine does not have. The names it knows: %{known}. For anything else, give it an `icon_svg` of your own."
-  tag_icon_not_svg: "The `icon_svg` of the tag \"%{tag}\" holds no <svg> element, so nothing will be drawn."
+  tag_icon_not_svg: "The `icon_svg` of the tag \"%{tag}\" holds no <svg> element, so the engine refuses it -- the tag gets no icon of its own, a post carrying it keeps the icon of its content type, and its listing keeps the generic tag icon."
   tag_icon_scale: "The `icon_svg` of the tag \"%{tag}\" is not drawn on the 24-unit grid the other icons use (`viewBox=\"0 0 24 24\"`), so it will sit crooked in a date badge."
-  trash_holds: "The trash holds %{count} post(s), %{size}. They are still restorable; `./blog.sh empty trash` deletes them for good."
+  trash_holds: "The trash holds %{count} item(s), %{size} -- trashed posts, and anything `check --repair` set aside. They are still restorable; `./blog.sh empty trash` deletes them for good."
   heading: "Checking this install"
   running_online: "Checking hosts and tokens too (--online)"
   summary: "%{errors} problem(s), %{warnings} worth a look, %{oks} fine."
@@ -1125,6 +1201,8 @@ check:
   media_cause_empty: "it is zero bytes"
   media_cause_broken_link: "it is a link pointing at a file that is not there"
   media_unusable_fix: "An interrupted download, a permission bit or a folder under the picture's name. Put a real copy of the file there; the page shows a broken picture until then."
+  media_tail_index: "%{slug}: the video %{file} carries its index at the end of the file."
+  media_tail_index_fix: "It plays, but every reader waits for the whole file before the first frame -- a player needs that index to start. A recorder has to write it last; repacking moves it to the front and copies the video across untouched: ffmpeg -i FILE -c copy -movflags +faststart NEW.mp4. New videos do it on save with media.remux_video."
   media_missing_fix: "The post asks for it and the page renders a hole. Usually an import whose download failed -- put the file there, or edit the post to drop it."
   image_degenerate: "%{slug}: the image %{file} is %{width}x%{height} and will not be rendered at all."
   image_degenerate_fix: "Anything 1px or smaller is treated as a tracking pixel and dropped WITH its caption, so the page silently loses both. Replace the image or remove the block."
@@ -1341,6 +1419,7 @@ wizard:
   prompt_with_current: "Now: %{current}\n> "
   prompt_with_suggestion: "Suggested: %{current}\n> "
   empty_value: "(not set)"
+  current_is: "Now: %{value}"
   choice_prompt: "Choice: "
   menu_hint: "↑↓ move · Enter select · 1-%{count} quick pick · Esc keep current"
   interrupted: "Stopped. Nothing was written -- the config is exactly as it was."
@@ -1583,3 +1662,21 @@ style:
 
 lock:
   busy: "Another %{who}run is still going%{detail} -- skipping this one. Nothing is broken; try again in a minute."
+
+share:
+  heading: "Share this post"
+  mastodon: "Share on Mastodon"
+  bluesky: "Share on Bluesky"
+  email: "Share by e-mail"
+  ask_label: "Which Mastodon instance are you on? This browser will remember it."
+  ask_go: "Share"
+  change_instance: "Change instance"
+  ask_invalid: "That does not look like an instance address. Try something like mastodon.social."
+  copy: "Copy the link"
+  copied: "Link copied"
+  copy_failed: "Could not copy the link"
+  system: "Share…"
+  facebook: "Share on Facebook"
+  linkedin: "Share on LinkedIn"
+  threads: "Share on Threads"
+  x: "Share on X"
