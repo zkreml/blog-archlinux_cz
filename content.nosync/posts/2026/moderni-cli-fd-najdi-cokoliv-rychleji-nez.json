@@ -1,0 +1,609 @@
+{
+  "slug": "moderni-cli-fd-najdi-cokoliv-rychleji-nez",
+  "title": "Moderní CLI: fd – najdi cokoliv rychleji než findem",
+  "date": "2026-09-04T17:58:50+02:00",
+  "created_at": "2026-09-04T17:58:34+02:00",
+  "state": "published",
+  "tags": [
+    "cli",
+    "rust",
+    "tipy",
+    "arch",
+    "fd"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 1200,
+          "height": 630
+        }
+      ],
+      "alt_text": "fd hledá markdown soubory"
+    },
+    {
+      "type": "text",
+      "text": "find je mocný nástroj, ale jeho syntaxe patří k nejošklivějším v celém Unixu. find . -type f -name \"*.md\" -not -path \"./node_modules/*\" – kdo to má pamatovat. fd řeší přesně tohle: dělá 90 % toho, co lidi z find reálně potřebují, ale jednoduše.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "type": "code",
+          "start": 78,
+          "end": 135
+        },
+        {
+          "type": "code",
+          "start": 159,
+          "end": 161
+        },
+        {
+          "type": "code",
+          "start": 207,
+          "end": 211
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S fd",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Balíček je v extra repu. Na jiných distribucích může být pod názvem fd-find, na Archu je čistě fd.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 13,
+          "end": 18
+        },
+        {
+          "type": "code",
+          "start": 68,
+          "end": 75
+        },
+        {
+          "type": "code",
+          "start": 95,
+          "end": 97
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní použití"
+    },
+    {
+      "type": "code",
+      "text": "# najdi vše s \"config\" v názvu (rekurzivně od aktuální složky)\nfd config\n \n# jen v konkrétní cestě\nfd config ~/.config\n \n# jen soubory (bez složek)\nfd -t f config\n \n# jen složky\nfd -t d config\n \n# podle přípony\nfd -e md\nfd -e py\n \n# včetně skrytých souborů\nfd -H .env\n \n# včetně ignorovaných v .gitignore\nfd -I nejaky-vzor",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Porovnání s find"
+    },
+    {
+      "type": "text",
+      "text": "Najdi všechny .md soubory:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 14,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# find\nfind . -type f -name \"*.md\"\n \n# fd\nfd -e md",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Najdi soubor a spusť nad ním příkaz:"
+    },
+    {
+      "type": "code",
+      "text": "# find\nfind . -name \"*.log\" -exec rm {} \\;\n \n# fd\nfd -e log -x rm",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Najdi soubory změněné za posledních 24 hodin:"
+    },
+    {
+      "type": "code",
+      "text": "# find\nfind . -type f -mtime -1\n \n# fd\nfd --changed-within 1d",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Rozdíl je vidět hlavně v čitelnosti."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co fd umí navíc"
+    },
+    {
+      "type": "text",
+      "text": "Respektuje .gitignore. Neprohledává node_modules, target, .venv a další adresáře, které jsi vyloučil. Můžeš to obejít přes -I.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 22
+        },
+        {
+          "type": "code",
+          "start": 11,
+          "end": 21
+        },
+        {
+          "type": "code",
+          "start": 36,
+          "end": 48
+        },
+        {
+          "type": "code",
+          "start": 50,
+          "end": 56
+        },
+        {
+          "type": "code",
+          "start": 58,
+          "end": 63
+        },
+        {
+          "type": "code",
+          "start": 123,
+          "end": 125
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Barevný výstup. Rozlišuje typy souborů podle LS_COLORS.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 15
+        },
+        {
+          "type": "code",
+          "start": 45,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Paralelní hledání. Využívá všechna dostupná jádra CPU.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Chytré case-insensitive matching. Když napíšeš fd readme, najde i README.md a Readme. Když použiješ velké písmeno (fd README), přepne se do case-sensitive režimu (smart case).",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 33
+        },
+        {
+          "type": "code",
+          "start": 47,
+          "end": 56
+        },
+        {
+          "type": "code",
+          "start": 66,
+          "end": 75
+        },
+        {
+          "type": "code",
+          "start": 78,
+          "end": 84
+        },
+        {
+          "type": "code",
+          "start": 115,
+          "end": 124
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Regex out-of-the-box. Vzor je regex, ne shell glob. Pro glob použij -g.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 21
+        },
+        {
+          "type": "code",
+          "start": 68,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd '^test_.*\\.py$'      # regex\nfd -g 'test_*.py'       # glob",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kombinace s dalšími nástroji"
+    },
+    {
+      "type": "text",
+      "text": "Spouštění akce nad výsledky:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# smaž všechny .log soubory\nfd -e log -x rm\n \n# převeď všechny .png na .webp\nfd -e png -x cwebp {} -o {.}.webp\n \n# {} = cesta k souboru\n# {.} = cesta bez přípony\n# {/} = jen název souboru\n# {//} = cesta k rodičovské složce",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Paralelní zpracování s -x:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# každý soubor jako samostatný proces (paralelně)\nfd -e jpg -x jpegoptim\n \n# všechny soubory najednou (jako xargs)\nfd -e jpg -X du -ch",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Kombinace s bat pro preview:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd -e md | fzf --preview 'bat --color=always {}'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Kombinace s ripgrepem:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# najdi TODO jen v Python souborech\nfd -e py -X rg \"TODO\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Praktické triky"
+    },
+    {
+      "type": "text",
+      "text": "Vyloučit konkrétní adresáře:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd -e md -E node_modules -E .venv",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Podle velikosti:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd --size +10M         # větší než 10 MB\nfd --size -1k          # menší než 1 KB",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Podle času změny:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd --changed-within 2h\nfd --changed-before 1week",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Absolutní cesty:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd -a config",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Follow symlinks:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd -L config",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Vlastní hloubka:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "fd --max-depth 3 config\nfd -d 3 config           # zkráceně",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Alias"
+    },
+    {
+      "type": "text",
+      "text": "Do ~/.zshrc:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 3,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "alias find='fd'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Když opravdu potřebuješ původní find:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 32,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "\\find . -name \"*.md\"\ncommand find . -name \"*.md\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "fd nepoužívá config soubor – všechno se ovládá přes proměnné a přepínače.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Užitečné proměnné:"
+    },
+    {
+      "type": "code",
+      "text": "# vlastní výchozí ignorace (kromě .gitignore)\nexport FD_IGNORE_FILE=~/.config/fd/ignore",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "~/.config/fd/ignore:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "node_modules\ntarget\n.venv\n__pycache__\n*.pyc"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kdy se vrátit k find?"
+    },
+    {
+      "type": "text",
+      "text": "find má fičury, které fd nemá:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 4
+        },
+        {
+          "type": "code",
+          "start": 22,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "- Komplexní logika s -and, -or, -not - Kontrola oprávnění (-perm) - Změna vlastníka souborů během hledání - Kompatibilita napříč všemi UNIX systémy Pro skripty, které musí běžet i na starém serveru bez fd, drž se find.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 21,
+          "end": 25
+        },
+        {
+          "type": "code",
+          "start": 27,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "type": "code",
+          "start": 59,
+          "end": 64
+        },
+        {
+          "type": "code",
+          "start": 202,
+          "end": 204
+        },
+        {
+          "type": "code",
+          "start": 213,
+          "end": 217
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Shrnutí"
+    },
+    {
+      "type": "text",
+      "text": "fd neuchvátí nikoho, kdo find důkladně nezná. Ale kdo ho zná a proklíná jeho syntaxi, ocení fd do pěti minut. Kratší, rychlejší, respektuje .gitignore.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 2
+        },
+        {
+          "type": "code",
+          "start": 25,
+          "end": 29
+        },
+        {
+          "type": "code",
+          "start": 92,
+          "end": 94
+        },
+        {
+          "type": "code",
+          "start": 140,
+          "end": 150
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Příště se podíváme na ripgrep – nejrychlejší způsob, jak hledat text v souborech.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 29
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "series": "Moderní CLI",
+  "series_part": 4,
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M1PJ9THDA6T4JMA516AF91TG"
+}
