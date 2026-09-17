@@ -9,7 +9,8 @@
     "wayland",
     "desktop",
     "nvidia",
-    "archlinux"
+    "archlinux",
+    "zprávy"
   ],
   "content": [
     {
