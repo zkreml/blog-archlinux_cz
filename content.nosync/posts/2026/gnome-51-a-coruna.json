@@ -1,0 +1,406 @@
+{
+  "slug": "gnome-51-a-coruna",
+  "title": "GNOME 51 „A Coruña“ je venku – co nového a co to znamená pro Arch",
+  "date": "2026-09-17T21:10:03+02:00",
+  "created_at": "2026-09-17T21:00:36+02:00",
+  "state": "published",
+  "tags": [
+    "gnome",
+    "wayland",
+    "desktop",
+    "nvidia",
+    "archlinux"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 982,
+          "height": 696
+        }
+      ],
+      "alt_text": "Gnome 51"
+    },
+    {
+      "type": "text",
+      "text": "GNOME vydalo verzi 51 s kódovým jménem A Coruña. Po loňském „Tokiu“, které definitivně pohřbilo X11, přichází klidnější vydání. Žádné převratné změny, spíš hromada vylepšení napříč celým desktopem – a pár věcí, které dřív vyžadovaly rozšíření nebo ruční konfiguraci. Další velká verze, GNOME 52 „Terengganu“, je v plánu na březen 2027.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 39,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Prošli jsme změny a vybrali to, co podle nás stojí za pozornost."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Wayland a vzhled"
+    },
+    {
+      "type": "text",
+      "text": "Mutter i GTK4 nově umí Wayland protokol ext-background-effect-v1. Aplikace si díky němu můžou standardně vyžádat rozmazané pozadí za oknem – bez rozšíření typu Blur my Shell. Kurzory se nově kreslí z SVG, takže zůstávají ostré i na HiDPI a při frakčním škálování. Mutter má také lepší plánování snímků a podporu externích implementací kurzoru.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 40,
+          "end": 64
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Méně nápadné, ale praktické: GNOME si pamatuje jas monitoru a po restartu ho vrátí.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 47,
+          "end": 59
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Přístupnost a ovládání"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Shell má první podporu nastavení reduced motion – kdo nemá rád animace, může je utlumit systémově.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 33,
+              "end": 47
+            }
+          ]
+        },
+        {
+          "text": "Výběr oblasti pro snímek obrazovky jde pohodlně ovládat klávesnicí."
+        },
+        {
+          "text": "Textová pole reagují na vyhrazené klávesy pro kopírování, vložení a vyjmutí."
+        },
+        {
+          "text": "V Nastavení jde vypnout focus timeout, Orca má lokalizované texty."
+        },
+        {
+          "text": "Aplikace můžou dočasně zablokovat globální zkratky přístupnosti."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Přihlašování a bezpečnost"
+    },
+    {
+      "type": "text",
+      "text": "GNOME Shell dostal sjednocený autentizační mechanismus a podporu webového přihlášení – zajímavé hlavně pro firemní prostředí se SSO. Správa otisků prstů má konečně vlastní rozhraní v panelu Uživatelé. Portál pro hesla (Secret portal) nově obstarává oo7-portal, GNOME Web umí generovat silná hesla a Průvodce prvním spuštěním podporuje účty přes systemd-homed.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 249,
+          "end": 259
+        },
+        {
+          "type": "bold",
+          "start": 345,
+          "end": 358
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "GDM umí nastavit záložní sezení, vypnout lokální přihlašovací obrazovku na headless strojích a pro výčet konfliktních sezení používá logind."
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Nastavení – to nejužitečnější"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Síť: nastavení prohledávaných DNS domén, lepší práce s WireGuardem, a konec zastaralého WEP.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 4
+            }
+          ]
+        },
+        {
+          "text": "Vzdálené přihlášení: podporuje sshd.service i socketovou aktivaci přes sshd.socket.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 20
+            },
+            {
+              "type": "code",
+              "start": 31,
+              "end": 43
+            },
+            {
+              "type": "code",
+              "start": 71,
+              "end": 82
+            }
+          ]
+        },
+        {
+          "text": "Myš a touchpad: touchpad se dá automaticky vypnout, když je připojená myš.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        },
+        {
+          "text": "Displeje: automatická rotace na zařízeních s akcelerometrem a lepší přichytávání monitorů při rozmístění.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 9
+            }
+          ]
+        },
+        {
+          "text": "O systému: místo „verze GNOME“ ukazuje přesnou verzi GNOME Shellu a má odkaz na poznámky k vydání.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aplikace"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "items": [
+        {
+          "text": "Soubory (Nautilus) – při přetahování více souborů ukazuje jejich počet, rychleji obnovuje zobrazení, složky otevřené z jiných aplikací jdou do nové záložky a „Nový dokument“ je v menu, i když máte prázdný adresář šablon.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 18
+            }
+          ]
+        },
+        {
+          "text": "Sushi (náhled na mezerník) zvládá víc typů souborů, zalamování řádků a celoobrazovkový náhled obrázků dvojklikem.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Disky jsou konečně přepsané do GTK4 a libadwaita, s přepracovaným odemykáním a změnou velikosti oddílů.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Kalkulačka si pamatuje historii i po zavření.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 10
+            }
+          ]
+        },
+        {
+          "text": "Loupe ukazuje víc metadat fotek – autora, objektiv, použitý software nebo ICC profil.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 5
+            }
+          ]
+        },
+        {
+          "text": "Software varuje před instalací aplikací bez podpory a rychleji startuje díky cache AppStream dat.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Kalendář podporuje odkazy na Teams a má rychlejší měsíční pohled.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 8
+            }
+          ]
+        },
+        {
+          "text": "Vzdálená plocha má hardwarovou akceleraci na grafikách AMD.",
+          "formatting": [
+            {
+              "type": "bold",
+              "start": 0,
+              "end": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Pozor na starší NVIDIA"
+    },
+    {
+      "type": "text",
+      "text": "Podle zpráv z vývojových verzí Mutter 51 ruší podporu starých NVIDIA ovladačů. Pokud máte kartu řady GTX 10 (Pascal) nebo starší, zkontrolujte si před upgradem, jaký ovladač používáte.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 101,
+          "end": 128
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "lspci -k | grep -A3 -Ei 'vga|3d'",
+      "lang": "bash"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Qs nvidia",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "GNOME 51 na Archu"
+    },
+    {
+      "type": "text",
+      "text": "Stabilní balíky se do [extra] dostanou obvykle za pár dní až týdnů, jakmile projdou testingem. Nic nemusíte instalovat ručně – stačí klasický update.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 22,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -Syu",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Kontrola verze po restartu:"
+    },
+    {
+      "type": "code",
+      "text": "gnome-shell --version",
+      "lang": "bash"
+    },
+    {
+      "type": "code",
+      "text": "pacman -Q gnome-shell mutter gtk4",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Pokud se něco rozbije, podívejte se nejdřív do logů:"
+    },
+    {
+      "type": "code",
+      "text": "journalctl -b -p err --user",
+      "lang": "bash"
+    },
+    {
+      "type": "code",
+      "text": "journalctl -b -p err _COMM=gnome-shell",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Po velkém updatu GNOME je běžné, že část rozšíření ještě nemá podporu nové verze. Vypněte je a zapínejte postupně:"
+    },
+    {
+      "type": "code",
+      "text": "gnome-extensions list --enabled",
+      "lang": "bash"
+    },
+    {
+      "type": "code",
+      "text": "gnome-extensions disable NAZEV@ROZSIRENI",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Shrnutí"
+    },
+    {
+      "type": "text",
+      "text": "GNOME 51 je hlavně o vyladění – rozmazání, ostré kurzory, přístupnost, lepší Nastavení a konečně moderní Disky. Na Archu bude brzy, majitelé starších NVIDIA karet by ale měli nejdřív zkontrolovat ovladače."
+    },
+    {
+      "type": "text",
+      "text": "Zdroj: 9to5linux",
+      "formatting": [
+        {
+          "type": "link",
+          "url": "https://9to5linux.com/gnome-51-a-coruna-desktop-environment-officially-released-this-is-whats-new",
+          "start": 7,
+          "end": 16
+        }
+      ]
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M2RCD9F4QAPXC5K84NZ5G2KD",
+  "former_slugs": [
+    "2026/gnome-51-a-coruna-je-venku-co"
+  ]
+}
