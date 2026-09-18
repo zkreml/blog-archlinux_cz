@@ -1,0 +1,599 @@
+{
+  "slug": "moderni-cli-ripgrep-hledani-v-souborech-na",
+  "title": "\"Moderní CLI: ripgrep – hledání v souborech na steroidech",
+  "date": "2026-09-18T06:41:31+02:00",
+  "created_at": "2026-09-18T06:41:28+02:00",
+  "state": "published",
+  "tags": [
+    "cli",
+    "rust",
+    "tipy",
+    "arch",
+    "ripgrep"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "media": [
+        {
+          "url": "01.png",
+          "width": 1200,
+          "height": 630
+        }
+      ],
+      "alt_text": "Moderní CLI: ripgrep"
+    },
+    {
+      "type": "text",
+      "text": "Když potřebuješ najít text v souborech, sáhneš po grep. Funguje, ale pomalu, s ošklivým výstupem a musíš pamatovat na -r, --exclude-dir, --include. ripgrep (příkaz rg) tenhle úkol dělá násobně rychleji a s lepšími defaulty.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 50,
+          "end": 54
+        },
+        {
+          "type": "code",
+          "start": 118,
+          "end": 120
+        },
+        {
+          "type": "code",
+          "start": 122,
+          "end": 135
+        },
+        {
+          "type": "code",
+          "start": 137,
+          "end": 146
+        },
+        {
+          "type": "code",
+          "start": 148,
+          "end": 155
+        },
+        {
+          "type": "code",
+          "start": 164,
+          "end": 166
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Ne náhodou používá ripgrep pod kapotou i VSCode, Zed a další moderní editory pro fulltextové hledání.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 19,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Instalace"
+    },
+    {
+      "type": "code",
+      "text": "sudo pacman -S ripgrep",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Balíček je v oficiálním extra repu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 24,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Základní použití"
+    },
+    {
+      "type": "code",
+      "text": "# hledej \"TODO\" ve všech souborech od aktuální složky\nrg TODO\n\n# hledej v konkrétní cestě\nrg \"systemd\" /etc\n\n# case-insensitive\nrg -i todo\n\n# jen názvy souborů, kde se výraz našel\nrg -l TODO\n\n# počet výskytů\nrg -c TODO\n\n# invertovaný match (řádky BEZ vzoru)\nrg -v TODO",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Porovnání s grep"
+    },
+    {
+      "type": "text",
+      "text": "Rekurzivní hledání:"
+    },
+    {
+      "type": "code",
+      "text": "# grep\ngrep -r \"TODO\" ~/projekty\n\n# rg (rekurze je defaultně on)\nrg TODO ~/projekty",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Jen v konkrétních příponách:"
+    },
+    {
+      "type": "code",
+      "text": "# grep\ngrep -r --include=\"*.md\" \"arch\" ~/blog\n\n# rg\nrg -t md \"arch\" ~/blog",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Vyloučit adresáře:"
+    },
+    {
+      "type": "code",
+      "text": "# grep\ngrep -r --exclude-dir=node_modules \"TODO\" .\n\n# rg (respektuje .gitignore automaticky)\nrg TODO",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Rozdíl v rychlosti je obvykle 5–10× ve prospěch rg, na velkých repozitářích i víc.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 48,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Co ripgrep umí navíc"
+    },
+    {
+      "type": "text",
+      "text": "Respektuje .gitignore, .ignore, .rgignore. Nehrabe se v node_modules, target, .venv.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 42
+        },
+        {
+          "type": "code",
+          "start": 11,
+          "end": 21
+        },
+        {
+          "type": "code",
+          "start": 23,
+          "end": 30
+        },
+        {
+          "type": "code",
+          "start": 32,
+          "end": 41
+        },
+        {
+          "type": "code",
+          "start": 56,
+          "end": 68
+        },
+        {
+          "type": "code",
+          "start": 70,
+          "end": 76
+        },
+        {
+          "type": "code",
+          "start": 78,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Automaticky přeskakuje binárky. Nezkazí ti terminál, když omylem grepuješ v adresáři s obrázky.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Kontext výsledků.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -A 3 TODO        # 3 řádky za matchem\nrg -B 3 TODO        # 3 řádky před\nrg -C 3 TODO        # 3 řádky před i za",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Filtrování podle typu souboru.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -t py \"import\"        # jen Python\nrg -t md \"arch\"          # jen markdown\nrg -t js \"function\"      # jen JavaScript\nrg -T test \"TODO\"        # VYNECH testovací soubory\n\n# seznam všech známých typů\nrg --type-list",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Regex out-of-the-box.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg \"^\\d{4}-\\d{2}-\\d{2}\"        # datum na začátku řádku\nrg -e \"error\" -e \"warning\"     # více vzorů (OR)",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Multiline hledání.",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -U \"function.*\\n.*return\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Praktické triky"
+    },
+    {
+      "type": "text",
+      "text": "Zobraz jen matchující text (bez okolí):",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -o \"https?://[^ ]+\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Užitečné pro extrakci URL, IP adres, emailů."
+    },
+    {
+      "type": "text",
+      "text": "Nahrazení textu (jen ve výstupu, nemění soubory):",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg \"verze=(\\d+)\" -r 'v$1'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Skutečné nahrazení v souborech s sd:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# sd = moderní náhrada sed\nsudo pacman -S sd\nrg -l \"starytext\" | xargs sd \"starytext\" \"novytext\"",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Vylučování dalších adresářů (kromě .gitignore):",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg TODO --glob '!vendor/'\nrg TODO -g '!*.min.js'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Hledání i ve skrytých souborech:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -. token         # tečka = hidden\nrg --hidden token",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Hledání i v .gitignore:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -uu token        # -u = neignoruj .gitignore, -uu = ani skryté\nrg -uuu token       # -uuu = ani binárky",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "JSON výstup pro další zpracování:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg --json TODO | jq .",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kombinace s dalšími nástroji"
+    },
+    {
+      "type": "text",
+      "text": "S fzf pro interaktivní hledání:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg --line-number TODO | fzf --delimiter=: --preview 'bat --color=always {1} --highlight-line {2}'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "S bat pro barevný výstup:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "rg -p TODO | bat -l ruby --paging=always",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Otevři match ve vim:",
+      "formatting": [
+        {
+          "type": "bold",
+          "start": 0,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "vim $(rg -l TODO)\n# nebo interaktivně:\nrg -l TODO | fzf | xargs vim",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Aliasy"
+    },
+    {
+      "type": "text",
+      "text": "Do ~/.zshrc:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 3,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "alias grep='rg'\nalias grepc='rg --context 3'\nalias grepf='rg --files-with-matches'",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "Když opravdu potřebuješ původní grep:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 32,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "\\grep pattern file\ncommand grep pattern file",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Konfigurace"
+    },
+    {
+      "type": "text",
+      "text": "ripgrep čte konfiguraci z proměnné RIPGREP_CONFIG_PATH:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "type": "code",
+          "start": 35,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "export RIPGREP_CONFIG_PATH=~/.config/ripgrep/config",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "text": "~/.config/ripgrep/config:",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# vždy ukaž kontext\n--context=2\n\n# vždy hledej ve skrytých\n--hidden\n\n# vlastní ignorace\n--glob=!.git/\n--glob=!node_modules/\n--glob=!*.min.js\n\n# smart-case (velké písmeno = case-sensitive)\n--smart-case\n\n# barvy\n--colors=line:none\n--colors=line:style:bold"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Kdy se vrátit ke grep?"
+    },
+    {
+      "type": "text",
+      "text": "Ve skriptech, které musí běžet přenositelně. grep je součást POSIX standardu, rg může chybět.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 45,
+          "end": 49
+        },
+        {
+          "type": "code",
+          "start": 78,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Když parsuješ výstup existujícím skriptem – rg má jiný default formát.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 44,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Pro jednoduché filtrování v pipe je grep naprosto dostatečný a nemá overhead startupu.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 36,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# tohle je pořád v pořádku\nps aux | grep nginx",
+      "lang": "bash"
+    },
+    {
+      "type": "text",
+      "subtype": "heading2",
+      "text": "Shrnutí"
+    },
+    {
+      "type": "text",
+      "text": "ripgrep je nejjednodušší a zároveň nejúčinnější upgrade pro každého, kdo denně prohledává kód nebo konfigy. Rychlost + smart defaulty + .gitignore respect z něj dělají nástroj, po kterém sáhneš pokaždé, když potřebuješ najít cokoliv v souborech.",
+      "formatting": [
+        {
+          "type": "code",
+          "start": 0,
+          "end": 7
+        },
+        {
+          "type": "code",
+          "start": 136,
+          "end": 146
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Příště sérii uzavřeme kompletním setupem – aliasy, integrace s fzf a zshrc konfigurace k okopírování."
+    }
+  ],
+  "source": {
+    "platform": "manual"
+  },
+  "series_part": 5,
+  "mastodon_url": "https://gts.arch-linux.cz/@arch/statuses/01M2SD3NVGA8KQM4ZKAT2DT1R4"
+}
